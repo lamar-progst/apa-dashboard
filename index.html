@@ -57,7 +57,7 @@ async function refresh(){
  if(!user){msg('Sign in or request access to continue.');return}
  const {data:member,error:readError}=await sb.from('svp_members').select('status,is_admin').eq('user_id',user.id).maybeSingle();
  if(readError){msg('Membership check failed: '+readError.message);return}
- if(!member){const {error:insertError}=await sb.from('svp_members').insert({user_id:user.id,email:user.email,status:'pending'});if(insertError){msg('Account signed in, but request failed: '+insertError.message);return}msg('Access requested. Waiting for administrator approval.');return}
+ if(!member){const {error:insertError}=await sb.from('svp_members').insert({user_id:user.id,email:user.email,status:'pending'});if(insertError){if(insertError.code==='23505'){const {data:existing,error:retryError}=await sb.from('svp_members').select('status,is_admin').eq('user_id',user.id).maybeSingle();if(retryError){msg('Membership lookup failed: '+retryError.message);return}if(existing){await refresh();return}msg('Account exists, but membership access is blocked by database permissions. Contact administrator.');return}msg('Account signed in, but request failed: '+insertError.message);return}msg('Access requested. Waiting for administrator approval.');return}
  if(member.status!=='approved'&&!member.is_admin){msg('Signed in as '+user.email+'. Access status: '+member.status.toUpperCase()+'.');return}
  protectedArea.hidden=false;msg('✓ Access approved · '+user.email+(member.is_admin?' · Administrator':''));
  if(member.is_admin){$('svpAdmin').hidden=false;await loadRequests()}
