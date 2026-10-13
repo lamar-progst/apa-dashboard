@@ -146,7 +146,10 @@ async function loadRequests(){
  $('svpRequests').appendChild(row);
  }
 }
-$('svpRegister').onclick=async()=>{const email=$('svpEmail').value.trim(),password=$('svpPassword').value;if(!email||password.length<8){msg('Enter a valid email and password with at least 8 characters.');return}msg('Creating account…');const {error}=await sb.auth.signUp({email,password});msg(error?error.message:'Account created. Check your email for a confirmation link, then sign in to request approval.');};
+let svpSignupBusy=false;
+$('svpRegister').onclick=async()=>{if(svpSignupBusy)return;const email=$('svpEmail').value.trim(),password=$('svpPassword').value;if(!email||password.length<8){msg('Enter a valid email and password with at least 8 characters.');return}
+svpSignupBusy=true;$('svpRegister').disabled=true;msg('Creating account…');
+try{const {error}=await sb.auth.signUp({email,password});if(error){const e=(error.message||'').toLowerCase();msg(e.includes('rate limit')||e.includes('email limit')||error.status===429?'Email service is temporarily at capacity for the whole S.V.P. site. Please try again later. Admin needs to configure a higher-capacity email provider; creating a different email will not help.':error.message)}else{msg('Account created. Check your email for a confirmation link, then sign in to request approval.')}}catch(e){msg('Signup could not complete. Please try again later.')}finally{svpSignupBusy=false;$('svpRegister').disabled=false}};
 $('svpLogin').onclick=async()=>{msg('Signing in…');const {error}=await sb.auth.signInWithPassword({email:$('svpEmail').value.trim(),password:$('svpPassword').value});if(error)msg(error.message);else await refresh()};
 $('svpLogout').onclick=async()=>{await sb.auth.signOut();await refresh()};
 sb.auth.onAuthStateChange(()=>{setTimeout(refresh,0)});
