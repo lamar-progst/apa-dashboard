@@ -267,35 +267,35 @@ function quotePop(){const q=$('quoteToast');if(!q)return;q.textContent=APA_QUOTE
 setTimeout(quotePop,5000);setInterval(quotePop,26000);
 load();setInterval(load,5000);setInterval(()=>{render(DATA);const s=Math.floor((Date.now()-LAST_LOAD)/1000);$('refreshCount').textContent=s+'s';$('scanClock').textContent=(age(DATA.updated)<150?'🟢 SCANNER ACTIVE · ':'🔴 SCANNER OFFLINE · ')+new Date().toLocaleTimeString();paintSignalCountdown()},1000);
 </script><style id="apa-clean-v2">
-/* Focused dashboard; retain existing functionality but remove visual noise */
+/* S.V.P. cinematic redesign: live data preserved */
 .nav,.quoteToast,.conditions,.metrics,.proofCards,.recentTable,.terminal,.cmdTerminal,.network,.analytics,.dock,.pulse,.sidebar,.footer,.promo,.chart-section,.journal,.marketSpeed,.decorative{display:none!important}
-body{background:#080f1b!important;color:#eaf3ff!important}
+body{background:radial-gradient(ellipse at 20% -10%,#16294c 0%,transparent 45%),radial-gradient(ellipse at 95% 20%,#291b48 0%,transparent 40%),#060912!important;color:#eaf3ff!important}
 #apaClean{max-width:1120px;margin:22px auto;padding:0 18px 60px;font-family:system-ui,-apple-system,sans-serif}
-#apaClean .ac-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+#apaClean .svp-brand{display:flex;align-items:center;gap:16px}#apaClean .svp-emblem{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-size:22px;letter-spacing:-3px;font-weight:950;font-style:italic;color:#8deaff;background:radial-gradient(circle at 30% 20%,#4b3683,#0b1329 62%);border:2px solid #8adfff;box-shadow:0 0 20px #2c9eea70,inset 0 0 18px #bc7aff55;text-shadow:0 0 14px #3cdcff}#apaClean .svp-emblem span{color:#d29cff}#apaClean .ac-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
 #apaClean h1{font-size:clamp(24px,4vw,36px);margin:0;font-weight:800}
 #apaClean .ac-muted{color:#94a9c1;font-size:13px}
 #apaClean .ac-pill{border:1px solid #29415d;background:#111e31;border-radius:24px;padding:9px 13px;font-size:13px}
 #apaClean .ac-stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
-#apaClean .ac-stat{border:1px solid #243851;border-radius:12px;background:#101d30;padding:12px 16px;min-width:135px}
+#apaClean .ac-stat{border:1px solid #243851;border-radius:12px;background:linear-gradient(130deg,#14243c,#1d1637);padding:12px 16px;min-width:135px}
 #apaClean .ac-stat b{display:block;font-size:23px;margin-top:4px}
 #apaClean .ac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-#apaClean .ac-card{background:#101c2d;border:1px solid #263c55;border-radius:14px;padding:17px}
+#apaClean .ac-card{background:linear-gradient(145deg,#15203aee,#100f27f2);border:1px solid #394a77;box-shadow:0 9px 25px #0005;border-radius:14px;padding:17px}
 #apaClean .ac-card h3{font-size:16px;margin:0}
 #apaClean .ac-price{font-size:23px;font-weight:750;margin:15px 0}
 #apaClean .ac-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;font-size:13px}
 #apaClean .ac-progress{height:6px;border-radius:6px;background:#26364a;overflow:hidden;margin-top:8px}
-#apaClean .ac-progress i{display:block;height:100%;background:#49a5f5}
+#apaClean .ac-progress i{display:block;height:100%;background:linear-gradient(90deg,#38d5ff,#a375ff)}
 #apaClean .ac-green{color:#55d69c}.ac-amber{color:#ffd177}.ac-red{color:#ff8c8c}
 #apaClean .ac-section{font-size:17px;font-weight:750;margin:28px 0 14px}
 #apaClean .ac-signal{border-bottom:1px solid #263c55;padding:12px 4px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
 #apaClean .ac-note{margin:12px 0;color:#94a9c1;font-size:13px}
 #apaClean .ac-filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
-#apaClean .ac-filters button{border:1px solid #34475f;border-radius:10px;padding:8px 13px;background:#14243a;color:#dceafa;cursor:pointer}
-#apaClean .ac-filters button.active{background:#2764a3;border-color:#4ca3ee}
+#apaClean .ac-filters button{border:1px solid #34475f;border-radius:10px;padding:8px 13px;background:#1d2340;color:#dceafa;cursor:pointer}
+#apaClean .ac-filters button.active{background:#5949a6;border-color:#a5a3ff}
 body.apa-clean-mode> :not(#apaClean):not(script):not(style){display:none!important}
 </style>
 <section id="apaClean" aria-label="A.P.A. clean market dashboard">
- <div class="ac-head"><div><h1>A.P.A. <span style="color:#65b9ff">Market Room</span></h1><div class="ac-muted">D1 + H4 trend alignment · H1 setup · M15 entry</div></div><div id="acStatus" class="ac-pill">Checking feed…</div></div>
+ <div class="ac-head"><div class="svp-brand"><div class="svp-emblem" aria-label="S.V.P. logo">S<span>V</span>P</div><div><h1><span style="color:#7dd8ff">S.V.P.</span> <span style="color:#c5a7ff">Market Room</span></h1><div class="ac-muted">PRICE ACTION INTELLIGENCE · D1 → H4 → H1 → M15</div></div></div><div id="acStatus" class="ac-pill">Checking feed…</div></div>
  <div class="ac-stats"><div class="ac-stat"><span class="ac-muted">Markets</span><b id="acMarkets">—</b></div><div class="ac-stat"><span class="ac-muted">Entries ready</span><b id="acReady">—</b></div><div class="ac-stat"><span class="ac-muted">Trend aligned</span><b id="acAligned">—</b></div></div>
  <div class="ac-filters" id="acFilters"><button class="active" data-group="ALL">All</button><button data-group="GOLD">Gold</button><button data-group="VIX">Volatility</button><button data-group="STEP">Step</button></div>
  <div id="acCards" class="ac-grid"><div class="ac-muted">Loading markets…</div></div>
@@ -304,7 +304,7 @@ body.apa-clean-mode> :not(#apaClean):not(script):not(style){display:none!importa
 </section>
 <script id="apa-clean-runtime">
 (function(){
- document.body.classList.add('apa-clean-mode');
+ document.body.classList.add('apa-clean-mode'); document.title='S.V.P. · Market Room';
  const by=id=>document.getElementById(id), esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  let feed=null,group='ALL';
  const cls=s=>/step/i.test(s)?'STEP':/volatility|vix/i.test(s)?'VIX':/gold|xau/i.test(s)?'GOLD':'OTHER';
