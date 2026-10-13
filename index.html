@@ -266,4 +266,66 @@ async function load(){try{const r=await fetch('state.json?t='+Date.now(),{cache:
 function quotePop(){const q=$('quoteToast');if(!q)return;q.textContent=APA_QUOTES[Math.floor(Math.random()*APA_QUOTES.length)];q.classList.add('show');setTimeout(()=>q.classList.remove('show'),3200)}
 setTimeout(quotePop,5000);setInterval(quotePop,26000);
 load();setInterval(load,5000);setInterval(()=>{render(DATA);const s=Math.floor((Date.now()-LAST_LOAD)/1000);$('refreshCount').textContent=s+'s';$('scanClock').textContent=(age(DATA.updated)<150?'🟢 SCANNER ACTIVE · ':'🔴 SCANNER OFFLINE · ')+new Date().toLocaleTimeString();paintSignalCountdown()},1000);
-</script></body></html>
+</script><style id="apa-clean-v2">
+/* Focused dashboard; retain existing functionality but remove visual noise */
+.nav,.quoteToast,.conditions,.metrics,.proofCards,.recentTable,.terminal,.cmdTerminal,.network,.analytics,.dock,.pulse,.sidebar,.footer,.promo,.chart-section,.journal,.marketSpeed,.decorative{display:none!important}
+body{background:#080f1b!important;color:#eaf3ff!important}
+#apaClean{max-width:1120px;margin:22px auto;padding:0 18px 60px;font-family:system-ui,-apple-system,sans-serif}
+#apaClean .ac-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+#apaClean h1{font-size:clamp(24px,4vw,36px);margin:0;font-weight:800}
+#apaClean .ac-muted{color:#94a9c1;font-size:13px}
+#apaClean .ac-pill{border:1px solid #29415d;background:#111e31;border-radius:24px;padding:9px 13px;font-size:13px}
+#apaClean .ac-stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+#apaClean .ac-stat{border:1px solid #243851;border-radius:12px;background:#101d30;padding:12px 16px;min-width:135px}
+#apaClean .ac-stat b{display:block;font-size:23px;margin-top:4px}
+#apaClean .ac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+#apaClean .ac-card{background:#101c2d;border:1px solid #263c55;border-radius:14px;padding:17px}
+#apaClean .ac-card h3{font-size:16px;margin:0}
+#apaClean .ac-price{font-size:23px;font-weight:750;margin:15px 0}
+#apaClean .ac-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px;font-size:13px}
+#apaClean .ac-progress{height:6px;border-radius:6px;background:#26364a;overflow:hidden;margin-top:8px}
+#apaClean .ac-progress i{display:block;height:100%;background:#49a5f5}
+#apaClean .ac-green{color:#55d69c}.ac-amber{color:#ffd177}.ac-red{color:#ff8c8c}
+#apaClean .ac-section{font-size:17px;font-weight:750;margin:28px 0 14px}
+#apaClean .ac-signal{border-bottom:1px solid #263c55;padding:12px 4px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+#apaClean .ac-note{margin:12px 0;color:#94a9c1;font-size:13px}
+#apaClean .ac-filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+#apaClean .ac-filters button{border:1px solid #34475f;border-radius:10px;padding:8px 13px;background:#14243a;color:#dceafa;cursor:pointer}
+#apaClean .ac-filters button.active{background:#2764a3;border-color:#4ca3ee}
+body.apa-clean-mode> :not(#apaClean):not(script):not(style){display:none!important}
+</style>
+<section id="apaClean" aria-label="A.P.A. clean market dashboard">
+ <div class="ac-head"><div><h1>A.P.A. <span style="color:#65b9ff">Market Room</span></h1><div class="ac-muted">D1 + H4 trend alignment · H1 setup · M15 entry</div></div><div id="acStatus" class="ac-pill">Checking feed…</div></div>
+ <div class="ac-stats"><div class="ac-stat"><span class="ac-muted">Markets</span><b id="acMarkets">—</b></div><div class="ac-stat"><span class="ac-muted">Entries ready</span><b id="acReady">—</b></div><div class="ac-stat"><span class="ac-muted">Trend aligned</span><b id="acAligned">—</b></div></div>
+ <div class="ac-filters" id="acFilters"><button class="active" data-group="ALL">All</button><button data-group="GOLD">Gold</button><button data-group="VIX">Volatility</button><button data-group="STEP">Step</button></div>
+ <div id="acCards" class="ac-grid"><div class="ac-muted">Loading markets…</div></div>
+ <div class="ac-section">Recent signals</div><div id="acSignals"><div class="ac-muted">Loading…</div></div>
+ <p class="ac-note" id="acUpdated"></p>
+</section>
+<script id="apa-clean-runtime">
+(function(){
+ document.body.classList.add('apa-clean-mode');
+ const by=id=>document.getElementById(id), esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ let feed=null,group='ALL';
+ const cls=s=>/step/i.test(s)?'STEP':/volatility|vix/i.test(s)?'VIX':/gold|xau/i.test(s)?'GOLD':'OTHER';
+ const dir=v=>{const t=String(v??'').toUpperCase();return /^(BUY|BULL|BULLISH|UP|1)$/.test(t)?'BUY':/^(SELL|BEAR|BEARISH|DOWN|-1)$/.test(t)?'SELL':null};
+ function alignment(m){const d=dir(m.d1_direction??m.daily_direction??m.trend_d1??m.d1_trend),h=dir(m.h4_direction??m.trend_h4??m.h4_trend);if(!d||!h)return ['AWAITING TREND DATA','ac-amber',false];return d===h?[d==='BUY'?'🟢 BULLISH ALIGNED':'🔴 BEARISH ALIGNED','ac-green',true]:['⚠️ TREND CONFLICT','ac-red',false]}
+ function paint(){
+ if(!feed)return;
+ const all=Array.isArray(feed.markets)?feed.markets:[],signals=Array.isArray(feed.signals)?feed.signals:[];
+ const ts=Date.parse(feed.updated),age=Number.isFinite(ts)?(Date.now()-ts)/1000:Infinity,online=feed.online!==false&&age>=-30&&age<180;
+ by('acStatus').textContent=online?'🟢 FEED ONLINE':'🔴 FEED STALE';
+ by('acStatus').className='ac-pill '+(online?'ac-green':'ac-red');
+ by('acMarkets').textContent=all.length;by('acReady').textContent=all.filter(x=>String(x.stage).toUpperCase()==='READY').length;
+ by('acAligned').textContent=all.filter(x=>alignment(x)[2]).length+' / '+all.length;
+ const shown=all.filter(x=>group==='ALL'||cls(x.symbol)===group);
+ by('acCards').innerHTML=shown.length?shown.map(m=>{const a=alignment(m),p=Math.max(0,Math.min(100,Number(m.progress)||0)),stage=String(m.stage||'WATCH').toUpperCase();return '<article class="ac-card"><div class="ac-row" style="margin-top:0"><h3>'+esc(m.symbol)+'</h3><span class="ac-muted">'+esc(stage)+'</span></div><div class="ac-price">'+esc(m.price)+'</div><div class="ac-row"><span class="ac-muted">D1 + H4 trend</span><strong class="'+a[1]+'">'+esc(a[0])+'</strong></div><div class="ac-row"><span class="ac-muted">Setup</span><b>'+Math.round(p)+'%</b></div><div class="ac-progress"><i style="width:'+p+'%"></i></div><div class="ac-row"><span class="ac-muted">Direction</span><b>'+esc(m.side||'WAIT')+'</b></div><div class="ac-note">'+esc(m.note||'Monitoring market')+'</div></article>'}).join(''):'<div class="ac-muted">No markets in this category.</div>';
+ by('acSignals').innerHTML=signals.length?signals.slice(0,8).map(x=>'<div class="ac-signal"><strong>'+esc(x.side)+' · '+esc(x.symbol)+'</strong><span class="ac-muted">Entry '+esc(x.entry)+' · SL '+esc(x.stop)+' · TP '+esc(x.target)+'</span><span>'+esc(x.status||'OPEN')+'</span></div>').join(''):'<div class="ac-muted">No recorded signals yet.</div>';
+ by('acUpdated').textContent='Feed updated: '+(Number.isFinite(ts)?new Date(ts).toLocaleString():'unknown')+' · Setup progress is not a win probability. Trend alignment requires separate D1 and H4 fields from the bot.';
+ }
+ async function refresh(){try{const r=await fetch('state.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('Feed HTTP '+r.status);const d=await r.json();if(!Array.isArray(d.markets))throw Error('Invalid market data');feed=d;paint()}catch(e){by('acStatus').textContent='🔴 FEED ERROR';by('acStatus').className='ac-pill ac-red';by('acUpdated').textContent='Feed unavailable: '+e.message;console.error(e)}}
+ by('acFilters').addEventListener('click',e=>{const b=e.target.closest('button[data-group]');if(!b)return;group=b.dataset.group;by('acFilters').querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));paint()});
+ refresh();setInterval(refresh,10000);setInterval(paint,1000);
+})();
+</script>
+</body></html>
