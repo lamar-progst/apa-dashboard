@@ -94,69 +94,7 @@ $('activity').innerHTML=markets.length?markets.map(x=>'<div class="event"><stron
 $('liveFeed').innerHTML=signals.length?signals.slice(0,25).map(x=>'<div class="event"><strong>'+esc(x.side)+' · '+esc(x.symbol)+'</strong>'+line('Status',x.status)+line('Entry',x.entry)+line('SL / TP',fmt(x.stop)+' / '+fmt(x.target))+tpProgress(x,markets)+'</div>').join(''):'<div class="empty">No signal events.</div>';
 document.querySelectorAll('.market').forEach((node,i)=>{const visible=markets.filter(x=>{const buttons=document.querySelector('#filters button.active');const v=buttons?.dataset.filter||'ALL';return v==='ALL'||(v==='GOLD'?/xau|gold/i:v==='STEP'?/step/i:v==='FOREX'?/^(EUR|GBP|USD|AUD|NZD|CAD|CHF|JPY)[A-Z]{3}([._-].*)?$/i:v==='INDICES'?/nas|ndx|us[135]0|spx|s&p|ger40|dax|uk100|dj30|jp225|index|indices/i:/volatility|vix|crash|boom|jump|skew/i).test(x.symbol)});const x=visible[i];if(!x)return;let det=node.querySelector('.market-details');if(!det){det=document.createElement('details');det.className='market-details';node.appendChild(det)}const detailsHtml='<summary>View detailed market analysis</summary>'+line('H1 sweep / reclaim',x.h1_sweep??x.liquidity_sweep??'Not reported')+line('Fib / supply-demand',x.fib_zone??x.supply_demand??'Not reported')+line('Market phase',x.market_phase??'Not reported')+line('M15 confirmation',x.m15_confirmation??'Not reported')+line('Invalidation',x.invalidation_level??'Not reported')+line('Reason',x.note??'Monitoring');if(det.innerHTML!==detailsHtml)det.innerHTML=detailsHtml})}
 async function update(){try{const r=await fetch('./state.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();if(!Array.isArray(d.markets))throw Error('Invalid feed');const changed=JSON.stringify({markets:d.markets,signals:d.signals,positions:d.positions,performance:d.performance})!==JSON.stringify({markets:data?.markets,signals:data?.signals,positions:data?.positions,performance:data?.performance});data=d;if(changed)render()}catch(e){$('chartNote').textContent='Data feed unavailable: '+e.message}}$('chartSymbol').addEventListener('change',e=>{chosen=e.target.value;render()});$('filters').addEventListener('click',()=>setTimeout(render,30));update();setInterval(update,10000)})();
-</script><script type="module" id="svp-member-auth">
-import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
-const sb=createClient('https://zuemztvanxdregfcppoa.supabase.co','sb_publishable_dA9EvB1z73P-XX47ZWT5kg_0ZRQQmuq',{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-const main=document.querySelector('main'),header=main.querySelector('header');
-const protectedArea=document.createElement('div');protectedArea.id='svpProtected';
-while(header.nextSibling)protectedArea.appendChild(header.nextSibling);
-main.appendChild(protectedArea);protectedArea.hidden=true;
-const auth=document.createElement('section');auth.id='svpAuth';auth.innerHTML=`
-<h2>🔐 S.V.P. Member Access</h2><p>Register or sign in. New accounts must be approved by the S.V.P. administrator.</p>
-<div class="svp-fields"><input id="svpEmail" type="email" placeholder="Email address" autocomplete="email" aria-label="Email"><input id="svpPassword" type="password" placeholder="Password (8+ characters)" autocomplete="current-password" aria-label="Password"></div>
-<div class="svp-buttons"><button id="svpRegister" type="button">Request access</button><button id="svpLogin" class="action" type="button">Sign in</button><button id="svpLogout" type="button" hidden>Sign out</button></div>
-<div id="svpWelcome" hidden><strong id="svpWelcomeName"></strong><button id="svpPrivacy" type="button" aria-pressed="true">🔒 Hide email</button><span id="svpIdentity" class="svp-private-email" hidden></span></div><p id="svpAuthMessage" class="svp-message">Checking membership…</p>
-<div id="svpAdmin" hidden><h3>🛡️ Member Control Center</h3><div id="svpRequests"></div></div>`;
-main.insertBefore(auth,protectedArea);
-const $=id=>document.getElementById(id),msg=t=>$('svpAuthMessage').textContent=t;
-const firstName=user=>{const metadata=user?.user_metadata||{};const named=String(metadata.first_name||metadata.given_name||'').trim();if(named)return named.charAt(0).toUpperCase()+named.slice(1).toLowerCase();const local=String(user?.email||'user').split('@')[0];const base=local.split(/[._-]/)[0].replace(/[0-9]+$/,'');const first=/^lamar/i.test(base)?'lamar':(base.match(/^[a-z]+/i)?.[0]||'User');return first.charAt(0).toUpperCase()+first.slice(1).toLowerCase()};
-let privateEmail=true;
-function updateIdentity(user){const w=$('svpWelcome');w.hidden=!user;if(!user)return;$('svpWelcomeName').textContent='✨ Welcome, '+firstName(user)+'!';$('svpIdentity').textContent=user.email||'';$('svpIdentity').hidden=privateEmail;$('svpPrivacy').textContent=privateEmail?'🔒 Show email':'👁 Hide email';$('svpPrivacy').setAttribute('aria-pressed',String(privateEmail))}
-$('svpPrivacy').onclick=()=>{privateEmail=!privateEmail;updateIdentity(current)};
-const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let current=null;
-async function refresh(){
- const {data:{user},error}=await sb.auth.getUser();
- current=user||null;updateIdentity(current);protectedArea.hidden=true;$('svpAdmin').hidden=true;
- $('svpLogout').hidden=!user;$('svpLogin').hidden=!!user;$('svpRegister').hidden=!!user;
- $('svpEmail').hidden=!!user;$('svpPassword').hidden=!!user;
- if(error&&!user){msg('Sign in or request access to continue.');return}
- if(!user){msg('Sign in or request access to continue.');return}
- const {data:member,error:readError}=await sb.from('svp_members').select('status,is_admin').eq('user_id',user.id).maybeSingle();
- if(readError){msg('Membership check failed: '+readError.message);return}
- if(!member){const {error:insertError}=await sb.from('svp_members').insert({user_id:user.id,email:user.email,status:'pending'});if(insertError){if(insertError.code==='23505'){const {data:existing,error:retryError}=await sb.from('svp_members').select('status,is_admin').eq('user_id',user.id).maybeSingle();if(retryError){msg('Membership lookup failed: '+retryError.message);return}if(existing){await refresh();return}msg('Account exists, but membership access is blocked by database permissions. Contact administrator.');return}msg('Account signed in, but request failed: '+insertError.message);return}msg('Access requested. Waiting for administrator approval.');return}
- if(member.status!=='approved'&&!member.is_admin){msg('Welcome, '+firstName(user)+'! Access status: '+member.status.toUpperCase()+'.');return}
- protectedArea.hidden=false;msg('✓ Access approved · '+firstName(user)+(member.is_admin?' · Administrator':''));
- if(member.is_admin){$('svpAdmin').hidden=false;await loadRequests()}
-}
-async function loadRequests(){
- const {data,error}=await sb.from('svp_members').select('user_id,email,status,created_at').order('created_at',{ascending:false}).limit(100);
- if(error){$('svpRequests').textContent=error.message;return}
- $('svpRequests').replaceChildren();
- for(const member of data||[]){
- if(member.user_id===current?.id)continue;
- const row=document.createElement('div');row.className='svp-member';
- const label=document.createElement('span');label.textContent=member.email+' · '+member.status;
- row.appendChild(label);
- if(member.user_id!==current?.id){
- const actions=document.createElement('span');
- for(const status of ['approved','denied','revoked']){
- const btn=document.createElement('button');btn.type='button';btn.textContent=status==='approved'?'Approve':status==='denied'?'Deny':'Revoke';btn.disabled=member.status===status;
- btn.onclick=async()=>{if(!confirm('Set '+member.email+' to '+status+'?'))return;const {error}=await sb.from('svp_members').update({status,reviewed_at:new Date().toISOString()}).eq('user_id',member.user_id);if(error)alert(error.message);await loadRequests()};
- actions.appendChild(btn);
- }row.appendChild(actions)}
- $('svpRequests').appendChild(row);
- }
-}
-let svpSignupBusy=false;
-$('svpRegister').onclick=async()=>{if(svpSignupBusy)return;const email=$('svpEmail').value.trim(),password=$('svpPassword').value;if(!email||password.length<8){msg('Enter a valid email and password with at least 8 characters.');return}
-svpSignupBusy=true;$('svpRegister').disabled=true;msg('Creating account…');
-try{const {error}=await sb.auth.signUp({email,password});if(error){const e=(error.message||'').toLowerCase();msg(e.includes('rate limit')||e.includes('email limit')||error.status===429?'Email service is temporarily at capacity for the whole S.V.P. site. Please try again later. Admin needs to configure a higher-capacity email provider; creating a different email will not help.':error.message)}else{msg('Account created. Check your email for a confirmation link, then sign in to request approval.')}}catch(e){msg('Signup could not complete. Please try again later.')}finally{svpSignupBusy=false;$('svpRegister').disabled=false}};
-$('svpLogin').onclick=async()=>{msg('Signing in…');const {error}=await sb.auth.signInWithPassword({email:$('svpEmail').value.trim(),password:$('svpPassword').value});if(error)msg(error.message);else await refresh()};
-$('svpLogout').onclick=async()=>{await sb.auth.signOut();await refresh()};
-sb.auth.onAuthStateChange(()=>{setTimeout(refresh,0)});
-await refresh();
-</script><style id="svp-sound-style">#svpSoundBar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding:12px 16px;margin:12px 0;border:1px solid #8e7cff66;border-radius:14px;background:linear-gradient(115deg,#342252bb,#142b49bb);color:#e9e5ff;font-size:13px}#svpSoundBar button{border:1px solid #aaa0ff88}#svpSoundStatus{color:#b9c9ed}#svpSoundToast{position:fixed;right:16px;bottom:20px;z-index:9999;background:#171c3af2;border:1px solid #9f89ff;border-radius:14px;padding:15px 20px;box-shadow:0 0 30px #806bff55;max-width:min(390px,90vw);color:#fff}</style>
+</script><!-- Temporary public access: login and membership gate paused; restore from Git history when needed. --><style id="svp-sound-style">#svpSoundBar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding:12px 16px;margin:12px 0;border:1px solid #8e7cff66;border-radius:14px;background:linear-gradient(115deg,#342252bb,#142b49bb);color:#e9e5ff;font-size:13px}#svpSoundBar button{border:1px solid #aaa0ff88}#svpSoundStatus{color:#b9c9ed}#svpSoundToast{position:fixed;right:16px;bottom:20px;z-index:9999;background:#171c3af2;border:1px solid #9f89ff;border-radius:14px;padding:15px 20px;box-shadow:0 0 30px #806bff55;max-width:min(390px,90vw);color:#fff}</style>
 <script id="svp-sound-runtime">
 (()=>{'use strict';
 let enabled=false,ctx=null,initialized=false,seen=new Set();
