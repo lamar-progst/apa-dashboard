@@ -253,7 +253,7 @@ button:hover{transform:none!important;border-color:#57cfc1!important;box-shadow:
     <article class="svp-flow-step waiting"><div class="svp-flow-step-top"><span class="svp-flow-step-dot"></span><strong>RETEST → M1 TRIGGER</strong><em>WAITING</em></div><h3>Waiting for entry confirmation</h3><p>A WATCH state is not an entry.</p></article>
   </div>
   <div class="svp-flow-lower">
-    <div class="svp-flow-chart-wrap"><div class="svp-flow-chart-head"><strong id="svp-flow-chart-title">M15 price action</strong><span id="svp-flow-chart-badge">WAITING FOR FEED</span></div><div class="svp-flow-chart" id="svp-flow-chart" aria-live="polite">Waiting for verified M15 candles from the bot.</div><div class="svp-flow-legend"><span><i class="svp-flow-legend-price"></i>Current price</span><span><i class="svp-flow-legend-zone"></i>Bot-published zone</span></div></div>
+    <div class="svp-flow-chart-wrap"><div class="svp-flow-chart-head"><strong id="svp-flow-chart-title">M15 price action</strong><span id="svp-flow-chart-badge">WAITING FOR FEED</span></div><div class="svp-flow-chart" id="svp-flow-chart" aria-live="polite">Waiting for verified M15 candles from the bot.</div><div class="svp-flow-legend"><span><i class="svp-flow-legend-price"></i>Current price</span><span><i class="svp-flow-legend-zone"></i>Bot-published zone</span></div><small class="svp-flow-chart-note" id="svp-flow-chart-note">The forming candle waits for fresh MT5 ticks.</small></div>
     <aside class="svp-flow-readout"><div class="svp-flow-live" id="svp-flow-live">Connecting to scanner…</div><div class="svp-flow-market-name" id="svp-flow-name">Waiting for market</div><div class="svp-flow-readout-row"><span>Direction</span><strong id="svp-flow-direction">—</strong></div><div class="svp-flow-readout-row"><span>Current price</span><strong id="svp-flow-price">—</strong></div><div class="svp-flow-readout-row"><span>Zone / breakout level</span><strong id="svp-flow-zone">Not published</strong></div><p id="svp-flow-next">Waiting for scanner evidence.</p></aside>
   </div>
   <p class="svp-flow-foot">The chart uses bot-published M15 candles and MT5 ticks when available. The current feed must publish zone bounds before a zone can be drawn; “Not published” means the bot has not sent those levels.</p>
@@ -555,9 +555,15 @@ function step(label,state,title,detail){
  return '<article class="svp-flow-step '+state+'"><div class="svp-flow-step-top"><span class="svp-flow-step-dot"></span><strong>'+label+'</strong><em>'+names[state]+'</em></div><h3>'+esc(title)+'</h3><p>'+esc(detail)+'</p></article>';
 }
 function drawChart(m,live,fresh){
- const root=$('svp-flow-chart');
+ const root=$('svp-flow-chart'),note=$('svp-flow-chart-note');
  const candles=Array.isArray(m.candles)?m.candles.map(c=>({time:Number(c.time),open:priceNumber(c.open??c.o),high:priceNumber(c.high??c.h),low:priceNumber(c.low??c.l),close:priceNumber(c.close??c.c)})).filter(c=>Number.isFinite(c.time)&&[c.open,c.high,c.low,c.close].every(Number.isFinite)).sort((a,b)=>a.time-b.time).slice(-30):[];
- if(!candles.length){root.innerHTML='<div class="svp-flow-chart-empty">No verified M15 candles are published for '+esc(m.symbol)+'. The setup card will not draw estimated candles.</div>';return}
+ const liveBar=live?.bar;
+ if(fresh&&liveBar&&[liveBar.time,liveBar.open,liveBar.high,liveBar.low,liveBar.close].every(v=>Number.isFinite(Number(v)))){
+  const c={time:Number(liveBar.time),open:Number(liveBar.open),high:Number(liveBar.high),low:Number(liveBar.low),close:Number(liveBar.close)};
+  const at=candles.findIndex(x=>x.time===c.time);
+  if(at>=0)candles[at]=c;else if(!candles.length||c.time>candles[candles.length-1].time)candles.push(c);
+ }
+ if(!candles.length){root.innerHTML='<div class="svp-flow-chart-empty">No verified M15 candles are published for '+esc(m.symbol)+'. Waiting for bot candle history or live ticks.</div>';if(note)note.textContent='The chart only draws candles received from the bot or tick stream.';return}
  const quote=fresh?priceNumber(live?.price):priceNumber(m.price);
  const zone=m.sr_zone&&typeof m.sr_zone==='object'?m.sr_zone:{};
  let zoneLow=numFrom(zone,['low','bottom'])??numFrom(m,['zone_low','sr_zone_low','breakout_zone_low','support_zone_low','resistance_zone_low','consolidation_low']);
@@ -575,7 +581,8 @@ function drawChart(m,live,fresh){
  const levelSvg=level!==null&&level>lo&&level<hi?'<line x1="'+L+'" y1="'+y(level).toFixed(1)+'" x2="'+(W-R)+'" y2="'+y(level).toFixed(1)+'" stroke="#d6bd66" stroke-width="1.3" stroke-dasharray="5 4"/><text x="'+(W-R+4)+'" y="'+(y(level)-3).toFixed(1)+'" fill="#e3ce83" font-size="8">LEVEL</text>':'';
  const quoteSvg=quote!==null&&quote>lo&&quote<hi?'<line x1="'+L+'" y1="'+y(quote).toFixed(1)+'" x2="'+(W-R)+'" y2="'+y(quote).toFixed(1)+'" stroke="#4af0a4" stroke-width="1.4" stroke-dasharray="3 3"/><text x="'+(W-R+4)+'" y="'+(y(quote)-3).toFixed(1)+'" fill="#73efb0" font-size="8">'+(fresh?'LIVE':'BOT')+'</text>':'';
  const xLabels=[0,Math.floor((candles.length-1)/2),candles.length-1].filter((n,i,a)=>a.indexOf(n)===i).map(i=>{const d=new Date(candles[i].time*1000);return '<text x="'+(L+(i+.5)*stepW).toFixed(1)+'" y="'+(H-5)+'" text-anchor="middle" fill="#6f8192" font-size="9">'+d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+'</text>'}).join('');
- root.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Verified M15 candlestick chart for '+esc(m.symbol)+'">'+lines+zoneSvg+levelSvg+quoteSvg+bars+xLabels+'</svg>';
+ root.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="M15 candlestick chart for '+esc(m.symbol)+'">'+lines+zoneSvg+levelSvg+quoteSvg+bars+xLabels+'</svg>';
+ if(note)note.textContent=fresh?'Live M15 candle updates from MT5 ticks received by this page.':'Showing closed M15 candles from the last bot snapshot; the forming candle waits for fresh ticks.';
 }
 function render(){
  if(!feed)return;
@@ -621,6 +628,31 @@ window.addEventListener('svp-feed-loaded',e=>{feed=e.detail;render()});
 $('svp-flow-market').addEventListener('change',e=>{choice=e.target.value;const ai=$('svp-ai-market');if(ai&&[...ai.options].some(o=>o.value===choice)){ai.value=choice;ai.dispatchEvent(new Event('change',{bubbles:true}))}render()});
 $('svp-ai-market')?.addEventListener('change',e=>{choice=e.target.value;const flow=$('svp-flow-market');if(flow)flow.value=choice;render()});
 const originalTick=window.svpAIUpdateLiveTicks;
-window.svpAIUpdateLiveTicks=rows=>{if(typeof originalTick==='function')originalTick(rows);if(Array.isArray(rows)){for(const t of rows)if(t&&t.symbol&&priceNumber(t.price)!==null)liveTicks.set(t.symbol,{...t,received_at:Date.now()/1000});if(!renderQueued){renderQueued=true;setTimeout(()=>{renderQueued=false;render()},350)}}};
+function normalizeBar(input,fallbackTime){
+ if(!input||typeof input!=='object')return null;
+ const timeRaw=Number(input.time??input.timestamp??fallbackTime),time=timeRaw>1e12?Math.floor(timeRaw/1000):Math.floor(timeRaw);
+ const bar={time,open:priceNumber(input.open??input.o),high:priceNumber(input.high??input.h),low:priceNumber(input.low??input.l),close:priceNumber(input.close??input.c)};
+ return Number.isFinite(bar.time)&&[bar.open,bar.high,bar.low,bar.close].every(Number.isFinite)?bar:null;
+}
+function buildTickBar(t,previous,now){
+ const supplied=normalizeBar(t.m15_bar??t.current_bar??t.bar??t.candle,now);
+ if(supplied)return supplied;
+ const price=priceNumber(t.price);if(price===null)return previous?.bar||null;
+ const bucket=Math.floor(now/900)*900,prior=previous?.bar;
+ if(prior&&Number(prior.time)===bucket)return{time:bucket,open:Number(prior.open),high:Math.max(Number(prior.high),price),low:Math.min(Number(prior.low),price),close:price};
+ return{time:bucket,open:price,high:price,low:price,close:price};
+}
+window.svpAIUpdateLiveTicks=rows=>{
+ if(typeof originalTick==='function')originalTick(rows);
+ if(Array.isArray(rows)){
+  const now=Date.now()/1000;
+  for(const t of rows){
+   if(!t||!t.symbol||priceNumber(t.price)===null)continue;
+   const previous=liveTicks.get(t.symbol),bar=buildTickBar(t,previous,now);
+   liveTicks.set(t.symbol,{...(previous||{}),...t,bar,received_at:now});
+  }
+  if(!renderQueued){renderQueued=true;setTimeout(()=>{renderQueued=false;render()},350)}
+ }
+};
 })();
 </script></body></html>
