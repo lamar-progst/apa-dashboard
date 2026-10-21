@@ -506,7 +506,7 @@ function render(){
  }
  drawPattern(m,direction,retestLevel||rawEntry,ready&&hasPrices);
  const live=liveTicks.get(m.symbol),liveFresh=!!(live&&Date.now()/1000-Number(live.received_at||0)<=8);
- el('svp-ai-live-status').textContent=liveFresh?'LIVE · MT5 tick received '+new Date(Number(live.time)*1000).toLocaleTimeString():'Waiting for an MT5 tick stream.';
+ el('svp-ai-live-status').textContent=liveFresh?'LIVE CONFIRMED · MT5 tick received '+new Date(Number(live.time)*1000).toLocaleTimeString():'WAITING · no recent MT5 tick received';
 }
 window.addEventListener('svp-feed-loaded',e=>{feed=e.detail;render()});
 el('svp-ai-market')?.addEventListener('change',e=>{choice=e.target.value;render()});
@@ -611,7 +611,7 @@ function render(){
  $('svp-flow-steps').innerHTML=step('H4 DIRECTION',h4state,h4title,h4detail)+step('M15 BREAKOUT',m15state,m15title,m15detail)+step('RETEST → M1 TRIGGER',triggerstate,triggerTitle,triggerDetail);
  const live=liveTicks.get(m.symbol),fresh=!!(live&&Date.now()/1000-Number(live.received_at||0)<=8);
  const current=fresh?priceNumber(live.price):priceNumber(m.price);
- $('svp-flow-live').textContent=stale?'FEED STALE · NOT CURRENT':fresh?'LIVE · MT5 TICK':'LIVE · BOT FEED';
+ $('svp-flow-live').textContent=stale?'FEED STALE · NOT CURRENT':fresh?'LIVE CONFIRMED · MT5 TICK':'BOT FEED · WAITING FOR TICK';
  $('svp-flow-live').className='svp-flow-live'+(stale?' stale':'');
  $('svp-flow-name').textContent=m.symbol+' · '+(validSide?tradeSide:'WAIT')+' · '+stage(m);
  $('svp-flow-direction').textContent=directionLabel(direction)+(validSide&&!matches?' · mismatch':'');
