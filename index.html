@@ -324,7 +324,7 @@ function render(){
  if(!m){status.textContent='NO LIVE MARKET DATA';status.className='svp-ai-status';pair.textContent='Waiting for Gold, VIX, or Step data';reason.textContent='The bot has not published a market to analyze.';entry.textContent=stop.textContent=target.textContent='—';next.textContent='No entry plan until fresh scanner data arrives.';checks.innerHTML='';diagram.hidden=true;return}
  const ready=stage(m)==='READY'&&(side(m)==='BUY'||side(m)==='SELL'),sig=ready?signalFor(m):null;
  const rawEntry=sig?.entry??m.entry??m.entry_price,rawStop=sig?.stop??m.stop??m.stop_loss,rawTarget=sig?.target??m.target??m.take_profit;
- const hasPrices=[rawEntry,rawStop,rawTarget].some(v=>v!==null&&v!==undefined&&v!=='');
+ const hasPrices=[rawEntry,rawStop,rawTarget].every(v=>v!==null&&v!==undefined&&v!=='');
  const direction=side(m),which=direction==='BUY'?'bullish':'bearish';
  status.textContent=ready?(hasPrices?'READY SIGNAL · '+direction:'READY · WAITING FOR PRICES'):'WAIT · SETUP NOT READY';
  status.className='svp-ai-status'+(ready&&hasPrices?' ready':'');
