@@ -192,7 +192,72 @@ button:hover{transform:none!important;border-color:#57cfc1!important;box-shadow:
 #svp-ai-title.svp-ai-title{display:flex;align-items:center;gap:10px;margin:5px 0 4px;font-size:clamp(21px,3vw,28px);letter-spacing:.01em}
 .svp-ai-logo{display:block;width:36px;height:36px;flex:none;object-fit:cover;border-radius:50%;border:1px solid #44d7cc;box-shadow:0 0 15px #3dd9cc35}
 @media(max-width:600px){.svp-ai-logo{width:32px;height:32px}}
-</style></head><body><div id="svpPassGate"><section class="svp-pass-card" role="dialog" aria-modal="true" aria-labelledby="svpPassTitle"><h1 id="svpPassTitle">🔒 S.V.P. Market Room</h1><p>Enter the site password to continue.</p><form id="svpPassForm"><label for="svpPassInput">Password</label><input id="svpPassInput" type="password" autocomplete="current-password" required><button type="submit">Unlock site</button><p id="svpPassError" class="svp-pass-error" aria-live="polite"></p></form></section></div><script id="svp-passcode-runtime">(()=>{const form=document.getElementById('svpPassForm'),input=document.getElementById('svpPassInput'),error=document.getElementById('svpPassError');form.addEventListener('submit',e=>{e.preventDefault();if(input.value==='SVP'){try{sessionStorage.setItem('svp_site_unlocked_v1','yes')}catch{}document.documentElement.classList.add('svp-unlocked');error.textContent='';input.value='';document.querySelector('main')?.focus()}else{error.textContent='Incorrect password. Try again.';input.select()}});if(!document.documentElement.classList.contains('svp-unlocked'))input.focus()})();</script><main><header class="top"><div class="brand"><div class="logo" aria-label="S.V.P. official logo"><img src="data:image/webp;base64,UklGRlAHAABXRUJQVlA4IEQHAACQIACdASpkAGQAPt1apU0opSOirbbd+RAbiWIAx6BHPVMkIfks7fJ1QeMvgXLrBqco9ZEjp9G/SJ/FJP1m57s08/HC4kbxvqp3QP11/vvAmupYULyiLFNlbRoKaGzn/5Eyt9ekLP5UchgHCRSxyugPnX+3Ij90TBFb9OeEcGKztsoMxZFASSvXTg0UdLS2IaUcTfxM4zQ91dx3Ff3Y7XTbTuuslipcCgzLcCz46kceF2CIeLVf9U6CF3fPV/A2BxwvUfXZiht3iAo4jMgVXGkMQEiiwhX0ZlbvXJa7u4hF9q68Gzbs5AFOiHIfAm+jCAma9EV+Ux5qFT54lyIJ+ETVEVxoWCtv9kVKP6euwAD++9kYEZZ2uE1Tb34FCC/phUnO40myvyCow34GRBv/0zJn/Jn4qQlQE/vnrnxq+4GikRQODNpEIeCvdEU03Mvu6ZT2xDSZYd6SHV658Jg+TbJu1Xfvunx0Qfvzz01MeTGHrqwwlbNJMEf3RguScuyai9a/0wppkRMS4USrpudUi99Zng/wKsH/gnSm32wg6giSk+D9RsORkfE9o3OiP7ej6Cv8rjKCMAU5ony2QJ0hrTyGQGZaQ+/FXNQ9Ci3r8MHRChDTaamLf9o3pbRlBaXHI+O84As1ve1oVQRTkwCJHMkkoShuKESUd+mKynEBe8v2wKKn0YCPobGvTcE+HRNFX83kkmBU8wDHpizhZttofmQFVvuXiHw2+U8yH/36kInCYISQbDqGHJd/OLO8QS4nwwCupHmMhWqwNaNZzINFSoPj7zqHtCp0IMKO9TGNIzObs8YTk8ZsyjRjiy8nwWv+vJkbV8zBo6v6v+H4dO4SIZk87KyWXS20wdEuWlW2UlJtRclyxxrAXXnS3mh9KrE+YlqPor9IRwbgDNC9sU+4ap160PZXAAd0xfUxb3GwDXYy60uxfW1rVInGLvsb6YUp1lqnv4jUrkfwfCAyVoKGsi3gJ/JFmhd+n95MSaHJpyqadKcnqpUi05gjMIIr1a4Y8xIIj+6xtvxN/H6Yi0GHxWQIDsiepB6DLf0pcX31iOMYOmVSWlPFd+gBlYnuw48OPogsb/9dLesh8G2VgnCI76/WdWSKhtt5cXP1tpWIWvP0VbdwpIVu03JKBgDyR3ZZ2SGsqS/7g/mVfLGzoYfEwiVKG9/9jUuHsxHZ/epe2GgGKxwTglo97F51zZUHjCw2makJJT43YimeuRik4S4WtD9gLN3piz/WoiVWNaIxphy/j6el/E9KZ4MuDQNYVIGy5a2Ri+MtJNeA3jRDo4z7ooOLZibjCr0hXnGpxK6IsyIigNx0ieaOlvTyFu/BWIXNYimKin76WlNLx2C4qjyVNmtxwWoR9E01KkVLgPXvgzhCCxU8OqARsvuhEA+4b+QLbrlX439YJOIAsXD5kRO3luZRCEdq3kIbxGh7EjvQgsdC4uaMpmvSZ0aj4DvYM+T8wHPRF3KFPX+63ZjO7yz9w6aL2tkWGm8veNMsm27BsWoqhrDRC5judZEozdB3Tcwh5MJEIVb5QG5ZArmWM2zY3b0bYH/qAlmnzTZtYiamVoDwwh6Mz0IfufWlAYXeKZJNKqNaM5i9bywDbuldL02ZyyD+EQqDGAgjy7MDKMwdUcJX62kGxPUynFQo9k1KRJVf9d9GNanJo0Yayg+YV/mKe1EyhB4svT/fQWU2cnouD5FwJzhAFodMwTbpLY1zvb68ArlXRRbrWQy0lhs/Ao1l0zcd4MugIWwWBE0zQtqgeR1gH6HdJ/n95oy2rl5mbb5Fyaw3VRyncBJOXpBYgDQ7jod8VOja8fpOg/sLYicHrcb3iPmdoycGVPp5F9fpEEi6kMySh/cDudh4OeoyQtEkf1lvKMCw7r5X2cmT8Zde6hEu3L3rnRE3/acuSW+W/MjX8O6hN8uqB6n3CCdWX7lWSK1exMHfBhzMspqrwDXyD8VsabMhHMZHDZop+pXK3jPKfTV1eB4C0zRhC5CGlOrDVwOg7F+F+zUyyZRmS1CRz+RmAGWIMDMzr2traSdBnZVlu7so0JWm9zybaFxSwyWBv0UkrngzUezbUcbOwCjbmJmV/kaLQIEvM4Q9VsV5fur4Jkh0tsMgLufPXpmiui3UmWE0kA0Z/NL12qNeu9eli35lESY8CQgkDCTeCrQb21wnFKAo9CrWPaB3r7cw3IxdXVF5QiugV9LCiAHEHKIY4SB2DJ5ES7HNBr/m9n1CRCFf9WzlY15K0K5DYi30ZvkapeTZlP2CJ7TFrCvYBKXVZvB73/GIxDvWBnvftIBhPMWQZ9K/cPpGXegt+ALG7CWOkjCaXmP8JiEawglbwRm5LGF/IVXm7IA1VjBRYYdzwGLJVAlfytSv1EJPmjrolPjoFP2KES3fIMgYthsE/LDhHYz5T8UTFs1cKawdqp5JZgmE60+9DzYzgO2F++ex0xH/pqVlSWIVIU/WXjowoic2R5sMAAAAAAA=" alt="S.V.P. official logo"></div><div><h1>S.V.P. <span>Market Room</span></h1><p>PRICE ACTION INTELLIGENCE · H4 TREND → H1 SWEEP → M15 BOS</p></div></div><div class="status" id="status">⏳ Connecting…</div></header><div class="stats"><div class="stat"><div class="muted">Watched markets</div><div class="num" id="count">—</div></div><div class="stat"><div class="muted">Entries ready</div><div class="num" id="ready">—</div></div><div class="stat"><div class="muted">H4 trend direction</div><div class="num" id="aligned">—</div></div></div><section class="svp-ai-entry" aria-labelledby="svp-ai-title">
+</style><style id="svp-live-setup-flow-style">
+.svp-flow{margin:18px 0 22px;padding:18px;border:1px solid #184b49;border-radius:18px;background:linear-gradient(145deg,#081218,#070b12);box-shadow:0 12px 30px #0008}
+.svp-flow-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.svp-flow-kicker{font-size:10px;font-weight:900;letter-spacing:.13em;color:#66dbd0}
+.svp-flow-head h2{margin:5px 0;font-size:clamp(20px,3vw,26px);color:#e8f5f5}
+.svp-flow-head p,.svp-flow-foot{margin:0;color:#8999aa;font-size:12px;line-height:1.5}
+.svp-flow-market{min-width:180px}.svp-flow-market label{display:block;margin-bottom:5px;color:#8293a6;font-size:10px;font-weight:800;letter-spacing:.08em}
+.svp-flow-market select{width:100%;background:#09131a;border:1px solid #244446;color:#e5f2f3}
+.svp-flow-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:15px 0}
+.svp-flow-step{min-width:0;padding:13px;border:1px solid #1b2a36;border-radius:13px;background:#080e15}
+.svp-flow-step-top{display:flex;align-items:center;gap:7px}
+.svp-flow-step-top strong{font-size:9px;letter-spacing:.08em;color:#8ea3b5}
+.svp-flow-step-top em{margin-left:auto;font-style:normal;font-size:9px;font-weight:850;color:#7c8da0}
+.svp-flow-step-dot{width:7px;height:7px;flex:none;border-radius:50%;background:#526175}
+.svp-flow-step h3{margin:10px 0 5px;font-size:14px;color:#dbe7f2;overflow-wrap:anywhere}
+.svp-flow-step p{margin:0;color:#899aab;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.svp-flow-step.done{border-color:#18563e;background:#08140f}
+.svp-flow-step.done .svp-flow-step-dot{background:#4af0a4;box-shadow:0 0 10px #4af0a4}
+.svp-flow-step.done .svp-flow-step-top em{color:#78eeb1}
+.svp-flow-step.active{border-color:#216d69;background:#091513}
+.svp-flow-step.active .svp-flow-step-dot{background:#51e7d2;box-shadow:0 0 10px #51e7d2;animation:svpLivePulse 1.25s ease-in-out infinite}
+.svp-flow-step.active .svp-flow-step-top em{color:#71e5d8}
+.svp-flow-step.blocked{border-color:#7b3d42;background:#180b0e}
+.svp-flow-step.blocked .svp-flow-step-dot{background:#ff6376;box-shadow:0 0 10px #ff6376}
+.svp-flow-step.blocked .svp-flow-step-top em{color:#ff9ca8}
+.svp-flow-step.stale{border-color:#604d2c;background:#151106}
+.svp-flow-step.stale .svp-flow-step-dot{background:#ffc85c;box-shadow:0 0 9px #ffc85c}
+.svp-flow-lower{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(210px,.8fr);gap:11px}
+.svp-flow-chart-wrap,.svp-flow-readout{min-width:0;border:1px solid #192a37;border-radius:13px;background:#060b11;padding:12px}
+.svp-flow-chart-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.svp-flow-chart-head strong{font-size:12px;color:#d7e5ef}
+.svp-flow-chart-head span{font-size:9px;font-weight:850;letter-spacing:.06em;color:#73dfd1}
+.svp-flow-chart{min-height:160px;overflow:hidden;border-radius:9px;background:#05080d}
+.svp-flow-chart svg{display:block;width:100%;height:auto}
+.svp-flow-chart-empty{display:grid;min-height:160px;place-items:center;padding:18px;text-align:center;color:#7d8fa2;font-size:12px;line-height:1.5}
+.svp-flow-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;color:#8292a5;font-size:10px}
+.svp-flow-legend span{display:flex;align-items:center;gap:5px}
+.svp-flow-legend i{display:inline-block;width:12px;height:3px;border-radius:3px}
+.svp-flow-legend-price{background:#4af0a4}.svp-flow-legend-zone{background:#65d8d2}
+.svp-flow-live{display:inline-flex;align-items:center;gap:6px;margin-bottom:9px;color:#86e8be;font-size:9px;font-weight:900;letter-spacing:.07em}
+.svp-flow-live:before{content:"";width:7px;height:7px;border-radius:50%;background:#4af0a4;box-shadow:0 0 10px #4af0a4;animation:svpLivePulse 1.25s ease-in-out infinite}
+.svp-flow-live.stale{color:#ffd27d}.svp-flow-live.stale:before{background:#ffc85c;box-shadow:0 0 10px #ffc85c}
+.svp-flow-live.error{color:#ff9ca8}.svp-flow-live.error:before{background:#ff6376;box-shadow:0 0 10px #ff6376}
+.svp-flow-market-name{margin:0 0 12px;font-size:19px;font-weight:850;color:#eff8fb;overflow-wrap:anywhere}
+.svp-flow-readout-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid #17222d;font-size:11px}
+.svp-flow-readout-row span{color:#8292a5}.svp-flow-readout-row strong{text-align:right;color:#d7e5ef;overflow-wrap:anywhere}
+#svp-flow-next{margin:10px 0 0;color:#9aabc0;font-size:11px;line-height:1.55;overflow-wrap:anywhere}
+.svp-flow-foot{margin-top:10px;font-size:10px}
+@media(max-width:700px){.svp-flow{padding:14px}.svp-flow-steps{grid-template-columns:1fr}.svp-flow-step{padding:11px}.svp-flow-lower{grid-template-columns:1fr}.svp-flow-chart{min-height:140px}}
+@media(prefers-reduced-motion:reduce){.svp-flow-step.active .svp-flow-step-dot,.svp-flow-live:before{animation:none!important}}
+</style></head><body><div id="svpPassGate"><section class="svp-pass-card" role="dialog" aria-modal="true" aria-labelledby="svpPassTitle"><h1 id="svpPassTitle">🔒 S.V.P. Market Room</h1><p>Enter the site password to continue.</p><form id="svpPassForm"><label for="svpPassInput">Password</label><input id="svpPassInput" type="password" autocomplete="current-password" required><button type="submit">Unlock site</button><p id="svpPassError" class="svp-pass-error" aria-live="polite"></p></form></section></div><script id="svp-passcode-runtime">(()=>{const form=document.getElementById('svpPassForm'),input=document.getElementById('svpPassInput'),error=document.getElementById('svpPassError');form.addEventListener('submit',e=>{e.preventDefault();if(input.value==='SVP'){try{sessionStorage.setItem('svp_site_unlocked_v1','yes')}catch{}document.documentElement.classList.add('svp-unlocked');error.textContent='';input.value='';document.querySelector('main')?.focus()}else{error.textContent='Incorrect password. Try again.';input.select()}});if(!document.documentElement.classList.contains('svp-unlocked'))input.focus()})();</script><main><header class="top"><div class="brand"><div class="logo" aria-label="S.V.P. official logo"><img src="data:image/webp;base64,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" alt="S.V.P. official logo"></div><div><h1>S.V.P. <span>Market Room</span></h1><p>PRICE ACTION INTELLIGENCE · H4 TREND → H1 SWEEP → M15 BOS</p></div></div><div class="status" id="status">⏳ Connecting…</div></header><div class="stats"><div class="stat"><div class="muted">Watched markets</div><div class="num" id="count">—</div></div><div class="stat"><div class="muted">Entries ready</div><div class="num" id="ready">—</div></div><div class="stat"><div class="muted">H4 trend direction</div><div class="num" id="aligned">—</div></div></div><section class="svp-flow" id="svp-live-setup-flow" aria-labelledby="svp-flow-title">
+  <div class="svp-flow-head">
+    <div><span class="svp-flow-kicker">LIVE BREAKOUT + RETEST</span><h2 id="svp-flow-title">Setup journey</h2><p>Track H4 direction, the M15 zone break, then the retest and M1 trigger.</p></div>
+    <div class="svp-flow-market"><label for="svp-flow-market">MARKET</label><select id="svp-flow-market" aria-label="Choose a market for the live setup journey"><option value="AUTO">Auto · closest setup</option></select></div>
+  </div>
+  <div class="svp-flow-steps" id="svp-flow-steps" aria-live="polite">
+    <article class="svp-flow-step waiting"><div class="svp-flow-step-top"><span class="svp-flow-step-dot"></span><strong>H4 DIRECTION</strong><em>WAITING</em></div><h3>Waiting for market data</h3><p>H4 bias will appear here.</p></article>
+    <article class="svp-flow-step waiting"><div class="svp-flow-step-top"><span class="svp-flow-step-dot"></span><strong>M15 BREAKOUT</strong><em>WAITING</em></div><h3>Waiting for a zone break</h3><p>The bot’s latest M15 evidence will appear here.</p></article>
+    <article class="svp-flow-step waiting"><div class="svp-flow-step-top"><span class="svp-flow-step-dot"></span><strong>RETEST → M1 TRIGGER</strong><em>WAITING</em></div><h3>Waiting for entry confirmation</h3><p>A WATCH state is not an entry.</p></article>
+  </div>
+  <div class="svp-flow-lower">
+    <div class="svp-flow-chart-wrap"><div class="svp-flow-chart-head"><strong id="svp-flow-chart-title">M15 price action</strong><span id="svp-flow-chart-badge">WAITING FOR FEED</span></div><div class="svp-flow-chart" id="svp-flow-chart" aria-live="polite">Waiting for verified M15 candles from the bot.</div><div class="svp-flow-legend"><span><i class="svp-flow-legend-price"></i>Current price</span><span><i class="svp-flow-legend-zone"></i>Bot-published zone</span></div></div>
+    <aside class="svp-flow-readout"><div class="svp-flow-live" id="svp-flow-live">Connecting to scanner…</div><div class="svp-flow-market-name" id="svp-flow-name">Waiting for market</div><div class="svp-flow-readout-row"><span>Direction</span><strong id="svp-flow-direction">—</strong></div><div class="svp-flow-readout-row"><span>Current price</span><strong id="svp-flow-price">—</strong></div><div class="svp-flow-readout-row"><span>Zone / breakout level</span><strong id="svp-flow-zone">Not published</strong></div><p id="svp-flow-next">Waiting for scanner evidence.</p></aside>
+  </div>
+  <p class="svp-flow-foot">The chart uses bot-published M15 candles and MT5 ticks when available. The current feed must publish zone bounds before a zone can be drawn; “Not published” means the bot has not sent those levels.</p>
+</section><section class="svp-ai-entry" aria-labelledby="svp-ai-title">
 <div class="svp-ai-head"><div><span class="svp-ai-kicker">S.V.P. LIVE ANALYSIS</span><h2 id="svp-ai-title" class="svp-ai-title"><img class="svp-ai-logo" src="data:image/webp;base64,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" alt="S.V.P. logo"> S.V.P. Assistant</h2><div class="svp-ai-sub">Checks every market in the bot’s published watchlist. It shows the strongest matching setup, the confirmed plan, or the retest level and condition still needed.</div></div><div><label class="svp-ew-label" for="svp-ai-market">MARKET</label><select id="svp-ai-market" class="svp-ai-select" aria-label="Choose market for SVP analysis"><option value="AUTO">Auto · best ready setup</option></select></div></div>
 <div class="svp-ai-result"><article class="svp-ai-box"><div class="svp-ai-status" id="svp-ai-status">Waiting for live scanner</div><h3 style="margin-top:12px">Market assessment</h3><div class="svp-ai-pair" id="svp-ai-pair">Loading market data…</div><div class="svp-ai-reason" id="svp-ai-reason">SVP will explain the current scanner evidence here.</div><div id="svp-ai-checks" class="svp-ai-checks"></div><a class="svp-ai-diagram" id="svp-ai-diagram" href="#svp-invalidation-title" hidden>View matching invalidation diagram ↓</a></article>
 <article class="svp-ai-box"><h3>Entry plan from the bot</h3><div class="svp-ai-prices"><div class="svp-ai-price"><span>ENTRY</span><strong id="svp-ai-entry">—</strong></div><div class="svp-ai-price"><span>INVALIDATION / STOP</span><strong id="svp-ai-stop">—</strong></div><div class="svp-ai-price"><span>TARGET</span><strong id="svp-ai-target">—</strong></div></div><div class="svp-ai-reason" id="svp-ai-next">No entry plan until the scanner confirms a setup.</div><div class="svp-ai-live-status" id="svp-ai-live-status" role="status">Waiting for live MT5 ticks.</div><div class="svp-ai-pattern" id="svp-ai-pattern" aria-live="polite">Waiting for fresh scanner data.</div></article></div>
@@ -464,5 +529,98 @@ document.addEventListener('click',event=>{
  const section=document.getElementById('svp-invalidation-guide');
  const details=section?.closest('details');if(details)details.open=true;
 });
+})();
+</script><script id="svp-live-setup-flow-runtime">
+(()=>{'use strict';
+const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let feed=null,choice='AUTO',liveTicks=new Map(),renderQueued=false;
+const stage=m=>String(m?.stage||'WATCH').toUpperCase(),side=m=>String(m?.side||'WAIT').toUpperCase();
+const priceNumber=v=>{if(v===null||v===undefined||v==='')return null;const n=Number(String(v).replace(/,/g,''));return Number.isFinite(n)&&n>0?n:null};
+const display=v=>v===null||v===undefined||v===''?'—':String(v);
+const directionLabel=v=>v==='BUY'?'BULLISH':v==='SELL'?'BEARISH':v==='SIDEWAYS'?'SIDEWAYS':'NOT REPORTED';
+const numFrom=(obj,keys)=>{for(const k of keys){const n=priceNumber(obj?.[k]);if(n!==null)return n}return null};
+function selectedMarket(markets){
+ const requested=choice!=='AUTO'?markets.find(m=>m.symbol===choice):null;
+ if(requested)return requested;
+ return [...markets].sort((a,b)=>(stage(b)==='READY')-(stage(a)==='READY')||(Number(b.progress)||0)-(Number(a.progress)||0))[0]||null;
+}
+function breakoutConfirmed(m,ready){
+ if(ready)return true;
+ const text=[m.m15_confirmation,m.m15_candle_detail,m.market_phase,m.note].filter(Boolean).join(' ');
+ if(/\b(no|not|awaiting|waiting|wait for|pending)\b/i.test(text))return false;
+ return /(?:m15.{0,50}(?:breakout|\bbos\b|break of structure).{0,40}(?:confirmed|closed|complete|passed)|(?:confirmed|closed|complete|passed).{0,40}m15.{0,50}(?:breakout|\bbos\b|break of structure))/i.test(text);
+}
+function step(label,state,title,detail){
+ const names={done:'CONFIRMED',active:'LIVE · WAITING',blocked:'DIRECTION MISMATCH',stale:'STALE',waiting:'WAITING'};
+ return '<article class="svp-flow-step '+state+'"><div class="svp-flow-step-top"><span class="svp-flow-step-dot"></span><strong>'+label+'</strong><em>'+names[state]+'</em></div><h3>'+esc(title)+'</h3><p>'+esc(detail)+'</p></article>';
+}
+function drawChart(m,live,fresh){
+ const root=$('svp-flow-chart');
+ const candles=Array.isArray(m.candles)?m.candles.map(c=>({time:Number(c.time),open:priceNumber(c.open??c.o),high:priceNumber(c.high??c.h),low:priceNumber(c.low??c.l),close:priceNumber(c.close??c.c)})).filter(c=>Number.isFinite(c.time)&&[c.open,c.high,c.low,c.close].every(Number.isFinite)).sort((a,b)=>a.time-b.time).slice(-30):[];
+ if(!candles.length){root.innerHTML='<div class="svp-flow-chart-empty">No verified M15 candles are published for '+esc(m.symbol)+'. The setup card will not draw estimated candles.</div>';return}
+ const quote=fresh?priceNumber(live?.price):priceNumber(m.price);
+ const zone=m.sr_zone&&typeof m.sr_zone==='object'?m.sr_zone:{};
+ let zoneLow=numFrom(zone,['low','bottom'])??numFrom(m,['zone_low','sr_zone_low','breakout_zone_low','support_zone_low','resistance_zone_low','consolidation_low']);
+ let zoneHigh=numFrom(zone,['high','top'])??numFrom(m,['zone_high','sr_zone_high','breakout_zone_high','support_zone_high','resistance_zone_high','consolidation_high']);
+ const level=numFrom(m,['breakout_level','retest_level','key_level','sr_level']);
+ const vals=candles.flatMap(c=>[c.high,c.low]);if(quote!==null)vals.push(quote);if(zoneLow!==null)vals.push(zoneLow);if(zoneHigh!==null)vals.push(zoneHigh);if(level!==null)vals.push(level);
+ let lo=Math.min(...vals),hi=Math.max(...vals),pad=(hi-lo)*.1||Math.max(Math.abs(hi)*.001,1e-6);lo-=pad;hi+=pad;
+ const W=720,H=230,L=48,R=58,T=12,B=25,plotW=W-L-R,plotH=H-T-B,stepW=plotW/candles.length;
+ const y=v=>T+(hi-v)/(hi-lo)*plotH;
+ let lines='';
+ for(let i=1;i<=4;i++){const yy=T+i*plotH/4,val=hi-(hi-lo)*i/4;lines+='<line x1="'+L+'" y1="'+yy.toFixed(1)+'" x2="'+(W-R)+'" y2="'+yy.toFixed(1)+'" stroke="#182430" stroke-width="1"/><text x="'+(L-6)+'" y="'+(yy+3).toFixed(1)+'" text-anchor="end" fill="#647789" font-size="9">'+esc(val.toPrecision(5))+'</text>'}
+ const hasZone=zoneLow!==null&&zoneHigh!==null&&zoneHigh>zoneLow;
+ let zoneSvg=hasZone?'<rect x="'+L+'" y="'+y(zoneHigh).toFixed(1)+'" width="'+plotW+'" height="'+Math.max(2,y(zoneLow)-y(zoneHigh)).toFixed(1)+'" fill="#4bd7cb" fill-opacity=".13" stroke="#56d9ce" stroke-opacity=".55"/><text x="'+(L+6)+'" y="'+(y(zoneHigh)+12).toFixed(1)+'" fill="#82e9df" font-size="9">BOT ZONE</text>':'';
+ const bars=candles.map((c,i)=>{const x=L+(i+.5)*stepW,yo=y(c.open),yc=y(c.close),yh=y(c.high),yl=y(c.low),col=c.close>=c.open?'#4af0a4':'#ff778a',w=Math.max(2,Math.min(12,stepW*.56));return '<line x1="'+x.toFixed(1)+'" y1="'+yh.toFixed(1)+'" x2="'+x.toFixed(1)+'" y2="'+yl.toFixed(1)+'" stroke="'+col+'" stroke-width="1.2"/><rect x="'+(x-w/2).toFixed(1)+'" y="'+Math.min(yo,yc).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+Math.max(1,Math.abs(yc-yo)).toFixed(1)+'" rx="1" fill="'+col+'"/>'}).join('');
+ const levelSvg=level!==null&&level>lo&&level<hi?'<line x1="'+L+'" y1="'+y(level).toFixed(1)+'" x2="'+(W-R)+'" y2="'+y(level).toFixed(1)+'" stroke="#d6bd66" stroke-width="1.3" stroke-dasharray="5 4"/><text x="'+(W-R+4)+'" y="'+(y(level)-3).toFixed(1)+'" fill="#e3ce83" font-size="8">LEVEL</text>':'';
+ const quoteSvg=quote!==null&&quote>lo&&quote<hi?'<line x1="'+L+'" y1="'+y(quote).toFixed(1)+'" x2="'+(W-R)+'" y2="'+y(quote).toFixed(1)+'" stroke="#4af0a4" stroke-width="1.4" stroke-dasharray="3 3"/><text x="'+(W-R+4)+'" y="'+(y(quote)-3).toFixed(1)+'" fill="#73efb0" font-size="8">'+(fresh?'LIVE':'BOT')+'</text>':'';
+ const xLabels=[0,Math.floor((candles.length-1)/2),candles.length-1].filter((n,i,a)=>a.indexOf(n)===i).map(i=>{const d=new Date(candles[i].time*1000);return '<text x="'+(L+(i+.5)*stepW).toFixed(1)+'" y="'+(H-5)+'" text-anchor="middle" fill="#6f8192" font-size="9">'+d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+'</text>'}).join('');
+ root.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Verified M15 candlestick chart for '+esc(m.symbol)+'">'+lines+zoneSvg+levelSvg+quoteSvg+bars+xLabels+'</svg>';
+}
+function render(){
+ if(!feed)return;
+ const markets=Array.isArray(feed.markets)?feed.markets.filter(m=>m&&m.symbol):[],select=$('svp-flow-market');
+ const opts='<option value="AUTO">Auto · closest setup</option>'+markets.map(m=>'<option value="'+esc(m.symbol)+'">'+esc(m.symbol)+'</option>').join('');
+ if(select.innerHTML!==opts){select.innerHTML=opts;if(markets.some(m=>m.symbol===choice))select.value=choice;else{choice='AUTO';select.value='AUTO'}}
+ const m=selectedMarket(markets);
+ if(!m){$('svp-flow-live').textContent='NO MARKET DATA';$('svp-flow-live').className='svp-flow-live stale';$('svp-flow-name').textContent='No market published';$('svp-flow-direction').textContent='—';$('svp-flow-price').textContent='—';$('svp-flow-zone').textContent='Not published';$('svp-flow-next').textContent='Waiting for fresh scanner data.';$('svp-flow-steps').innerHTML=step('H4 DIRECTION','waiting','Waiting for market data','No H4 direction has been published.')+step('M15 BREAKOUT','waiting','Waiting for a zone break','No M15 breakout evidence has been published.')+step('RETEST → M1 TRIGGER','waiting','Waiting for entry confirmation','A WATCH state is not an entry.');$('svp-flow-chart').innerHTML='<div class="svp-flow-chart-empty">Waiting for verified M15 candles from the bot.</div>';return}
+ const updated=Date.parse(feed.updated),age=(Date.now()-updated)/1000,stale=feed.online===false||!Number.isFinite(updated)||age>180||age< -30;
+ const direction=String(m.h4_direction||'').toUpperCase(),tradeSide=side(m),validSide=tradeSide==='BUY'||tradeSide==='SELL',ready=stage(m)==='READY'&&validSide;
+ const aligned=direction==='BUY'||direction==='SELL',matches=validSide&&direction===tradeSide;
+ const m15Done=breakoutConfirmed(m,ready);
+ const rawZone=m.sr_zone&&typeof m.sr_zone==='object'?m.sr_zone:{};
+ const zoneLow=numFrom(rawZone,['low','bottom'])??numFrom(m,['zone_low','sr_zone_low','breakout_zone_low','support_zone_low','resistance_zone_low','consolidation_low']);
+ const zoneHigh=numFrom(rawZone,['high','top'])??numFrom(m,['zone_high','sr_zone_high','breakout_zone_high','support_zone_high','resistance_zone_high','consolidation_high']);
+ const hasZone=zoneLow!==null&&zoneHigh!==null&&zoneHigh>zoneLow;
+ const h4state=stale?'stale':!aligned?'active':validSide&&!matches?'blocked':'done';
+ const m15state=stale?'stale':m15Done?'done':h4state==='blocked'?'blocked':'active';
+ const triggerstate=stale?'stale':ready?'done':h4state==='blocked'?'blocked':m15Done?'active':'waiting';
+ const h4title=aligned?(direction==='BUY'?'Bullish H4 direction':'Bearish H4 direction'):'Waiting for H4 direction';
+ const h4detail=aligned?(validSide?(matches?'Matches '+tradeSide+' setup direction':'Does not match '+tradeSide+' setup direction'):'H4 bias published · no entry side yet'):'H4 direction is not reported by the feed.';
+ const m15title=ready?'Closed breakout confirmed':m15Done?'M15 breakout reported':'Waiting for M15 breakout';
+ const m15detail=String(m.m15_confirmation||m.next_required||m.note||'The bot has not published breakout evidence yet.');
+ const triggerTitle=ready?'Retest + entry trigger confirmed':m15Done?'Waiting for retest / entry trigger':'Retest + entry trigger not confirmed';
+ const triggerDetail=String(ready?(m.m15_confirmation||m.next_required||'The scanner marks this setup READY.'):m.next_required||m.m15_confirmation||'The scanner has not confirmed an entry.');
+ $('svp-flow-steps').innerHTML=step('H4 DIRECTION',h4state,h4title,h4detail)+step('M15 BREAKOUT',m15state,m15title,m15detail)+step('RETEST → M1 TRIGGER',triggerstate,triggerTitle,triggerDetail);
+ const live=liveTicks.get(m.symbol),fresh=!!(live&&Date.now()/1000-Number(live.received_at||0)<=8);
+ const current=fresh?priceNumber(live.price):priceNumber(m.price);
+ $('svp-flow-live').textContent=stale?'FEED STALE · NOT CURRENT':fresh?'LIVE · MT5 TICK':'LIVE · BOT FEED';
+ $('svp-flow-live').className='svp-flow-live'+(stale?' stale':'');
+ $('svp-flow-name').textContent=m.symbol+' · '+(validSide?tradeSide:'WAIT')+' · '+stage(m);
+ $('svp-flow-direction').textContent=directionLabel(direction)+(validSide&&!matches?' · mismatch':'');
+ $('svp-flow-price').textContent=current===null?'Not published':String(fresh?live.price:m.price);
+ const zl=numFrom(m,['zone_low','sr_zone_low','breakout_zone_low','support_zone_low','resistance_zone_low','consolidation_low']),zh=numFrom(m,['zone_high','sr_zone_high','breakout_zone_high','support_zone_high','resistance_zone_high','consolidation_high']),level=numFrom(m,['breakout_level','retest_level','key_level','sr_level']);
+ $('svp-flow-zone').textContent=zl!==null&&zh!==null?String(zl)+' – '+String(zh):level!==null?String(level):'Not published';
+ $('svp-flow-next').textContent=stale?'Last scanner update '+(Number.isFinite(updated)?new Date(updated).toLocaleString():'unknown')+'. Do not use this snapshot as current.':ready?'The scanner confirms the setup. Check the chart and published entry/invalidation values before acting.':String(m.next_required||m.m15_confirmation||'Waiting for the next scanner check.');
+ $('svp-flow-chart-title').textContent=m.symbol+' · M15 PRICE ACTION';
+ $('svp-flow-chart-badge').textContent=stale?'STALE SNAPSHOT':fresh?'LIVE MT5 PRICE':'BOT PRICE';
+ drawChart(m,live,fresh);
+ if(!hasZone&&!stale)$('svp-flow-zone').title='The feed currently does not publish support/resistance zone bounds.';
+}
+window.addEventListener('svp-feed-loaded',e=>{feed=e.detail;render()});
+$('svp-flow-market').addEventListener('change',e=>{choice=e.target.value;const ai=$('svp-ai-market');if(ai&&[...ai.options].some(o=>o.value===choice)){ai.value=choice;ai.dispatchEvent(new Event('change',{bubbles:true}))}render()});
+$('svp-ai-market')?.addEventListener('change',e=>{choice=e.target.value;const flow=$('svp-flow-market');if(flow)flow.value=choice;render()});
+const originalTick=window.svpAIUpdateLiveTicks;
+window.svpAIUpdateLiveTicks=rows=>{if(typeof originalTick==='function')originalTick(rows);if(Array.isArray(rows)){for(const t of rows)if(t&&t.symbol&&priceNumber(t.price)!==null)liveTicks.set(t.symbol,{...t,received_at:Date.now()/1000});if(!renderQueued){renderQueued=true;setTimeout(()=>{renderQueued=false;render()},350)}}};
 })();
 </script></body></html>
