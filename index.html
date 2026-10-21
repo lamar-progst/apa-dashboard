@@ -316,20 +316,35 @@ function signalFor(m){
 function drawPattern(m,direction,level,ready){
  const root=el('svp-ai-pattern');
  if(!root)return;
- const checks=Object.keys(m.conditions||{}).join(' ');
- const evidence=[m.strategy,m.note,m.m15_confirmation,m.next_required,checks].join(' ');
- if(!/breakout|retest|support|resistance|\bBOS\b/i.test(evidence)){
-  root.innerHTML='<strong>'+esc(m.symbol)+' · '+esc(direction)+'</strong><br>Entry type: '+esc(m.strategy||'scanner-defined')+'<br>'+esc(m.next_required||m.m15_confirmation||'Waiting for the market-specific trigger.')+'<br><span>Pattern example is shown when this market publishes a breakout/retest setup.</span>';
+ const all=Array.isArray(m.candles)?m.candles:[];
+ const bars=all.map(c=>({time:Number(c.time),open:Number(c.open),high:Number(c.high),low:Number(c.low),close:Number(c.close)}))
+  .filter(c=>Number.isFinite(c.time)&&[c.open,c.high,c.low,c.close].every(Number.isFinite))
+  .sort((a,b)=>a.time-b.time).slice(-48);
+ if(!bars.length){
+  root.innerHTML='<strong>'+esc(m.symbol)+' · '+esc(direction)+' · '+esc(stage(m))+'</strong><br>No real M15 candles were published for this market yet.';
   return;
  }
- if(direction!=='BUY'&&direction!=='SELL'){root.textContent='The scanner has not set a direction, so there is no matching entry diagram yet.';return}
- const buy=direction==='BUY',y=buy?102:68,lineName=buy?'RESISTANCE · RETEST FROM ABOVE':'SUPPORT · RETEST FROM BELOW';
- const bars=buy
- ? [[155,137,128,164,'down'],[139,145,132,153,'down'],[144,119,111,151,'up'],[120,82,74,124,'up'],[83,101,78,108,'down'],[101,72,66,106,'up']]
- : [[45,63,38,70,'down'],[62,57,52,72,'up'],[58,83,54,89,'down'],[82,121,78,125,'down'],[120,100,93,128,'up'],[100,132,95,138,'down']];
- const candles=bars.map((b,i)=>{const x=38+i*48,cls=b[4]==='up'?'ai-up':'ai-down';return '<line x1="'+(x+8)+'" y1="'+b[2]+'" x2="'+(x+8)+'" y2="'+b[3]+'" class="'+cls+'" stroke-width="2"/><rect x="'+x+'" y="'+Math.min(b[0],b[1])+'" width="16" height="'+Math.max(4,Math.abs(b[1]-b[0]))+'" class="'+cls+'" rx="2"/>'}).join('');
- const levelLabel=level?'Retest level: '+level:'Retest level: shown by scanner when published';
- root.innerHTML='<strong>'+esc(m.symbol)+' · '+esc(direction)+' · '+(ready?'READY':'WATCH')+'</strong><br>'+esc(levelLabel)+'<svg viewBox="0 0 340 184" role="img" aria-label="Illustrative '+(buy?'bullish':'bearish')+' breakout, retest, and M15 confirmation pattern"><line x1="18" y1="'+y+'" x2="326" y2="'+y+'" class="ai-level" stroke-width="2"/><text x="18" y="'+(y-7)+'" fill="#ffd277" font-size="9">'+lineName+(level?' · '+esc(level):'')+'</text>'+candles+'<text x="170" y="'+(buy?58:151)+'" fill="#d5e5ff" font-size="9">BREAK</text><text x="216" y="'+(buy?119:93)+'" fill="#d5e5ff" font-size="9">RETEST</text><text x="265" y="'+(buy?54:158)+'" fill="#8eeabc" font-size="9">M15 CLOSE → ENTRY</text><path d="'+(buy?'M286 75 l13 -12 l-2 8 l8 1':'M286 128 l13 12 l-2 -8 l8 -1')+'" fill="none" stroke="#8eeabc" stroke-width="2"/></svg><span>Illustrative setup pattern, not live OHLC. Wait for the bot’s closed M15 confirmation; the level alone is not an entry.</span>';
+ const W=720,H=285,L=62,R=82,T=22,B=34,plotW=W-L-R,plotH=H-T-B;
+ const values=bars.flatMap(c=>[c.high,c.low]);
+ const quote=Number(String(m.price??'').replace(/,/g,''));
+ const watch=Number(String(level??'').replace(/,/g,''));
+ if(Number.isFinite(quote)&&quote>0)values.push(quote);
+ if(Number.isFinite(watch)&&watch>0)values.push(watch);
+ let lo=Math.min(...values),hi=Math.max(...values),pad=(hi-lo)*.08||Math.max(Math.abs(hi)*.001,0.00001);
+ lo-=pad;hi+=pad;
+ const y=p=>T+(hi-p)/(hi-lo)*plotH;
+ const step=plotW/bars.length,cw=Math.max(3,Math.min(13,step*.56));
+ const grid=Array.from({length:5},(_,i)=>{const v=hi-(hi-lo)*i/4,yy=T+plotH*i/4;return '<line x1="'+L+'" y1="'+yy.toFixed(1)+'" x2="'+(W-R)+'" y2="'+yy.toFixed(1)+'" class="ai-grid"/><text x="'+(L-7)+'" y="'+(yy+4).toFixed(1)+'" text-anchor="end" class="ai-axis">'+esc(v.toPrecision(6))+'</text>'}).join('');
+ const candles=bars.map((c,i)=>{
+  const x=L+(i+.5)*step,yo=y(c.open),yc=y(c.close),yh=y(c.high),yl=y(c.low),cls=c.close>=c.open?'ai-up':'ai-down';
+  return '<line x1="'+x.toFixed(1)+'" y1="'+yh.toFixed(1)+'" x2="'+x.toFixed(1)+'" y2="'+yl.toFixed(1)+'" class="'+cls+'" stroke-width="1.4"/><rect x="'+(x-cw/2).toFixed(1)+'" y="'+Math.min(yo,yc).toFixed(1)+'" width="'+cw.toFixed(1)+'" height="'+Math.max(1,Math.abs(yc-yo)).toFixed(1)+'" class="'+cls+'" rx="1"/>'
+ }).join('');
+ const marks=[];
+ if(Number.isFinite(watch)&&watch>lo&&watch<hi)marks.push('<line x1="'+L+'" y1="'+y(watch).toFixed(1)+'" x2="'+(W-R)+'" y2="'+y(watch).toFixed(1)+'" class="ai-watch"/><text x="'+(W-R+5)+'" y="'+(y(watch)-4).toFixed(1)+'" class="ai-watch-label">RETEST</text>');
+ if(Number.isFinite(quote)&&quote>lo&&quote<hi)marks.push('<line x1="'+L+'" y1="'+y(quote).toFixed(1)+'" x2="'+(W-R)+'" y2="'+y(quote).toFixed(1)+'" class="ai-quote"/><text x="'+(W-R+5)+'" y="'+(y(quote)-4).toFixed(1)+'" class="ai-quote-label">BOT PRICE</text>');
+ const xLabels=[0,Math.floor((bars.length-1)/2),bars.length-1].filter((v,i,a)=>a.indexOf(v)===i).map(i=>{const t=new Date(bars[i].time*1000);return '<text x="'+(L+(i+.5)*step).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle" class="ai-axis">'+t.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+'</text>'}).join('');
+ const updated=feed?.updated?new Date(feed.updated).toLocaleTimeString(): 'unknown';
+ root.innerHTML='<div class="ai-chart-head"><strong>'+esc(m.symbol)+' · '+esc(direction)+' · '+esc(stage(m))+'</strong><span>M15 · REAL BOT CANDLES</span></div><div class="ai-chart-price">Last bot price: <b>'+esc(m.price||'—')+'</b></div><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Actual closed M15 OHLC candles published by the trading bot for '+esc(m.symbol)+'">'+grid+marks.join('')+candles+xLabels+'</svg><span>Closed M15 OHLC from the bot · '+bars.length+' candles · feed updated '+esc(updated)+'. The chart refreshes when the bot publishes; this feed is not tick-by-tick.</span>';
 }
 function render(){
  if(!feed)return;
