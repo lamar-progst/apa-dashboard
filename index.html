@@ -261,8 +261,8 @@ function render(data){
   }
   if(key==='bullish'||key==='bearish'){
    const wanted=key==='bullish'?'BUY':'SELL';
-   const watch=markets.filter(m=>stage(m)==='WATCH'&&side(m)===wanted).sort((a,b)=>(Number(b.progress)||0)-(Number(a.progress)||0)).slice(0,3);
-   node.innerHTML=watch.length?'<strong class="match-watch">👀 WATCHING '+wanted+' BIAS · ENTRY NOT CONFIRMED</strong>'+watch.map(m=>esc(m.symbol)+' · '+esc(m.next_required||m.m15_confirmation||'waiting for M15 confirmation')).join('<br>'):'<strong class="match-empty">No current '+wanted+' candidate</strong>';
+   const watch=markets.filter(m=>stage(m)==='WATCH'&&side(m)===wanted).sort((a,b)=>(Number(b.progress)||0)-(Number(a.progress)||0));
+   node.innerHTML=watch.length?'<strong class="match-watch">👀 WATCHING '+wanted+' BIAS · ENTRY NOT CONFIRMED</strong>'+watch.slice(0,5).map(m=>esc(m.symbol)+' · '+esc(m.next_required||m.m15_confirmation||'waiting for M15 confirmation')).join('<br>')+(watch.length>5?'<br>+'+(watch.length-5)+' more '+wanted+' candidates':''):'<strong class="match-empty">No current '+wanted+' candidate</strong>';
    return;
   }
   const tagged=markets.filter(m=>tag(m)===key);
