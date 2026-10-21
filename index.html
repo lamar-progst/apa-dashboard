@@ -605,7 +605,7 @@ function render(){
  const h4title=aligned?(direction==='BUY'?'Bullish H4 direction':'Bearish H4 direction'):'Waiting for H4 direction';
  const h4detail=aligned?(validSide?(matches?'Matches '+tradeSide+' setup direction':'Does not match '+tradeSide+' setup direction'):'H4 bias published · no entry side yet'):'H4 direction is not reported by the feed.';
  const m15title=ready?'Closed breakout confirmed':m15Done?'M15 breakout reported':'Waiting for M15 breakout';
- const m15detail=String(m.m15_confirmation||m.next_required||m.note||'The bot has not published breakout evidence yet.');
+ const m15detail=String(m.m15_confirmation||m.m15_candle_detail||(m15Done?(ready?'Scanner marks this setup READY.':'Closed M15 breakout confirmed by the feed.'):'No closed M15 breakout has been reported by the feed.'));
  const triggerTitle=ready?'Retest + entry trigger confirmed':m15Done?'Waiting for retest / entry trigger':'Retest + entry trigger not confirmed';
  const triggerDetail=String(ready?(m.m15_confirmation||m.next_required||'The scanner marks this setup READY.'):m.next_required||m.m15_confirmation||'The scanner has not confirmed an entry.');
  $('svp-flow-steps').innerHTML=step('H4 DIRECTION',h4state,h4title,h4detail)+step('M15 BREAKOUT',m15state,m15title,m15detail)+step('RETEST → M1 TRIGGER',triggerstate,triggerTitle,triggerDetail);
