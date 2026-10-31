@@ -19,6 +19,50 @@ section{padding:36px 0 48px}.head{display:flex;justify-content:space-between;ali
 .join{margin:30px 0 65px;padding:26px;border:1px solid #9889dc77;border-radius:20px;background:linear-gradient(110deg,#172b49,#281b43);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.join h2{margin:5px 0}.join p{color:#b9c7df;margin:0}footer{border-top:1px solid #ffffff18;padding:25px 0 38px;color:#8999b7;font-size:12px}.disclaimer{max-width:970px;color:#8c9bb7;font-size:11px;margin-top:10px}
 @media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.profileGrid{grid-template-columns:repeat(2,1fr)}.course{grid-template-columns:260px 1fr}.navlinks{gap:10px}.navlinks a{font-size:11px}}
 @media(max-width:680px){.wrap{padding:0 15px}.nav{height:65px}.navlinks{display:none;position:absolute;top:65px;left:0;right:0;padding:15px;background:#0a1020;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--line)}.navlinks.open{display:flex}.menuBtn{display:block}.nav>.btn{display:none}.hero{padding-top:49px}.hero h1{font-size:44px}.hero p{font-size:15px}.quick{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.head{display:block}.course{grid-template-columns:1fr}.sideList{max-height:310px;display:grid;grid-template-columns:1fr 1fr}.unitTitle{grid-column:1/-1}.reader{min-height:0}.videoGrid,.resourceList,.toolGrid,.strategyGrid{grid-template-columns:1fr}.profileGrid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(3,1fr)}.stat b{font-size:15px}}
+
+/* TradeByJay Academy — polished glass redesign */
+:root{color-scheme:light;--bg:#edf2f8;--panel:rgba(255,255,255,.72);--panel2:rgba(255,255,255,.88);--line:rgba(102,124,157,.22);--txt:#15243a;--muted:#64748b;--purple:#6d5dfc;--cyan:#0e9eaa;--green:#12856b;--gold:#b7791f;--red:#c94b62}
+body{background:radial-gradient(ellipse at 12% 0%,#d8e8fa 0,transparent 38%),radial-gradient(ellipse at 90% 8%,#e4dcff 0,transparent 35%),linear-gradient(135deg,#f7f9fc,#eaf0f7 60%,#f4f6fb);color:var(--txt);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+a{color:#4657b8}
+header{background:rgba(248,250,253,.78);border-bottom:1px solid rgba(112,132,166,.18);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);box-shadow:0 8px 30px #3347660a}
+.brand{color:#18283e}.brand small{color:#71809a}.logo{background:linear-gradient(135deg,#182e50,#6574df);border:1px solid #ffffffa8;box-shadow:0 8px 24px #5066c52e}
+.navlinks a{color:#52627b}.navlinks a:hover{color:#243b64}
+.btn{background:linear-gradient(115deg,#4359c7,#7764e8);border:1px solid #ffffff8c;box-shadow:0 8px 22px #5b63cf30;border-radius:13px}.btn.alt{background:rgba(255,255,255,.62);border-color:#c7d2e2;color:#33445e}
+.menuBtn{background:#ffffffb8;border-color:#d3dce9;color:#263955}
+.hero{position:relative;isolation:isolate;padding:80px 24px 55px;border-radius:30px;overflow:hidden;margin-top:20px}
+.hero:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(247,250,255,.96),rgba(247,250,255,.84) 54%,rgba(236,241,251,.53)),url("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1800&q=85") center/cover}
+.hero:after{content:"";position:absolute;inset:0;z-index:-1;border:1px solid #ffffffc7;border-radius:30px;box-shadow:inset 0 1px #ffffffb8}
+.eyebrow{color:#5365c5}.hero h1{color:#172a45}.gradient{background:linear-gradient(90deg,#267e9c,#5d59d9 70%,#8c68cb);background-clip:text;color:transparent}.hero p{color:#53647c}
+.heroPanel{background:rgba(255,255,255,.67);border:1px solid #ffffffd9;box-shadow:0 24px 70px #273a5b20,inset 0 1px #fff;backdrop-filter:blur(22px);color:#172943}
+.heroPanel h3{color:#203653}.chart{background:linear-gradient(145deg,#eaf1fb,#dce7f4);border:1px solid #cbd8e9}.stats .stat{background:#ffffff9c;border-color:#dce4ef}.stat span{color:#64748b}
+.quick a,.card,.profile,.tool,.video,.strategyCard,.side,.reader,.resource,.faq details{background:rgba(255,255,255,.68);border:1px solid rgba(143,160,188,.25);box-shadow:0 10px 30px rgba(42,62,94,.055),inset 0 1px rgba(255,255,255,.95);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.quick a{transition:transform .25s,box-shadow .25s,border-color .25s}.quick a:hover,.card:hover,.strategyCard:hover,.profile:hover{transform:translateY(-4px);box-shadow:0 18px 38px #334d7318;border-color:#aab9d7}
+.quick b,.card h3,.strategyCard h3,.profile h3,.video h3,.resource b{color:#20344f}
+.quick span,.card p,.strategyCard p,.profile p,.video p,.resource small{color:#64748b}
+section{scroll-margin-top:90px}
+.head p,.reader p,.reader li{color:#5b6c84}
+.num,.chip{color:#5b5ac8}.chip{border-color:#c9c8f3;background:#f4f3ff}
+.sideTop{border-color:#e0e7f0}.sideTop input,.tool input,.tool select{background:#f7f9fc;border:1px solid #d6dfeb;color:#24364f}
+.sideList{scrollbar-color:#bac6d9 transparent}.unitTitle{color:#71819a}.lessonBtn{color:#52647e}.lessonBtn:hover,.lessonBtn.active{background:#eef1ff;color:#293d75}.dot{border-color:#c2cddd;color:#61728d}.lessonBtn.done .dot{background:#d8f4e9;color:#16795d;border-color:#91d9bf}
+.reader{color:#20334e}.reader h2,.reader h3{color:#20344f}.reader .eyebrow{color:#5968c7}
+.callout{background:rgba(238,242,255,.82);color:#4a5d79;border-left-color:#7569df}.warning{border-left-color:#d49a3b}
+.readerNav{border-color:#e1e7f0}.readerNav button,.quiz button,.strategyFilters button{background:#f8faff;color:#425571;border-color:#d5deeb}.readerNav button:hover,.quiz button:hover,.strategyFilters button:hover{border-color:#8b91dc;background:#f0f1ff}.quiz{background:#f8faff;border-color:#d9e1ee}.quiz h3{color:#263a57}.feedback{color:#12856b}
+.strategyIntro{background:#f7f8ff;border-color:#d9dcf4;color:#56647d}.strategyFilters button.active{background:#5d62ce;border-color:#5d62ce;color:white}.strategyCard a{color:#4e5fc1}
+.video iframe{box-shadow:0 10px 25px #273a5b1a}
+.tool .result{background:#eef4ff;color:#4c5ec4}
+.join{background:linear-gradient(115deg,rgba(255,255,255,.86),rgba(232,236,255,.9)),url("https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1500&q=80") center/cover;border:1px solid #ffffffd9;box-shadow:0 20px 45px #35476a18;color:#20344f}.join p{color:#596b84}
+footer{border-color:#dce4ef;color:#75839a}.disclaimer{color:#7a879b}
+@keyframes floatIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes softPulse{0%,100%{box-shadow:0 10px 30px #4359c710}50%{box-shadow:0 15px 38px #4359c725}}
+.hero>div,.quick a,section .head,.card,.strategyCard,.video,.profile,.tool{animation:floatIn .65s both}
+.heroPanel{animation:floatIn .8s .12s both,softPulse 6s 1s infinite}
+.card:nth-child(2n),.strategyCard:nth-child(2n){animation-delay:.08s}
+.btn,.strategyFilters button,.readerNav button{transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px #5964c93a}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:680px){.hero{padding:42px 16px 28px;margin-top:8px}.hero:before{background:linear-gradient(90deg,rgba(247,250,255,.96),rgba(247,250,255,.85)),url("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=900&q=80") center/cover}.navlinks{background:rgba(248,250,253,.97);backdrop-filter:blur(20px)}}
+
 </style></head><body>
 <header><div class="wrap nav"><a class="brand" href="#"><span class="logo">TBJ</span><span>TRADEBYJAY<small>ACADEMY · FREE TRADING EDUCATION</small></span></a><nav class="navlinks" id="navlinks"><a href="#curriculum">Curriculum</a><a href="#lessons">Study lessons</a><a href="#deriv">Deriv setup</a><a href="#videos">Videos</a><a href="#strategy-videos">Strategies</a><a href="#traders">Trader library</a><a href="#tools">Tools</a></nav><button class="menuBtn" id="menuBtn">☰</button><a class="btn small" href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noopener">Join Telegram ↗</a></div></header>
 <main class="wrap">
