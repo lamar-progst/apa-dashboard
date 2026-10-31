@@ -268,7 +268,7 @@ function calcRisk(){const bal=Number(document.getElementById("balance").value),p
 ["balance","riskPct","stopDist","pointValue"].forEach(id=>document.getElementById(id).addEventListener("input",calcRisk));document.querySelectorAll('#checklist input').forEach(x=>x.addEventListener("change",()=>{const n=document.querySelectorAll('#checklist input:checked').length;document.getElementById("checkResult").textContent=n+" of 6 planning checks complete"}));
 
 /* Interactive learning features */
-const moduleQuizBank=[
+let moduleQuizBank=[
 [
 ["What is a realistic purpose of a trading plan?",["Guarantee profits","Define repeatable decisions and risk","Remove uncertainty"],1],
 ["Which is the safest starting environment for a beginner to learn platform controls?",["Demo account","Borrowed live account","Maximum leverage"],0],
