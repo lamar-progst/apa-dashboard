@@ -117,7 +117,7 @@ html{scroll-behavior:smooth}
 <div class="labQuestion"><label for="labScenario">Choose a practice scenario</label><select id="labScenario"><option value="sweep">Price trades above equal highs, then closes back below</option><option value="breakout">Price closes above resistance, then retests and holds</option><option value="fake">Price wicks above resistance but closes back inside the range</option><option value="fvg">A bullish impulse leaves a three-candle imbalance</option><option value="trend">H4 is bearish while M1 briefly turns bullish</option></select><label for="labAnswer">What is the best interpretation?</label><select id="labAnswer"><option value="">Choose your answer</option><option value="sweep">Potential buy-side liquidity sweep; wait for the plan's confirmation</option><option value="breakout">Potential bullish breakout-and-retest; check acceptance and invalidation</option><option value="fake">Possible failed breakout/rejection; do not assume reversal without confirmation</option><option value="fvg">Potential FVG/imbalance; context and setup still matter</option><option value="trend">Lower-timeframe bounce does not automatically reverse the H4 bias</option></select><button class="btn small" id="checkLab" type="button">Check answer</button><div id="labFeedback" class="feedback" aria-live="polite"></div></div></div>
 <div class="practicePanel"><h3>Build a trade plan from a chart</h3><p>Before calling a setup valid, write down the market bias, level, trigger, invalidation, stop location and target logic in your journal. If one is missing, keep practising instead of entering.</p><a class="btn alt small" href="#journal">Open trading journal →</a></div></section>
 
-<section id="module-assessments"><div class="head"><div><div class="eyebrow">CHECK YOUR UNDERSTANDING</div><h2>Module assessments</h2></div><p>Each module has a three-question assessment. Score at least 70% to pass. You can retry; passed modules are saved on this device.</p></div>
+<section id="module-assessments"><div class="head"><div><div class="eyebrow">CHECK YOUR UNDERSTANDING</div><h2>Module assessments</h2></div><p>Each module has a seven-question assessment. Score at least 70% to pass (5 of 7 answers is enough). You can retry; passed modules are saved on this device.</p></div>
 <div class="assessmentPanel"><label for="moduleSelect">Choose a module</label><select id="moduleSelect"></select><div id="moduleQuiz" class="moduleQuiz"></div><div class="assessmentActions"><button class="btn" id="submitModuleQuiz" type="button">Submit assessment</button><span id="moduleQuizResult" class="feedback" aria-live="polite"></span></div><div id="modulePassList" class="passList"></div></div></section>
 
 <section id="journal"><div class="head"><div><div class="eyebrow">BUILD A REPEATABLE PROCESS</div><h2>Trading journal</h2></div><p>Save practice and live-trade notes locally in this browser. Do not enter passwords, account IDs or other sensitive information. Journal entries stay on this device unless exported.</p></div>
@@ -350,12 +350,116 @@ const moduleQuizBank=[
 ["Which should be defined before entry?",["Setup, trigger, invalidation and risk","Only direction","A desired profit"],0],
 ["A no-trade condition is:",["A valid part of a plan","A failure","Never allowed"],0]]
 ];
+
+const moduleQuizExtras=[
+[
+["What is a market participant?",["A person or institution active in a market","A candle pattern","A platform theme"],0],
+["Why can a market price move against your view?",["Markets are uncertain and reflect many participants","The broker always knows your stop","Price must follow indicators"],0],
+["Which is a sound beginner habit?",["Use a written plan and demo practice","Trade every session","Borrow money to increase leverage"],0],
+["What does risk disclosure explain?",["Potential losses and product risks","Guaranteed profits","Exact future prices"],0]],
+[
+["A broker's regulator register helps verify:",["The exact authorised legal entity and permissions","The colour of its platform","Its social media follower count"],0],
+["A one-time security code should be:",["Kept private","Sent to a signal provider","Posted in a group"],0],
+["If the MT5 connection fails, first verify:",["Correct server and trading credentials","Your Telegram username","Your chart indicators"],0],
+["Before withdrawing, review:",["Official account process, fees and requirements","A stranger's instructions","A paid unlock link"],0]],
+[
+["Contract size tells you:",["The quantity represented by a lot","The account password","The trading session"],0],
+["A tick size is:",["The minimum price increment for an instrument","The daily profit target","The spread percentage"],0],
+["Slippage is:",["Difference between expected and actual execution price","The chart background","A type of candle"],0],
+["Why do trading costs matter?",["They affect net results and expectancy","They only matter to brokers","They disappear in a demo"],0]],
+[
+["The candle close is:",["The last price in the candle period","The highest price","The next candle's open"],0],
+["A bearish candle generally:",["Closes below its open","Closes above its open","Has no range"],0],
+["A candle body measures:",["The open-to-close range","The high-to-low range only","The spread"],0],
+["A long wick may indicate:",["Price moved away from an extreme before close","A guaranteed entry","A fixed target"],0]],
+[
+["A swing low is:",["A local low relative to surrounding price action","Always the daily low","A broker margin call"],0],
+["A trendline should be:",["Drawn consistently from meaningful swings","Forced to touch every candle","Used without invalidation"],0],
+["A broken resistance level:",["May become a level to retest, but is not guaranteed","Must hold forever","Always means buy"],0],
+["Too many chart levels can:",["Make analysis unclear","Guarantee accuracy","Remove volatility"],0]],
+[
+["Prior day highs/lows are:",["Potential reference areas for market attention","Exact maps of every stop order","Guaranteed reversal points"],0],
+["A liquidity sweep label should be based on:",["A clearly defined level and price behaviour","Any candle colour","A random indicator alert"],0],
+["After a possible sweep, a trader should:",["Wait for the setup's confirmation rules","Assume price must reverse","Remove the stop"],0],
+["Liquidity concepts are:",["Interpretive tools, not proof of hidden orders","A guarantee of institutional activity","A replacement for chart structure"],0]],
+[
+["A structural break rule should define:",["Which swing matters and whether a close is required","Only the candle colour","A preferred profit"],0],
+["Displacement usually describes:",["A forceful price move away from an area","A broker deposit","A spread widening only"],0],
+["A lower-timeframe MSS can be:",["Short-term and not necessarily a full trend reversal","A guarantee of H4 reversal","A substitute for context"],0],
+["Consistent terminology helps:",["Make a strategy testable","Ensure all trades win","Remove execution costs"],0]],
+[
+["A three-candle FVG model studies:",["A gap/imbalance between candle ranges","A moving-average cross","A broker's fee"],0],
+["A fresh zone may be:",["Worth monitoring but still capable of failing","Guaranteed to hold","A reason to risk more"],0],
+["A zone is invalidated when:",["Price behaviour breaches the trader's predefined rule","A trader feels nervous","A new candle appears"],0],
+["Confluence means:",["Several independent reasons support an idea","Every indicator must agree","A guaranteed result"],0]],
+[
+["What follows H4 direction in the APA framework?",["H1 structural zones and liquidity references","Immediate M1 entry","Broker verification"],0],
+["What is the role of M15?",["Confirm the planned setup at the area","Set the account password","Override the macro context"],0],
+["When should a trader stand aside?",["When key conditions are missing or unclear","Only after a loss","Never"],0],
+["A lower timeframe should be used to:",["Refine execution, not invent a countertrend setup","Ignore the H4 view","Increase leverage"],0]],
+[
+["A valid retest should be:",["Defined by observable price behaviour around the broken level","Any touch of any line","A guaranteed continuation"],0],
+["Invalidation describes:",["What proves the trade idea wrong","Where to add to a losing trade","A profit target"],0],
+["A target should be based on:",["A defined, tested exit method and market context","A random amount","The maximum leverage"],0],
+["A pending order:",["May remain unfilled if its conditions are not met","Always fills instantly","Has no execution risk"],0]],
+[
+["A daily loss limit is used to:",["Limit the damage from a bad session","Guarantee no losing days","Increase trade frequency"],0],
+["A risk percentage is:",["A choice that must fit personal circumstances and testing","A universally safe number","A way to eliminate losses"],0],
+["A meaningful backtest should include:",["Costs and losing periods","Only best trades","Only one market day"],0],
+["A high win rate can still lose money if:",["Average losses and costs outweigh average wins","Every trade has a stop","The sample is large"],0]],
+[
+["A central bank decision can influence:",["Interest-rate expectations and currency markets","Only chart colours","No market"],0],
+["Forecast versus actual data matters because:",["Markets react to surprises relative to expectations","The forecast always wins","Actual data is ignored"],0],
+["Around major releases, traders should consider:",["Volatility, spreads and slippage risk","Guaranteed direction","Removing stops"],0],
+["Fundamental analysis is:",["Study of economic and financial drivers","Only candle pattern recognition","A broker login method"],0]],
+[
+["An FX session clock is:",["A planning aid, not a guarantee of liquidity","A guarantee of volatility","A replacement for broker hours"],0],
+["Daylight saving can change:",["The local clock relationship of London and New York sessions","The definition of a pip","The contract size"],0],
+["A synthetic market schedule should be checked with:",["The provider's instrument specification","A stock exchange holiday calendar only","A random trader"],0],
+["A session overlap may:",["Have changing activity and volatility","Guarantee a profitable move","Remove execution risk"],0]],
+[
+["Owning a share generally means:",["Holding an ownership interest in a company","Trading a CFD","Holding a currency pair"],0],
+["A derivative's value is linked to:",["An underlying asset, rate or reference","The trader's username","A chart's colour"],0],
+["Crypto custody risk concerns:",["How digital assets are held and controlled","The candle timeframe","The market session name"],0],
+["An index typically measures:",["A basket or segment of a market","A broker's commission","A single pending order"],0]],
+[
+["A synthetic index methodology is:",["Defined by the provider's product terms","Identical for all brokers","A stock exchange listing"],0],
+["Before trading a derived product, read:",["Its contract specifications and risk disclosures","Only influencer reviews","Only a chart screenshot"],0],
+["Synthetic products may differ in:",["Price generation, hours and contract terms","Only chart background","Nothing"],0],
+["A demo result on a synthetic product:",["Does not guarantee live performance","Guarantees a payout","Removes all risk"],0]],
+[
+["Scalping is often sensitive to:",["Spread, commission and execution speed","Only quarterly earnings","Long-term dividend dates"],0],
+["A swing trader should plan for:",["Holding-period and overnight risk","Only one-minute candles","No stop placement"],0],
+["Position trading often uses:",["Longer-term themes and trends","Only second-by-second moves","No research"],0],
+["More trades per day:",["Do not automatically mean more opportunity","Always mean higher profit","Remove costs"],0]],
+[
+["Look-ahead bias occurs when:",["Future information improperly influences a historical decision","A trader uses a journal","A test includes losses"],0],
+["A forward test is useful because:",["It checks rules on unseen/new data","It guarantees future profit","It removes spreads"],0],
+["A journal can help identify:",["Repeated process errors and patterns","Guaranteed entries","The next market price"],0],
+["A robust sample should include:",["Different market conditions and losing streaks","Only the best week","Only screenshots of wins"],0]],
+[
+["FOMO can lead to:",["Entering without the planned setup","Better risk control","Guaranteed patience"],0],
+["A pre-trade checklist helps:",["Reduce impulsive decisions","Predict exact prices","Remove all uncertainty"],0],
+["After a series of losses, increasing size to recover is:",["A dangerous revenge-trading behaviour","A required strategy","A risk-free solution"],0],
+["Process review should ask:",["Did I follow my rules?","Did every trade win?","Can I hide losing trades?"],0]],
+[
+["Why compare a trader's methods with their context?",["Different markets and risk conditions affect outcomes","Everyone trades the same way","A famous name proves results"],0],
+["A claimed return should be:",["Checked critically and independently","Accepted without evidence","Copied immediately"],0],
+["A trader's public profile is not:",["Independent proof of long-term profitability","A possible research starting point","A source of interview information"],0],
+["The most useful case study question is:",["What were the method, risk controls and limitations?","How expensive was the lifestyle?","How many followers do they have?"],0]],
+[
+["A trading plan should specify:",["Markets, setup rules, risk limits and review process","Only a preferred indicator","Only profit targets"],0],
+["A no-trade rule is useful because:",["Not every market condition qualifies","It reduces learning","It guarantees a loss"],0],
+["A plan should be reviewed:",["Against a meaningful journal and test sample","After every single candle","Only after a winning streak"],0],
+["A written plan is best when:",["Another person could understand and test its rules","It changes with every outcome","It promises daily returns"],0]]
+];
+moduleQuizBank=moduleQuizBank.map((questions,i)=>questions.concat(moduleQuizExtras[i]));
 const quizPassedKey="tbj-module-passes-v1";let quizPassed=[];try{quizPassed=JSON.parse(localStorage.getItem(quizPassedKey)||"[]")}catch(e){quizPassed=[]}
 const moduleSelect=document.getElementById("moduleSelect"),moduleQuiz=document.getElementById("moduleQuiz");
 modules.forEach((m,i)=>{const o=document.createElement("option");o.value=i;o.textContent="Module "+m[0]+" — "+m[1];moduleSelect.appendChild(o)});
 function drawModuleQuiz(){const i=Number(moduleSelect.value||0);moduleQuiz.innerHTML=moduleQuizBank[i].map((q,j)=>'<div class="quizQuestion"><b>'+(j+1)+'. '+q[0]+'</b>'+q[1].map((a,k)=>'<label><input type="radio" name="mq'+j+'" value="'+k+'"> '+String.fromCharCode(65+k)+'. '+a+'</label>').join("")+'</div>').join("");document.getElementById("moduleQuizResult").textContent=quizPassed.includes(i)?"Already passed ✓ — you can retake this assessment.":""}
 moduleSelect.addEventListener("change",drawModuleQuiz);
-document.getElementById("submitModuleQuiz").addEventListener("click",()=>{const i=Number(moduleSelect.value),qs=moduleQuizBank[i];let score=0,answered=0;qs.forEach((q,j)=>{const a=moduleQuiz.querySelector('input[name="mq'+j+'"]:checked');if(a){answered++;if(Number(a.value)===q[2])score++}});const pct=Math.round(score/qs.length*100),out=document.getElementById("moduleQuizResult");if(answered<qs.length){out.textContent="Answer all 3 questions before submitting.";return}if(pct>=70&&!quizPassed.includes(i)){quizPassed.push(i);localStorage.setItem(quizPassedKey,JSON.stringify(quizPassed))}out.textContent="Score: "+score+"/3 ("+pct+"%). "+(pct>=70?"Passed ✓":"Not passed yet — review the module and retry.");drawPassList();refreshHub()});
+document.getElementById("submitModuleQuiz").addEventListener("click",()=>{const i=Number(moduleSelect.value),qs=moduleQuizBank[i];let score=0,answered=0;qs.forEach((q,j)=>{const a=moduleQuiz.querySelector('input[name="mq'+j+'"]:checked');if(a){answered++;if(Number(a.value)===q[2])score++}});const pct=Math.round(score/qs.length*100),out=document.getElementById("moduleQuizResult");if(answered<qs.length){out.textContent="Answer all 7 questions before submitting.";return}if(pct>=70&&!quizPassed.includes(i)){quizPassed.push(i);localStorage.setItem(quizPassedKey,JSON.stringify(quizPassed))}out.textContent="Score: "+score+"/3 ("+pct+"%). "+(pct>=70?"Passed ✓":"Not passed yet — review the module and retry.");drawPassList();refreshHub()});
 function drawPassList(){document.getElementById("modulePassList").textContent="Modules passed: "+quizPassed.length+" / "+modules.length+" · "+quizPassed.sort((a,b)=>a-b).map(i=>modules[i][0]).join(", ")}
 drawModuleQuiz();drawPassList();
 const apaScenarios=[
