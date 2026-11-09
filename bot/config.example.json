@@ -1,0 +1,17 @@
+{
+  "symbols": ["XAUUSD", "XAGUSD", "Volatility 75 Index", "Volatility 50 Index", "Step Index"],
+  "scan_seconds": 15,
+  "risk_percent": 1.0,
+  "max_portfolio_risk_percent": 3.0,
+  "max_positions": 3,
+  "magic": 611090,
+  "deviation_points": 30,
+  "auto_execute": false,
+  "demo_only": true,
+  "allow_live_trading": false,
+  "api_host": "127.0.0.1",
+  "api_port": 8765,
+  "api_token": "CHANGE_THIS_LOCAL_TOKEN",
+  "max_spread_points": 0,
+  "cooldown_minutes": 30
+}
