@@ -271,12 +271,16 @@ def bot_loop():
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self,*args): return
-    def headers(self):
+    def send_headers(self):
         self.send_header("Content-Type","application/json")
-        self.send_header("Access-Control-Allow-Origin","*")
+        origin=self.headers.get("Origin","")
+        allowed={"https://lamar-progst.github.io","http://127.0.0.1","http://localhost"}
+        if origin in allowed:
+            self.send_header("Access-Control-Allow-Origin",origin)
+            self.send_header("Vary","Origin")
+            self.send_header("Access-Control-Allow-Private-Network","true")
         self.send_header("Access-Control-Allow-Headers","Content-Type, Authorization")
         self.send_header("Access-Control-Allow-Methods","GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Private-Network","true")
         self.send_header("Cache-Control","no-store")
     def reply(self,code,data):
         raw=json.dumps(data,default=str).encode()
@@ -288,8 +292,9 @@ class Handler(BaseHTTPRequestHandler):
             snap={**state,"positions":position_snapshot()}
         return self.reply(200,snap)
     def do_POST(self):
-        if self.headers and self.headers: pass
-        token=self.headers_value("Authorization")
+        token=self.headers.get("Authorization","")
+        if cfg["api_token"]=="CHANGE_THIS_LOCAL_TOKEN":
+            return self.reply(403,{"error":"Change api_token in config.json before using bot controls"})
         if token!="Bearer "+str(cfg["api_token"]): return self.reply(401,{"error":"unauthorized"})
         length=int(self.headers.get("Content-Length") or 0)
         body=json.loads(self.rfile.read(length) or b"{}")
@@ -303,7 +308,6 @@ class Handler(BaseHTTPRequestHandler):
             scan_once()
         else: return self.reply(400,{"error":"action must be start, pause, or scan"})
         return self.reply(200,{"ok":True,"running":state["running"]})
-    def headers_value(self,name): return self.headers_map.get(name) if hasattr(self,"headers_map") else self.headers.get(name)
 
 def serve_api():
     server=ThreadingHTTPServer((cfg["api_host"],int(cfg["api_port"])),Handler)
