@@ -150,7 +150,14 @@ def send_order(symbol, side, entry, stop, target, volume):
     info=mt5.symbol_info(symbol)
     tick=mt5.symbol_info_tick(symbol)
     if not info or not tick: return "Rejected: symbol/tick unavailable"
+    if info.trade_mode == mt5.SYMBOL_TRADE_MODE_DISABLED:
+        return "Rejected: broker has disabled trading on this symbol"
     price=float(tick.ask if side=="BUY" else tick.bid)
+    min_gap=float(info.trade_stops_level or 0)*float(info.point or 0)
+    if side=="BUY" and (price-stop < min_gap or target-price < min_gap):
+        return "Rejected: SL/TP violates broker minimum stop distance"
+    if side=="SELL" and (stop-price < min_gap or price-target < min_gap):
+        return "Rejected: SL/TP violates broker minimum stop distance"
     if cfg.get("max_spread_points",0)>0 and (tick.ask-tick.bid)/info.point>cfg["max_spread_points"]:
         return "Rejected: spread exceeds configured limit"
     if volume<=0: return "Rejected: calculated volume is below broker minimum"
