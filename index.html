@@ -680,4 +680,86 @@ form.addEventListener('submit',async event=>{event.preventDefault();if(busy)retu
 document.querySelectorAll('[data-svp-prompt]').forEach(button=>button.addEventListener('click',()=>{if(busy)return;input.value=button.dataset.svpPrompt||'';form.requestSubmit()}));
 })();
 </script>
+
+<style id="svp-local-bot-console-style">
+.svp-bot-console{margin:28px auto 50px;max-width:1180px;padding:22px;border:1px solid #7564b9;border-radius:22px;background:linear-gradient(135deg,rgba(27,30,67,.92),rgba(17,13,39,.94));box-shadow:0 18px 55px #05051088;color:#f4f2ff}
+.svp-bot-console h2{margin:0 0 8px;font-size:clamp(22px,3vw,30px)}.svp-bot-console p{color:#b9b8d7}
+.svp-bot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:16px 0}
+.svp-bot-console input{width:100%;min-width:0;padding:12px;border-radius:12px;border:1px solid #514a83;background:#0c1024;color:#fff}
+.svp-bot-console button{padding:11px 15px;border-radius:12px;border:1px solid #7c69c7;background:#30245c;color:#fff;font-weight:700;cursor:pointer;margin:5px 7px 5px 0}
+.svp-bot-console button.primary{background:linear-gradient(120deg,#6c4acb,#3a5fc0)}.svp-bot-console button:disabled{opacity:.45;cursor:not-allowed}
+.svp-bot-status{display:flex;flex-wrap:wrap;gap:10px}.svp-bot-pill{padding:8px 11px;border:1px solid #49446d;border-radius:999px;background:#12162d;font-size:13px}
+.svp-bot-console pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090d1d;border:1px solid #343354;border-radius:13px;padding:13px;max-height:230px;overflow:auto;color:#d8d6f6;font-size:12px}
+.svp-bot-console .muted{font-size:12px;color:#a6a4c7}
+</style>
+<section class="svp-bot-console" id="svp-local-bot-console">
+  <h2>S.V.P. APA MT5 Bot Control</h2>
+  <p>Connect this dashboard to the local Python bot running beside your MT5 terminal. The scanner evaluates closed candles using H4 → H1 → M15 → M5. The website does not contain broker credentials.</p>
+  <div class="svp-bot-grid">
+    <label>Local bot address<input id="svp-bot-url" value="http://127.0.0.1:8765" spellcheck="false"></label>
+    <label>Local API token<input id="svp-bot-token" type="password" placeholder="Paste token from bot/config.json" autocomplete="off"></label>
+  </div>
+  <div>
+    <button class="primary" id="svp-bot-connect">Connect bot</button>
+    <button id="svp-bot-start" disabled>Start scanner</button>
+    <button id="svp-bot-pause" disabled>Pause scanner</button>
+    <button id="svp-bot-scan" disabled>Scan now</button>
+  </div>
+  <div class="svp-bot-status" style="margin-top:14px">
+    <span class="svp-bot-pill" id="svp-bot-connection">Bot: not connected</span>
+    <span class="svp-bot-pill" id="svp-bot-mode">Mode: unknown</span>
+    <span class="svp-bot-pill" id="svp-bot-account">MT5: not connected</span>
+    <span class="svp-bot-pill" id="svp-bot-lastscan">Last scan: —</span>
+  </div>
+  <div class="svp-bot-grid">
+    <div><strong>Latest signals</strong><pre id="svp-bot-signals">No signals received.</pre></div>
+    <div><strong>Setup rejections</strong><pre id="svp-bot-rejections">No scan results received.</pre></div>
+  </div>
+  <p class="muted">Safety: the bot starts in scan-only mode. Automatic orders require a deliberate change in local config.json and should be tested on a demo account first. Do not paste your API token into a public/shared computer.</p>
+  <p class="muted" id="svp-bot-message">Run bot/README.md on your Windows computer, then connect here.</p>
+</section>
+<script id="svp-local-bot-console-runtime">
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+const base=$('svp-bot-url'),token=$('svp-bot-token'),msg=$('svp-bot-message');
+if(!base||!token||!msg)return;
+let connected=false,polling=null;
+const endpoint=()=>base.value.trim().replace(/\/+$/,'');
+const say=(s,bad=false)=>{msg.textContent=s;msg.style.color=bad?'#ff9dba':'#a6e7d4'};
+async function request(path,options={}){
+ const response=await fetch(endpoint()+path,{cache:'no-store',...options});
+ const data=await response.json().catch(()=>({}));
+ if(!response.ok)throw new Error(data.error||('HTTP '+response.status));
+ return data;
+}
+function draw(data){
+ connected=true;
+ $('svp-bot-connection').textContent='Bot: API connected';
+ $('svp-bot-mode').textContent='Mode: '+(data.mode||'unknown')+(data.running?' / scanning':' / paused');
+ const a=data.account;
+ $('svp-bot-account').textContent=a?'MT5: '+a.login+' · '+a.server+' · '+a.currency+' '+Number(a.equity).toFixed(2):'MT5: not connected';
+ $('svp-bot-lastscan').textContent='Last scan: '+(data.last_scan?new Date(data.last_scan).toLocaleTimeString():'not scanned');
+ $('svp-bot-signals').textContent=(data.signals||[]).slice(0,12).map(s=>s.side+' '+s.symbol+' | entry '+s.entry+' | SL '+s.stop+' | TP '+s.target+' | '+(s.execution||s.reason)).join('\n')||'No qualified signals yet.';
+ $('svp-bot-rejections').textContent=(data.rejections||[]).slice(0,18).map(x=>x.symbol+': '+x.reason).join('\n')||'No rejected setups reported.';
+ ['svp-bot-start','svp-bot-pause','svp-bot-scan'].forEach(id=>$(id).disabled=false);
+ say('Connected. The local bot status is updating every 8 seconds.');
+}
+async function connect(){
+ try{say('Connecting to local MT5 bot...');const data=await request('/status');draw(data);
+ if(polling)clearInterval(polling);polling=setInterval(async()=>{try{draw(await request('/status'))}catch(e){connected=false;$('svp-bot-connection').textContent='Bot: disconnected';say(e.message,true)}},8000);
+ }catch(e){connected=false;$('svp-bot-connection').textContent='Bot: not connected';say(e.message+' — make sure the Python bot is running and allow local-network access.',true)}
+}
+async function command(action){
+ if(!connected)return;
+ try{const key=token.value.trim();if(!key)throw new Error('Enter the API token from bot/config.json first.');
+ const data=await request('/control',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({action})});
+ say(action==='start'?'Scanner started.':'Command sent: '+action);draw(await request('/status'));
+ }catch(e){say(e.message,true)}
+}
+$('svp-bot-connect').addEventListener('click',connect);
+$('svp-bot-start').addEventListener('click',()=>command('start'));
+$('svp-bot-pause').addEventListener('click',()=>command('pause'));
+$('svp-bot-scan').addEventListener('click',()=>command('scan'));
+})();
+</script>
 </body></html>
