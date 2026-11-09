@@ -266,8 +266,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Cache-Control","no-store")
     def reply(self,code,data):
         raw=json.dumps(data,default=str).encode()
-        self.send_response(code); self.headers(); self.end_headers(); self.wfile.write(raw)
-    def do_OPTIONS(self): self.send_response(204); self.headers(); self.end_headers()
+        self.send_response(code); self.send_headers(); self.end_headers(); self.wfile.write(raw)
+    def do_OPTIONS(self): self.send_response(204); self.send_headers(); self.end_headers()
     def do_GET(self):
         if self.path!="/status": return self.reply(404,{"error":"not found"})
         with lock:
@@ -277,7 +277,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.headers and self.headers: pass
         token=self.headers_value("Authorization")
         if token!="Bearer "+str(cfg["api_token"]): return self.reply(401,{"error":"unauthorized"})
-        length=int(self.headers_value("Content-Length") or 0)
+        length=int(self.headers.get("Content-Length") or 0)
         body=json.loads(self.rfile.read(length) or b"{}")
         action=body.get("action")
         if action=="start":
