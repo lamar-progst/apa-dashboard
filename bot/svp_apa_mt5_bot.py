@@ -32,6 +32,7 @@ state = {"running": False, "connected": False, "account": None, "mode": "SAFE / 
          "last_scan": None, "signals": [], "positions": [], "rejections": [], "errors": [], "symbols": []}
 lock = threading.RLock()
 last_traded = {}
+last_signal_bar = {}
 
 def rates(symbol, timeframe, count=160):
     data = mt5.copy_rates_from_pos(symbol, timeframe, 1, count)  # start at 1: closed candles only
@@ -124,7 +125,13 @@ def current_risk_percent():
     total=0.0
     for p in (mt5.positions_get() or []):
         if p.magic != int(cfg["magic"]): continue
-        total += abs(float(p.profit)) if p.profit < 0 else 0.0
+        if not p.sl:
+            return 999.0
+        order_type=mt5.ORDER_TYPE_BUY if p.type==mt5.POSITION_TYPE_BUY else mt5.ORDER_TYPE_SELL
+        loss=mt5.order_calc_profit(order_type,p.symbol,float(p.volume),float(p.price_open),float(p.sl))
+        if loss is None:
+            return 999.0
+        total += abs(float(loss))
     return total/account.equity*100.0
 
 def send_order(symbol, side, entry, stop, target, volume):
@@ -151,7 +158,7 @@ def send_order(symbol, side, entry, stop, target, volume):
              "type":mt5.ORDER_TYPE_BUY if side=="BUY" else mt5.ORDER_TYPE_SELL,
              "price":price,"sl":stop,"tp":target,"deviation":int(cfg["deviation_points"]),
              "magic":int(cfg["magic"]),"comment":"SVP APA","type_time":mt5.ORDER_TIME_GTC,
-             "type_filling":info.filling_mode}
+             "type_filling":(mt5.ORDER_FILLING_IOC if (info.filling_mode & 2) else (mt5.ORDER_FILLING_FOK if (info.filling_mode & 1) else mt5.ORDER_FILLING_RETURN))}
     result=mt5.order_send(request)
     if result is None: return f"Rejected: order_send returned no result ({mt5.last_error()})"
     if result.retcode not in (mt5.TRADE_RETCODE_DONE, mt5.TRADE_RETCODE_PLACED):
@@ -197,12 +204,11 @@ def scan_once():
                 if time.time()-prior < int(cfg["cooldown_minutes"])*60:
                     rejected.append({"symbol":symbol,"reason":"Cooldown active after previous signal/order"})
                     continue
-                if any(s["symbol"]==symbol and s["side"]==signal["side"] for s in state["signals"][-20:]):
-                    # Avoid repeating an identical setup on every scan; new closed M5 candle resets via time.
-                    if state["signals"][-1].get("trigger_bar") == rates(symbol,mt5.TIMEFRAME_M5,2)[-1]["time"]:
-                        continue
                 bars=rates(symbol,mt5.TIMEFRAME_M5,2)
                 signal["trigger_bar"]=bars[-1]["time"] if bars else 0
+                if last_signal_bar.get(key)==signal["trigger_bar"]:
+                    continue
+                last_signal_bar[key]=signal["trigger_bar"]
                 if cfg.get("auto_execute"):
                     signal["execution"]=send_order(symbol,signal["side"],signal["entry"],signal["stop"],signal["target"],signal["volume"])
                     if signal["execution"].startswith("ORDER SENT"): last_traded[key]=time.time()
@@ -263,6 +269,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Origin","*")
         self.send_header("Access-Control-Allow-Headers","Content-Type, Authorization")
         self.send_header("Access-Control-Allow-Methods","GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Private-Network","true")
         self.send_header("Cache-Control","no-store")
     def reply(self,code,data):
         raw=json.dumps(data,default=str).encode()
