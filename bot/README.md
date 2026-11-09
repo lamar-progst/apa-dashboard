@@ -15,11 +15,13 @@ Use Python 3.14 (MetaTrader5 does not currently install on every Python version)
 ```powershell
 py -3.14 -m pip install -r requirements.txt
 Copy-Item config.example.json config.json
+# Generate a private token, then paste it into config.json as api_token:
+py -3.14 -c "import secrets; print(secrets.token_urlsafe(32))"
 py -3.14 svp_apa_mt5_bot.py
 ```
 Keep the MT5 desktop terminal open and logged in. Edit config.json to match the exact broker symbol names shown in Market Watch.
 
-## First test
+Before starting, replace `CHANGE_THIS_LOCAL_TOKEN` in config.json with the generated private token. The bot refuses dashboard control commands while the placeholder remains. The local API accepts browser requests only from the S.V.P. GitHub Pages origin or localhost.\n\n## First test
 1. Leave auto_execute=false.
 2. Start the script and open http://127.0.0.1:8765/status on the same computer.
 3. Confirm the account, symbols, closed-candle scan and rejections look correct.
