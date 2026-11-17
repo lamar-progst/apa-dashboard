@@ -592,9 +592,9 @@ function drawChart(m,live,fresh){
  if(!candles.length){root.innerHTML='<div class="svp-flow-chart-empty">No verified M15 candles are published for '+esc(m.symbol)+'. Waiting for bot candle history or live ticks.</div>';if(note)note.textContent='The chart only draws candles received from the bot or tick stream.';return}
  const quote=fresh?priceNumber(live?.price):priceNumber(m.price);
  const zone=m.sr_zone&&typeof m.sr_zone==='object'?m.sr_zone:{};
- let zoneLow=numFrom(zone,['low','bottom'])??numFrom(m,['zone_low','sr_zone_low','breakout_zone_low','support_zone_low','resistance_zone_low','consolidation_low']);
- let zoneHigh=numFrom(zone,['high','top'])??numFrom(m,['zone_high','sr_zone_high','breakout_zone_high','support_zone_high','resistance_zone_high','consolidation_high']);
- const level=numFrom(m,['breakout_level','retest_level','key_level','sr_level']);
+ let zoneLow=numFrom(zone,['low','bottom']);
+ let zoneHigh=numFrom(zone,['high','top']);
+ const level=null;
  const vals=candles.flatMap(c=>[c.high,c.low]);if(quote!==null)vals.push(quote);if(zoneLow!==null)vals.push(zoneLow);if(zoneHigh!==null)vals.push(zoneHigh);if(level!==null)vals.push(level);
  let lo=Math.min(...vals),hi=Math.max(...vals),pad=(hi-lo)*.1||Math.max(Math.abs(hi)*.001,1e-6);lo-=pad;hi+=pad;
  const W=720,H=230,L=48,R=58,T=12,B=25,plotW=W-L-R,plotH=H-T-B,stepW=plotW/candles.length;
