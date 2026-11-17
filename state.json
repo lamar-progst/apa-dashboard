@@ -1,17 +1,1 @@
-{
-  "online": false,
-  "updated": "2026-11-16T22:00:00-05:00",
-  "strategy": "TRADESBYJAY_HTF_SR_M5_FVG",
-  "status": "WAITING_FOR_BOT",
-  "markets": [],
-  "signals": [],
-  "positions": [],
-  "performance": {
-    "wins": 0,
-    "losses": 0,
-    "win_rate": null,
-    "net_profit": null,
-    "max_drawdown": null
-  },
-  "message": "Waiting for the TradesByJay MT5 FVG scanner to publish verified live data."
-}
+{"updated":"2026-11-17T04:17:49.270169+00:00","online":true,"mode":"DEMO","account":{"server":"Deriv-Demo","currency":"USD"},"markets":[],"signals":[{"symbol":"Crash 500 Index","side":"BUY","status":"PENDING","entry":2971.564,"stop":2968.911,"target":2976.87,"sent_at":"2026-11-17T04:08:38+00:00","strategy":"M5 FVG"},{"symbol":"Volatility 50 Index","side":"SELL","status":"OPEN","entry":87.6957,"stop":88.7482,"target":85.8667,"sent_at":"2026-11-17T01:45:38+00:00","strategy":"M5 FVG"},{"symbol":"Volatility 50 Index","side":"SELL","status":"OPEN","entry":87.7753,"stop":88.7477,"target":85.8793,"sent_at":"2026-11-17T01:47:00+00:00","strategy":"M5 FVG"},{"symbol":"Volatility 50 Index","side":"SELL","status":"OPEN","entry":87.8622,"stop":88.7508,"target":85.8779,"sent_at":"2026-11-17T01:48:11+00:00","strategy":"M5 FVG"}],"scanner":{"configured_symbols":61,"positions":3,"pending_orders":1},"bot":"TradesByJay Demo Bot"}
