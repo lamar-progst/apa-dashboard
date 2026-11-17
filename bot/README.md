@@ -43,9 +43,10 @@ py -3.14 tradesbyjay_fvg_mt5_bot.py
 The local dashboard API listens on `http://127.0.0.1:8765/status`. On the TradesByJay website, use the Bot Control panel to connect, start, pause, or request a scan. Use the same `api_token` configured locally.
 
 ## Safety defaults
-- `auto_execute=false`: alerts and scanning only by default.
-- `demo_only=true`: non-demo accounts are rejected.
+- `auto_execute=true`: automatic limit orders are enabled by default on demo.
+- `demo_only=true`: non-demo accounts are rejected at startup.
 - `allow_live_trading=false`: live trading remains blocked.
+- Set `auto_execute=false` if you want alerts and scanning without orders.
 - `risk_percent=1.0`, `risk_reward=2.0`.
 - Broker symbol names and pip sizes vary. Verify each symbol's contract specification and set `pip_size_overrides` where needed.
 
