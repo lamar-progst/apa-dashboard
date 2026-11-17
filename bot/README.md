@@ -32,7 +32,31 @@ The bot updates `state.json` approximately every `publish_seconds` (default 30 s
 
 ## Telegram alerts
 
-Optional: set `telegram_bot_token` and `telegram_chat_id` in the local config. A new confirmed FVG setup triggers a Telegram message. Keep these credentials out of GitHub.
+1. In Telegram, open **@BotFather**, send `/newbot`, choose a display name and a unique username, then copy the bot token.
+2. Create your signal group (or choose an existing group) and add the bot as a member. For a channel, add it as an administrator with permission to post.
+3. In the group, send a message such as `/start@YourBotUsername`.
+4. In PowerShell, enter the token without sharing it:
+   ```powershell
+   $token = Read-Host "Paste your NEW Telegram bot token"
+   $updates = Invoke-RestMethod "https://api.telegram.org/bot$token/getUpdates"
+   $updates.result | ForEach-Object { $_.message.chat | Select-Object id,type,title,username }
+   ```
+   Copy the group's numeric `id` (supergroups commonly begin with `-100`). If no update appears, send another message in the group and run the command again.
+5. In the bot's local `config.json`, set:
+   ```json
+   "telegram_bot_token": "YOUR_NEW_BOT_TOKEN",
+   "telegram_chat_id": "-1001234567890"
+   ```
+   Keep the existing commas and other settings valid. Do not put these values in the website or commit them to GitHub.
+6. Send a test message from PowerShell:
+   ```powershell
+   $chatId = Read-Host "Paste the numeric group chat ID"
+   $body = @{ chat_id = $chatId; text = "TradesByJay Telegram signal connection test." } | ConvertTo-Json
+   Invoke-RestMethod -Method Post -Uri "https://api.telegram.org/bot$token/sendMessage" -ContentType "application/json" -Body $body
+   ```
+7. Restart the bot. It sends Telegram alerts when a new confirmed FVG setup is detected; it does not resend the same detected setup on every scan.
+
+**Security:** If a bot token was ever pasted into a chat, screenshot, or public repository, revoke it with @BotFather and use a newly generated token. Never send the token to anyone.
 
 ## Start
 
