@@ -206,40 +206,41 @@ def manage_pending(symbol, bars):
                 log.info("%s pending FVG order cancelled after invalidation", symbol)
 
 def place_limit(symbol, fvg, info, tick, account):
-    if not cfg.get("auto_execute", False):
-        return "ALERT ONLY — automatic execution is disabled", None
-    if account.trade_mode != mt5.ACCOUNT_TRADE_MODE_DEMO and cfg.get("demo_only", True):
-        return "BLOCKED — demo-only guard", None
-    if account.trade_mode != mt5.ACCOUNT_TRADE_MODE_DEMO and not cfg.get("allow_live_trading", False):
-        return "BLOCKED — live execution not explicitly enabled", None
-    if len([p for p in (mt5.positions_get() or []) if p.magic == int(cfg["magic"])]) >= int(cfg["max_positions"]):
-        return "BLOCKED — max bot positions reached", None
-    if any(o.symbol == symbol for o in pending_orders()):
-        return "BLOCKED — pending bot order already exists", None
-    spread = float(tick.ask - tick.bid)
-    if float(cfg.get("max_spread_points", 0)) > 0 and spread / info.point > float(cfg["max_spread_points"]):
-        return "BLOCKED — spread too wide", None
     entry = norm_price(fvg["entry"], info)
-    buffer = spread
+    spread = float(tick.ask - tick.bid)
     if fvg["side"] == "BUY":
         order_type = mt5.ORDER_TYPE_BUY_LIMIT
-        stop = norm_price(fvg["origin"] - buffer, info)
+        stop = norm_price(fvg["origin"] - spread, info)
         distance = entry - stop
         if entry >= tick.ask or distance <= 0:
             return "SKIPPED — midpoint is not below current ask", None
         target = norm_price(entry + distance * float(cfg["risk_reward"]), info)
     else:
         order_type = mt5.ORDER_TYPE_SELL_LIMIT
-        stop = norm_price(fvg["origin"] + buffer, info)
+        stop = norm_price(fvg["origin"] + spread, info)
         distance = stop - entry
         if entry <= tick.bid or distance <= 0:
             return "SKIPPED — midpoint is not above current bid", None
         target = norm_price(entry - distance * float(cfg["risk_reward"]), info)
+    levels = {"entry": entry, "stop": stop, "target": target, "volume": None}
     if distance < float(info.trade_stops_level) * info.point:
-        return "SKIPPED — stop distance below broker minimum", None
+        return "SKIPPED — stop distance below broker minimum", levels
+    if not cfg.get("auto_execute", False):
+        return "ALERT ONLY — automatic execution is disabled", levels
+    if account.trade_mode != mt5.ACCOUNT_TRADE_MODE_DEMO and cfg.get("demo_only", True):
+        return "BLOCKED — demo-only guard", levels
+    if account.trade_mode != mt5.ACCOUNT_TRADE_MODE_DEMO and not cfg.get("allow_live_trading", False):
+        return "BLOCKED — live execution not explicitly enabled", levels
+    if len([p for p in (mt5.positions_get() or []) if p.magic == int(cfg["magic"])]) >= int(cfg["max_positions"]):
+        return "BLOCKED — max bot positions reached", levels
+    if any(o.symbol == symbol for o in pending_orders()):
+        return "BLOCKED — pending bot order already exists", levels
+    if float(cfg.get("max_spread_points", 0)) > 0 and spread / info.point > float(cfg["max_spread_points"]):
+        return "BLOCKED — spread too wide", levels
     volume = volume_for_risk(symbol, fvg["side"], entry, stop, info, account)
     if volume <= 0:
-        return "SKIPPED — minimum lot would exceed risk budget", None
+        return "SKIPPED — minimum lot would exceed risk budget", levels
+    levels["volume"] = volume
     request = {"action": mt5.TRADE_ACTION_PENDING, "symbol": symbol, "volume": volume,
         "type": order_type, "price": entry, "sl": stop, "tp": target,
         "deviation": int(cfg["deviation_points"]), "magic": int(cfg["magic"]),
@@ -247,10 +248,10 @@ def place_limit(symbol, fvg, info, tick, account):
         "type_filling": mt5.ORDER_FILLING_RETURN}
     result = mt5.order_send(request)
     if not result or result.retcode not in (mt5.TRADE_RETCODE_DONE, mt5.TRADE_RETCODE_PLACED):
-        return "ORDER REJECTED — " + str(getattr(result, "comment", mt5.last_error())), None
+        return "ORDER REJECTED — " + str(getattr(result, "comment", mt5.last_error())), levels
     pending_meta[int(result.order)] = {"side": fvg["side"], "low": fvg["low"], "high": fvg["high"]}
-    return "LIMIT ORDER PLACED", {"ticket": int(result.order), "volume": volume,
-        "entry": entry, "stop": stop, "target": target}
+    levels["ticket"] = int(result.order)
+    return "LIMIT ORDER PLACED", levels
 
 def scan_symbol(symbol):
     info = mt5.symbol_info(symbol)
@@ -295,7 +296,7 @@ def scan_symbol(symbol):
                 signal = {"signal_id": "|".join(map(str, key)), "symbol": symbol, "side": fvg["side"],
                     "entry": order["entry"] if order else fvg["entry"],
                     "stop": order["stop"] if order else None, "target": order["target"] if order else None,
-                    "status": "PENDING" if order else "SETUP DETECTED",
+                    "status": "PENDING" if execution == "LIMIT ORDER PLACED" else "SETUP DETECTED",
                     "execution": execution, "volume": order["volume"] if order else None,
                     "sent_at": time.time(), "created_at": now_iso(), "fvg": market["fvg"]}
                 telegram("TradesByJay setup: " + fvg["side"] + " " + symbol +
@@ -367,15 +368,17 @@ def connect_mt5():
     log.info("Connected to MT5 account %s / %s", account.login, account.server)
 
 def bot_loop():
-    try:
-        connect_mt5()
-    except Exception as exc:
-        with lock:
-            state["bot"]["errors"] = [str(exc)]
-            state["bot"]["connected"] = False
-        log.error("%s", exc)
-        return
     while True:
+        if not state["bot"]["connected"]:
+            try:
+                connect_mt5()
+            except Exception as exc:
+                with lock:
+                    state["bot"]["errors"] = [str(exc)] + state["bot"]["errors"][:9]
+                    state["bot"]["connected"] = False
+                log.warning("MT5 not ready; retrying in 10 seconds: %s", exc)
+                time.sleep(10)
+                continue
         if state["bot"]["running"]:
             try:
                 scan_once()
