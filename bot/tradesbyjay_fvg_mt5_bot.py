@@ -246,7 +246,7 @@ def place_limit(symbol, fvg, info, tick, account):
         "comment": "TBJ SR FVG M5", "type_time": mt5.ORDER_TIME_GTC,
         "type_filling": mt5.ORDER_FILLING_RETURN}
     result = mt5.order_send(request)
-    if not result or result.retcode != mt5.TRADE_RETCODE_DONE:
+    if not result or result.retcode not in (mt5.TRADE_RETCODE_DONE, mt5.TRADE_RETCODE_PLACED):
         return "ORDER REJECTED — " + str(getattr(result, "comment", mt5.last_error())), None
     pending_meta[int(result.order)] = {"side": fvg["side"], "low": fvg["low"], "high": fvg["high"]}
     return "LIMIT ORDER PLACED", {"ticket": int(result.order), "volume": volume,
