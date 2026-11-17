@@ -551,17 +551,11 @@ function render(){
  }
  drawPattern(m,direction,retestLevel||rawEntry,ready&&hasPrices);
  const live=liveTicks.get(m.symbol),liveFresh=!!(live&&Date.now()/1000-Number(live.received_at||0)<=8);
- el('svp-ai-live-status').textContent=liveFresh?'LIVE CONFIRMED · MT5 tick received '+new Date(Number(live.time)*1000).toLocaleTimeString():'WAITING · no recent MT5 tick received';
+ const scannerAge=feed?Date.now()/1000-Date.parse(feed.updated)/1000:Infinity;const scannerFresh=feed&&feed.online!==false&&scannerAge>=-30&&scannerAge<180;el('svp-ai-live-status').textContent=liveFresh?'LIVE CONFIRMED · MT5 tick received '+new Date(Number(live.time)*1000).toLocaleTimeString():scannerFresh?'LIVE SCANNER SNAPSHOT · last bot update '+new Date(feed.updated).toLocaleTimeString():'STALE · waiting for a fresh TradesByJay scan';
 }
 window.addEventListener('svp-feed-loaded',e=>{feed=e.detail;render()});
 el('svp-ai-market')?.addEventListener('change',e=>{choice=e.target.value;render()});
 })();
-</script><script type="module" id="svp-live-tick-client">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.107.0';
-const client=createClient('https://zuemztvanxdregfcppoa.supabase.co','sb_publishable_dA9EvB1z73P-XX47ZWT5kg_0ZRQQmuq',{auth:{autoRefreshToken:false,persistSession:false},realtime:{params:{eventsPerSecond:10}}});
-const channel=client.channel('svp:live-ticks',{config:{private:true,broadcast:{self:false}}})
- .on('broadcast',{event:'tick'},message=>window.svpAIUpdateLiveTicks?.(message.payload?.ticks||[]))
- .subscribe(status=>{const s=document.getElementById('svp-ai-live-status');if(s&&status!=='SUBSCRIBED'&&!s.textContent.startsWith('LIVE'))s.textContent='MT5 tick stream: '+status;});
 </script><script id="svp-clean-live-runtime">
 (()=>{'use strict';
 const badge=document.getElementById('status');
