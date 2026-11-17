@@ -1,0 +1,25 @@
+name: Validate TradesByJay bot
+
+on:
+  push:
+    paths:
+      - "bot/tradesbyjay_fvg_mt5_bot.py"
+      - "bot/config.example.json"
+      - ".github/workflows/validate-tradesbyjay.yml"
+  pull_request:
+    paths:
+      - "bot/tradesbyjay_fvg_mt5_bot.py"
+      - "bot/config.example.json"
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile bot
+        run: python -m py_compile bot/tradesbyjay_fvg_mt5_bot.py
+      - name: Validate example configuration
+        run: python -m json.tool bot/config.example.json > /dev/null
