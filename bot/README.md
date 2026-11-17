@@ -1,43 +1,52 @@
-# S.V.P. APA MT5 Bot
+# TradesByJay MT5 Bot — HTF Support & Resistance + M5 FVG
 
-This is the local MT5 execution service for the restored S.V.P. Market Room.
+This is the local MT5 scanner/execution service used by the TradesByJay dashboard.
 
-## Safety defaults
-- Starts in scan-only mode; no orders are sent.
-- Demo-only account guard is enabled.
-- Live trading is blocked unless demo_only is disabled AND allow_live_trading is explicitly enabled.
-- Signals use closed candles only.
-- Risk sizing uses MT5 order_calc_profit and the broker's volume step/min/max.
-- A 1% per-trade risk target and 3% aggregate bot risk ceiling are configured by default.
+## Strategy
+1. Select H1 or H4 as the higher timeframe.
+2. Identify support from the lowest-low candle and resistance from the highest-high candle in the configured HTF lookback. The candle's full range is the zone.
+3. Wait for price to interact with support (bullish) or resistance (bearish).
+4. Detect a completed three-candle M5 displacement FVG. The middle candle must close in the direction of the gap.
+5. Optionally require an M5 liquidity sweep (off by default).
+6. Alert on the setup and, when automatic execution is deliberately enabled, place a limit order at the FVG 50% midpoint.
+7. SL is beyond the FVG origin candle with a spread buffer. TP defaults to 2R.
+8. Cancel a tracked pending order if a completed M5 candle closes through the far side of the FVG.
 
-## Install on Windows
-Use Python 3.14 (MetaTrader5 does not currently install on every Python version):
+## Install (Windows / PowerShell)
+
+Use a Python version supported by the MetaTrader5 package and keep the MT5 desktop terminal open and logged into a **demo account**.
+
 ```powershell
 py -3.14 -m pip install -r requirements.txt
 Copy-Item config.example.json config.json
-# Generate a private token, then paste it into config.json as api_token:
 py -3.14 -c "import secrets; print(secrets.token_urlsafe(32))"
-py -3.14 svp_apa_mt5_bot.py
 ```
-Keep the MT5 desktop terminal open and logged in. Edit config.json to match the exact broker symbol names shown in Market Watch.
 
-Before starting, replace `CHANGE_THIS_LOCAL_TOKEN` in config.json with the generated private token. The bot refuses dashboard control commands while the placeholder remains. The local API accepts browser requests only from the S.V.P. GitHub Pages origin or localhost.\n\n## First test
-1. Leave auto_execute=false.
-2. Start the script and open http://127.0.0.1:8765/status on the same computer.
-3. Confirm the account, symbols, closed-candle scan and rejections look correct.
-4. Test on a demo account before considering any live execution.
+Paste the generated value into `api_token` in `config.json`.
 
-## Execution
-Only after demo testing, set auto_execute=true. The default demo_only=true guard will still reject a non-demo account. Live execution requires a deliberate config change to demo_only=false and allow_live_trading=true. Never put the API token or MT5 credentials in the public website or repository.
+## Dashboard live publishing
 
-The local API is bound to 127.0.0.1. POST commands require the Bearer token configured in config.json. The web dashboard connection UI still needs to be wired to this local service in a follow-up integration step.
+The website reads `state.json` from GitHub Pages. To publish fresh scanner data, create a GitHub fine-grained personal access token limited to this repository with **Contents: Read and write** permission. Put it in the local `github_token` field in `config.json`. Never commit `config.json` or share this token.
 
-## Strategy implementation
-- H4: HH/HL or LL/LH structure with EMA context; neutral if unclear.
-- H1: relevant swing/liquidity location; sweep is optional.
-- M15: close beyond recent structure (BOS).
-- M5: closed-candle precision shift.
-- Stop: protected M5 swing; target: opposing H1 swing.
-- Candlestick catalogue and other patterns remain context/education, not standalone entries.
+The bot updates `state.json` approximately every `publish_seconds` (default 30 seconds). The website polls that feed and displays real scanner results. Without this token, the local MT5 scanner still works, but remote website visitors will not receive fresh market data.
 
-This is a first executable baseline, not a profitability claim. Backtest and forward-test each broker symbol. Broker naming, filling modes, stop distances and contract specifications differ.
+## Telegram alerts
+
+Optional: set `telegram_bot_token` and `telegram_chat_id` in the local config. A new confirmed FVG setup triggers a Telegram message. Keep these credentials out of GitHub.
+
+## Start
+
+```powershell
+py -3.14 tradesbyjay_fvg_mt5_bot.py
+```
+
+The local dashboard API listens on `http://127.0.0.1:8765/status`. On the TradesByJay website, use the Bot Control panel to connect, start, pause, or request a scan. Use the same `api_token` configured locally.
+
+## Safety defaults
+- `auto_execute=false`: alerts and scanning only by default.
+- `demo_only=true`: non-demo accounts are rejected.
+- `allow_live_trading=false`: live trading remains blocked.
+- `risk_percent=1.0`, `risk_reward=2.0`.
+- Broker symbol names and pip sizes vary. Verify each symbol's contract specification and set `pip_size_overrides` where needed.
+
+This software is not a profitability guarantee. Forward-test on demo and inspect every broker-specific order result before considering any change to execution settings.
