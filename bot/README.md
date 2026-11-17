@@ -1,77 +1,80 @@
-# TradesByJay MT5 Bot — HTF Support & Resistance + M5 FVG
+# TradesByJay MT5 Bot — H4 Trend + H1 Liquidity Sweep + M15 Wick Entry
 
-This is the local MT5 scanner/execution service used by the TradesByJay dashboard.
+This is the demo-only MT5 scanner and execution bot used by the TradesByJay dashboard.
 
-## Strategy
-1. Select H1 or H4 as the higher timeframe.
-2. Identify support from the lowest-low candle and resistance from the highest-high candle in the configured HTF lookback. The candle's full range is the zone.
-3. Wait for price to interact with support (bullish) or resistance (bearish).
-4. Detect a completed three-candle M5 displacement FVG. The middle candle must close in the direction of the gap.
-5. Optionally require an M5 liquidity sweep (off by default).
-6. Alert on the setup and, when automatic execution is deliberately enabled, place a limit order at the FVG 50% midpoint.
-7. SL is beyond the FVG origin candle with a spread buffer. TP defaults to 2R.
-8. Cancel a tracked pending order if a completed M5 candle closes through the far side of the FVG.
+## Exact strategy
 
-## Install (Windows / PowerShell)
+1. **H4 trend:** confirmed swing structure defines direction. Higher highs + higher lows = bullish; lower highs + lower lows = bearish. Mixed structure = no trade. No EMAs.
+2. **H1 liquidity sweep:** in the H4 direction, a completed H1 candle must wick through an older confirmed swing level and close back through that level. The sweep extreme becomes the invalidation point.
+3. **M15 entry:** wait for price to return to the swept H1 level and print a long-wick rejection candle in the H4 direction. The M15 candle must close directionally and meet the configured wick-to-range ratio.
+4. **Execution:** market order at the current quote. Stop loss is beyond the H1 sweep extreme (plus the configured point buffer). Take profit is the configured reward-to-risk multiple (default 2.0R).
+5. **Invalidation:** invalidate if an M15 candle closes beyond the sweep extreme, H4 trend no longer agrees, or the setup expires. A sweep is not re-armed after it has been invalidated.
 
-Use a Python version supported by the MetaTrader5 package and keep the MT5 desktop terminal open and logged into a **demo account**.
+There are no EMA, FVG, BOS, or M5 entry conditions in this strategy.
 
-```powershell
-py -3.14 -m pip install -r requirements.txt
-Copy-Item config.example.json config.json
-py -3.14 -c "import secrets; print(secrets.token_urlsafe(32))"
-```
+## Install (Windows)
 
-Paste the generated value into `api_token` in `config.json`.
-
-## Dashboard live publishing
-
-The website reads `state.json` from GitHub Pages. To publish fresh scanner data, create a GitHub fine-grained personal access token limited to this repository with **Contents: Read and write** permission. Put it in the local `github_token` field in `config.json`. Never commit `config.json` or share this token.
-
-The bot updates `state.json` approximately every `publish_seconds` (default 30 seconds). The website polls that feed and displays real scanner results. Without this token, the local MT5 scanner still works, but remote website visitors will not receive fresh market data.
-
-## Telegram alerts
-
-1. In Telegram, open **@BotFather**, send `/newbot`, choose a display name and a unique username, then copy the bot token.
-2. Create your signal group (or choose an existing group) and add the bot as a member. For a channel, add it as an administrator with permission to post.
-3. In the group, send a message such as `/start@YourBotUsername`.
-4. In PowerShell, enter the token without sharing it:
-   ```powershell
-   $token = Read-Host "Paste your NEW Telegram bot token"
-   $updates = Invoke-RestMethod "https://api.telegram.org/bot$token/getUpdates"
-   $updates.result | ForEach-Object { $_.message.chat | Select-Object id,type,title,username }
-   ```
-   Copy the group's numeric `id` (supergroups commonly begin with `-100`). If no update appears, send another message in the group and run the command again.
-5. In the bot's local `config.json`, set:
-   ```json
-   "telegram_bot_token": "YOUR_NEW_BOT_TOKEN",
-   "telegram_chat_id": "-1001234567890"
-   ```
-   Keep the existing commas and other settings valid. Do not put these values in the website or commit them to GitHub.
-6. Send a test message from PowerShell:
-   ```powershell
-   $chatId = Read-Host "Paste the numeric group chat ID"
-   $body = @{ chat_id = $chatId; text = "TradesByJay Telegram signal connection test." } | ConvertTo-Json
-   Invoke-RestMethod -Method Post -Uri "https://api.telegram.org/bot$token/sendMessage" -ContentType "application/json" -Body $body
-   ```
-7. Restart the bot. It sends Telegram alerts when a new confirmed FVG setup is detected; it does not resend the same detected setup on every scan.
-
-**Security:** If a bot token was ever pasted into a chat, screenshot, or public repository, revoke it with @BotFather and use a newly generated token. Never send the token to anyone.
-
-## Start
+Keep the MT5 desktop terminal open and logged into a **demo account**. Use a Python version supported by MetaTrader5:
 
 ```powershell
-py -3.14 tradesbyjay_fvg_mt5_bot.py
+py -3.14 -m pip install MetaTrader5
 ```
 
-The local dashboard API listens on `http://127.0.0.1:8765/status`. On the TradesByJay website, use the Bot Control panel to connect, start, pause, or request a scan. Use the same `api_token` configured locally.
+Save the bot script and its sibling `.env` file in the same folder, then run:
 
-## Safety defaults
-- `auto_execute=true`: automatic limit orders are enabled by default on demo.
-- `demo_only=true`: non-demo accounts are rejected at startup.
-- `allow_live_trading=false`: live trading remains blocked.
-- Set `auto_execute=false` if you want alerts and scanning without orders.
-- `risk_percent=1.0`, `risk_reward=2.0`.
-- Broker symbol names and pip sizes vary. Verify each symbol's contract specification and set `pip_size_overrides` where needed.
+```powershell
+py -3.14 .\TRADESBYJAY_BOT.py
+```
 
-This software is not a profitability guarantee. Forward-test on demo and inspect every broker-specific order result before considering any change to execution settings.
+The bot refuses to start on a live account and stops if the connected account changes away from demo.
+
+## Local .env settings
+
+Create a plain-text `.env` beside the script. Example:
+
+```dotenv
+APA_SIGNAL_SYMBOLS=XAUUSD,Volatility 10 Index,Volatility 25 Index,Volatility 50 Index,Volatility 75 Index,Volatility 100 Index
+RISK_USD=1
+SVP_RR=2.0
+SCAN_SECONDS=5
+MAX_POSITIONS=4
+DRY_RUN=false
+TREND_SWING=2
+SWEEP_SWING=3
+SWEEP_LOOKBACK_H1=12
+SETUP_EXPIRY_H1=24
+WICK_RATIO=0.5
+SL_BUFFER_POINTS=0
+MAX_SPREAD_POINTS=0
+APA_AUTO_SYMBOL_KEYWORDS=STEP
+TRADE_BUY=true
+TRADE_SELL=true
+APA_WEB_GITHUB_TOKEN=YOUR_REPOSITORY_TOKEN
+GITHUB_REPO=lamar-progst/apa-dashboard
+GITHUB_BRANCH=main
+PUBLISH_SECONDS=30
+TELEGRAM_BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
+TELEGRAM_CHAT_ID=YOUR_TELEGRAM_CHAT_ID
+```
+
+The bot matches configured symbols to the broker's actual symbol names. It can also auto-add broker symbols matching `APA_AUTO_SYMBOL_KEYWORDS` (default: `STEP`). Only symbols successfully found and scanned by MT5 are published.
+
+`RISK_USD` is a fixed cash-risk budget per trade, not a percentage. If the broker's minimum lot would exceed that budget, the bot skips the trade rather than increasing volume. `MAX_POSITIONS` limits total open positions plus pending orders. `DRY_RUN=true` sends setup notifications without sending orders.
+
+## Website live feed
+
+The website reads `state.json` from this repository's `main` branch. Set `APA_WEB_GITHUB_TOKEN` in the local `.env` file to a GitHub token with repository Contents read/write access. The token stays local and must never be committed or pasted into the website. The bot publishes current market snapshots and open/pending trades approximately every `PUBLISH_SECONDS` seconds (default 30).
+
+The website's strategy journey displays H4 trend → H1 liquidity sweep → M15 wick-rejection entry. Candle charts use the completed M15 candles published by the bot.
+
+## Telegram and Discord alerts
+
+Set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` for Telegram. Optional Discord webhook variables supported by the script include `DISCORD_WEBHOOK_URL`, `MARKET_TIME_DISCORD_WEBHOOK_URL`, `BOT_STATUS_DISCORD_WEBHOOK_URL`, `XAUUSD_DISCORD_WEBHOOK_URL`, `VIX_DISCORD_WEBHOOK_URL`, `SKEW_DISCORD_WEBHOOK_URL`, `STEP_DISCORD_WEBHOOK_URL`, and the individual `VIX_*_WEBHOOK` variables.
+
+The bot sends alerts for setup armed, setup invalidated, demo bot status, and order signals. Keep credentials in the local `.env` file only.
+
+## Safety
+
+- Demo accounts only; live account execution is blocked at startup and during the scan loop.
+- This is not a profitability guarantee. Forward-test on demo and verify broker symbol specifications, spread, contract size, and order results.
+- Never commit `.env`, tokens, webhook URLs, or other credentials to GitHub.
