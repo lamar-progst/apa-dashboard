@@ -25,7 +25,7 @@ DEFAULTS = {
     "risk_percent": 1.0, "risk_reward": 2.0,
     "scan_seconds": 5, "publish_seconds": 30,
     "max_spread_points": 0, "deviation_points": 20,
-    "magic": 161126, "auto_execute": False, "demo_only": True,
+    "magic": 161126, "auto_execute": True, "demo_only": True,
     "allow_live_trading": False, "max_positions": 4,
     "api_host": "127.0.0.1", "api_port": 8765,
     "api_token": "CHANGE_THIS_LOCAL_TOKEN",
