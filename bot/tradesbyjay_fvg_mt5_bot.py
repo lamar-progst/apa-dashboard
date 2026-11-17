@@ -332,14 +332,14 @@ def publish_loop():
     global last_publish
     while True:
         time.sleep(1)
-        if not state["bot"]["running"]:
+        if not state["bot"]["running"] or not state["bot"]["connected"] or not state.get("updated"):
             continue
         if time.time() - last_publish < int(cfg["publish_seconds"]):
             continue
         with lock:
             payload = {k: v for k, v in state.items() if k != "bot"}
-            payload["online"] = True
-            payload["updated"] = now_iso()
+            payload["online"] = bool(state.get("online")) and bool(state.get("updated"))
+            payload["updated"] = state.get("updated")
         ok, error = publish_github(payload)
         last_publish = time.time()
         with lock:
