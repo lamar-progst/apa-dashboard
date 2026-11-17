@@ -271,7 +271,7 @@ def scan_symbol(symbol):
         "strategy": "HTF SUPPORT/RESISTANCE + M5 FVG",
         "support_zone": support, "resistance_zone": resistance,
         "market_speed": "LIVE", "data_ready": True, "timeframes": {cfg["htf_timeframe"]: True, "M5": True},
-        "candles": m5[-48:], "updated_at": now_iso(),
+        "candles": m5[-48:], "m5_candle_time": m5[-1]["time"], "entry_timeframe": "M5", "updated_at": now_iso(),
         "note": "Waiting for price to interact with a higher-timeframe zone and a confirmed M5 FVG.",
         "conditions": {"HTF support/resistance available": True,
                        "Price interacted with HTF zone": bool(touched_support or touched_resistance),
@@ -287,6 +287,7 @@ def scan_symbol(symbol):
             key = (symbol, fvg["side"], fvg["third_time"])
             market.update({"stage": "READY", "entry": fvg["entry"], "stop": None, "target": None,
                 "fvg": {"low": fvg["low"], "high": fvg["high"], "midpoint": fvg["entry"], "size": fvg["size"]},
+                "invalidation_level": fvg["low"] if fvg["side"] == "BUY" else fvg["high"],
                 "next_required": "FVG midpoint retracement / limit fill",
                 "note": "Confirmed " + fvg["side"] + " M5 FVG after HTF zone interaction."})
             if key not in seen_fvg:
