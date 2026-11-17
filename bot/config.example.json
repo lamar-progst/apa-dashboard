@@ -14,7 +14,7 @@
   "max_spread_points": 0,
   "deviation_points": 20,
   "magic": 161126,
-  "auto_execute": false,
+  "auto_execute": true,
   "demo_only": true,
   "allow_live_trading": false,
   "max_positions": 4,
