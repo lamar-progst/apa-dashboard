@@ -1,7 +1,15 @@
-name: Deploy A.P.A. Pages
+name: Deploy TradesByJay Pages
 on:
   push:
     branches: [main]
+    paths:
+      - "index.html"
+      - "admin.html"
+      - "assets/**"
+      - "favicon.ico"
+      - "icon.png"
+      - ".nojekyll"
+      - ".github/workflows/pages.yml"
   workflow_dispatch:
 permissions:
   contents: read
