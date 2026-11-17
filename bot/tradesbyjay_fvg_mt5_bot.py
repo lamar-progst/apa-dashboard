@@ -403,7 +403,7 @@ class Handler(BaseHTTPRequestHandler):
         raw = json.dumps(data, default=str).encode()
         self.send_response(code); self.send_headers(); self.end_headers(); self.wfile.write(raw)
     def do_OPTIONS(self):
-        self.send_response(204); self.headers(); self.end_headers()
+        self.send_response(204); self.send_headers(); self.end_headers()
     def do_GET(self):
         if self.path != "/status":
             return self.reply(404, {"error": "not found"})
