@@ -366,9 +366,9 @@ const m=chosen||sorted[0];
 feedEl.innerHTML='<i class="svp-ew-dot"></i>'+(online?'BOT FEED LIVE':'BOT FEED STALE');
 heartEl.textContent=updated&&Number.isFinite(Date.parse(updated))?new Date(updated).toLocaleTimeString([],{hour:'numeric',minute:'2-digit',second:'2-digit'}):'No timestamp';
 countEl.textContent=list.length+' markets published · page checks every 3 sec';
-if(!m){marketEl.textContent='No market data';progressEl.textContent='Waiting for the bot to publish its market list.';candleEl.textContent='No M15 candle data';ageEl.textContent='No candle timestamp was published.';nextEl.textContent='Waiting for scanner analysis';if(entryChartEl)entryChartEl.textContent='M15 closed candle';if(entryTriggerEl)entryTriggerEl.textContent='Waiting for bot evidence.';if(invalidationEl)invalidationEl.textContent='Not published';barEl.style.width='0%';return}
+if(!m){marketEl.textContent='No market data';progressEl.textContent='Waiting for the bot to publish its market list.';candleEl.textContent='No M15 candle data';ageEl.textContent='No candle timestamp was published.';nextEl.textContent='Waiting for scanner analysis';if(entryChartEl)entryChartEl.textContent='M15 closed candle';if(entryTriggerEl)entryTriggerEl.textContent='Waiting for M15 wick rejection at the swept H1 level.';if(invalidationEl)invalidationEl.textContent='Waiting for H1 sweep extreme';barEl.style.width='0%';return}
 marketEl.textContent=String(m.symbol||'Unknown market')+' · '+String(m.stage||'WATCH')+' · '+String(m.side||'WAIT');
-const entryTf=String(m.entry_timeframe??m.entry_tf??m.timeframes?.entry??'M15').toUpperCase();if(entryChartEl)entryChartEl.textContent=entryTf+' closed candle';if(entryTriggerEl)entryTriggerEl.textContent=String(m.m15_candle_detail||m.m15_confirmation||m.next_required||m.note||'Waiting for entry confirmation.');if(invalidationEl)invalidationEl.textContent=String(m.invalidation_level??m.invalidation??'Waiting for H1 sweep extreme');
+const entryTf=String(m.entry_timeframe??m.entry_tf??m.timeframes?.entry??'M15').toUpperCase();if(entryChartEl)entryChartEl.textContent=entryTf+' closed candle';if(entryTriggerEl)entryTriggerEl.textContent=String(m.m15_confirmation||m.next_required||m.note||'Waiting for M15 wick rejection at the swept H1 level.');if(invalidationEl)invalidationEl.textContent=String(m.stop??m.invalidation_level??m.invalidation??'Waiting for H1 sweep extreme');
 const p=displayProgress(m);const pct=p===null?0:Math.max(0,Math.min(100,p));
 progressEl.textContent=p===null?'Scanner has not published live setup progress.':p.toFixed(1)+'% live setup progress · '+checkSummary(m)+' · not a win probability';
 barEl.style.width=pct+'%';
@@ -529,7 +529,7 @@ function render(){
  status.textContent=ready?(hasPrices?'READY SIGNAL · '+direction:'READY · WAITING FOR PRICES'):'WAIT · SETUP NOT READY';
  status.className='svp-ai-status'+(ready&&hasPrices?' ready':'');
  pair.textContent=String(m.symbol||'Market')+' · '+direction+' · '+stage(m);
- const evidence=m.m15_candle_detail||m.m15_confirmation||m.note||'Waiting for M15 wick rejection at the swept H1 level.';
+ const evidence=m.m15_confirmation||m.next_required||m.note||'Waiting for M15 wick rejection at the swept H1 level.';
  reason.textContent=(ready?'Scanner confirms this setup. ':'This is a direction candidate, not an entry. ')+String(evidence);
  const cond=m.conditions&&typeof m.conditions==='object'?Object.entries(m.conditions):[];
  checks.innerHTML=cond.map(([k,v])=>'<span class="svp-ai-check">'+(v===true?'✓':v===false?'○':'•')+' '+esc(k)+'</span>').join('');
@@ -576,12 +576,6 @@ function selectedMarket(markets){
  if(requested)return requested;
  return [...markets].sort((a,b)=>(stage(b)==='READY')-(stage(a)==='READY')||(Number(b.progress)||0)-(Number(a.progress)||0))[0]||null;
 }
-function breakoutConfirmed(m,ready){
- if(ready)return true;
- const text=[m.m15_confirmation,m.m15_candle_detail,m.market_phase,m.note].filter(Boolean).join(' ');
- if(/\b(no|not|awaiting|waiting|wait for|pending)\b/i.test(text))return false;
- return /(?:m15.{0,50}(?:breakout|\bbos\b|break of structure).{0,40}(?:confirmed|closed|complete|passed)|(?:confirmed|closed|complete|passed).{0,40}m15.{0,50}(?:breakout|\bbos\b|break of structure))/i.test(text);
-}
 function step(label,state,title,detail){
  const names={done:'CONFIRMED',active:'LIVE · WAITING',blocked:'DIRECTION MISMATCH',stale:'STALE',waiting:'WAITING'};
  return '<article class="svp-flow-step '+state+'"><div class="svp-flow-step-top"><span class="svp-flow-step-dot"></span><strong>'+label+'</strong><em>'+names[state]+'</em></div><h3>'+esc(title)+'</h3><p>'+esc(detail)+'</p></article>';
@@ -622,7 +616,7 @@ function render(){
  const opts='<option value="AUTO">Auto · closest setup</option>'+markets.map(m=>'<option value="'+esc(m.symbol)+'">'+esc(m.symbol)+'</option>').join('');
  if(select.innerHTML!==opts){select.innerHTML=opts;if(markets.some(m=>m.symbol===choice))select.value=choice;else{choice='AUTO';select.value='AUTO'}}
  const m=selectedMarket(markets);
- if(!m){$('svp-flow-live').textContent='NO MARKET DATA';$('svp-flow-live').className='svp-flow-live stale';$('svp-flow-name').textContent='No market published';$('svp-flow-direction').textContent='—';$('svp-flow-price').textContent='—';$('svp-flow-zone').textContent='Not published';$('svp-flow-next').textContent='Waiting for fresh scanner data.';$('svp-flow-steps').innerHTML=step('H4 TREND','waiting','Waiting for market data','No H4 trend direction has been published.')+step('M15 liquidity-sweep','waiting','Waiting for M15 liquidity-sweep','No M15 liquidity-sweep evidence has been published.')+step('50% liquidity-sweep ENTRY','waiting','Waiting for entry confirmation','A WATCH state is not an entry.');$('svp-flow-chart').innerHTML='<div class="svp-flow-chart-empty">Waiting for verified M15 candles from the bot.</div>';return}
+ if(!m){$('svp-flow-live').textContent='NO MARKET DATA';$('svp-flow-live').className='svp-flow-live stale';$('svp-flow-name').textContent='No market published';$('svp-flow-direction').textContent='—';$('svp-flow-price').textContent='—';$('svp-flow-zone').textContent='Not published';$('svp-flow-next').textContent='Waiting for fresh scanner data.';$('svp-flow-steps').innerHTML=step('H4 TREND','waiting','Waiting for market data','No H4 trend direction has been published.')+step('H1 LIQUIDITY SWEEP','waiting','Waiting for H1 liquidity sweep','A completed H1 candle must wick through a confirmed swing and close back through it.')+step('M15 WICK ENTRY','waiting','Waiting for M15 rejection','A WATCH state is not an entry.');$('svp-flow-chart').innerHTML='<div class="svp-flow-chart-empty">Waiting for verified M15 candles from the bot.</div>';return}
  const updated=Date.parse(feed.updated),age=(Date.now()-updated)/1000,stale=feed.online===false||!Number.isFinite(updated)||age>180||age< -30;
  const direction=String(m.h4_direction||'').toUpperCase(),tradeSide=side(m),validSide=tradeSide==='BUY'||tradeSide==='SELL',ready=stage(m)==='READY'&&validSide;
  const aligned=direction==='BUY'||direction==='SELL',matches=validSide&&direction===tradeSide;
@@ -654,7 +648,7 @@ function render(){
  $('svp-flow-chart-title').textContent=m.symbol+' · M15 PRICE ACTION';
  $('svp-flow-chart-badge').textContent=stale?'STALE SNAPSHOT':fresh?'LIVE MT5 PRICE':'BOT PRICE';
  drawChart(m,live,fresh);
- if(!hasZone&&!stale)$('svp-flow-zone').title='The feed currently does not publish support/resistance zone bounds.';
+ if(!hasZone&&!stale)$('svp-flow-zone').title='The bot has not armed an H1 liquidity sweep for this market yet.';
 }
 window.addEventListener('svp-feed-loaded',e=>{feed=e.detail;render()});
 $('svp-flow-market').addEventListener('change',e=>{choice=e.target.value;const ai=$('svp-ai-market');if(ai&&[...ai.options].some(o=>o.value===choice)){ai.value=choice;ai.dispatchEvent(new Event('change',{bubbles:true}))}render()});
