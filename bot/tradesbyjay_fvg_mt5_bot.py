@@ -44,10 +44,30 @@ state = {"online": False, "updated": None, "strategy": "TRADESBYJAY_HTF_SR_M5_FV
          "status": "STARTING", "markets": [], "signals": [], "positions": [],
          "performance": {}, "bot": {"running": False, "connected": False, "mode": "SCAN ONLY",
          "last_scan": None, "last_publish": None, "errors": []}}
-seen_fvg = set()
-pending_meta = {}
+SEEN_PATH = ROOT / "seen_fvg.json"
+PENDING_PATH = ROOT / "pending_fvg.json"
+try:
+    seen_fvg = {(str(x[0]), str(x[1]), int(x[2])) for x in json.loads(SEEN_PATH.read_text(encoding="utf-8"))}
+except Exception:
+    seen_fvg = set()
+try:
+    pending_meta = {int(k): v for k, v in json.loads(PENDING_PATH.read_text(encoding="utf-8")).items()}
+except Exception:
+    pending_meta = {}
 last_publish = 0.0
 last_telegram = set()
+
+def save_seen_fvg():
+    try:
+        SEEN_PATH.write_text(json.dumps([list(x) for x in sorted(seen_fvg)]), encoding="utf-8")
+    except Exception as exc:
+        log.warning("Could not persist FVG deduplication state: %s", exc)
+
+def save_pending_meta():
+    try:
+        PENDING_PATH.write_text(json.dumps({str(k): v for k, v in pending_meta.items()}), encoding="utf-8")
+    except Exception as exc:
+        log.warning("Could not persist pending FVG metadata: %s", exc)
 
 def now_iso():
     return datetime.now(timezone.utc).isoformat()
@@ -190,7 +210,14 @@ def pending_orders():
 
 def manage_pending(symbol, bars):
     last = bars[-1]
-    for order in pending_orders():
+    active_orders = pending_orders()
+    active_tickets = {int(o.ticket) for o in active_orders}
+    stale = [ticket for ticket in pending_meta if ticket not in active_tickets]
+    for ticket in stale:
+        pending_meta.pop(ticket, None)
+    if stale:
+        save_pending_meta()
+    for order in active_orders:
         if order.symbol != symbol:
             continue
         meta = pending_meta.get(order.ticket)
@@ -203,6 +230,7 @@ def manage_pending(symbol, bars):
                                      "comment": "TBJ FVG invalidated"})
             if result and result.retcode == mt5.TRADE_RETCODE_DONE:
                 pending_meta.pop(order.ticket, None)
+                save_pending_meta()
                 log.info("%s pending FVG order cancelled after invalidation", symbol)
 
 def place_limit(symbol, fvg, info, tick, account):
@@ -249,7 +277,8 @@ def place_limit(symbol, fvg, info, tick, account):
     result = mt5.order_send(request)
     if not result or result.retcode not in (mt5.TRADE_RETCODE_DONE, mt5.TRADE_RETCODE_PLACED):
         return "ORDER REJECTED — " + str(getattr(result, "comment", mt5.last_error())), levels
-    pending_meta[int(result.order)] = {"side": fvg["side"], "low": fvg["low"], "high": fvg["high"]}
+    pending_meta[int(result.order)] = {"side": fvg["side"], "low": fvg["low"], "high": fvg["high"], "symbol": symbol}
+    save_pending_meta()
     levels["ticket"] = int(result.order)
     return "LIMIT ORDER PLACED", levels
 
@@ -292,6 +321,7 @@ def scan_symbol(symbol):
                 "note": "Confirmed " + fvg["side"] + " M5 FVG after HTF zone interaction."})
             if key not in seen_fvg:
                 seen_fvg.add(key)
+                save_seen_fvg()
                 account = mt5.account_info()
                 execution, order = place_limit(symbol, fvg, info, tick, account)
                 signal = {"signal_id": "|".join(map(str, key)), "symbol": symbol, "side": fvg["side"],
