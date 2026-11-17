@@ -12,5 +12,14 @@ See [bot/README.md](bot/README.md) for installation, configuration, dashboard co
 
 The strategy is higher-timeframe support/resistance (H1 or H4) with 5-minute displacement Fair Value Gap entries. The public website does not contain MT5 credentials or private bot tokens.
 
+## Supabase configuration
+The existing Supabase project hosts access-request handling and TradesByJay chat.
+
+- Add `OPENAI_API_KEY` under Supabase Edge Function secrets for chat responses.
+- Add `TRADESBYJAY_ADMIN_KEY` under Supabase Edge Function secrets for the access-admin page. Generate a strong random value locally and enter the same value in the admin page when reviewing requests.
+- The chat model defaults to `gpt-6-luna`; optionally override it with `TRADESBYJAY_AI_MODEL`.
+
+Never paste these secrets into the public website or commit them to GitHub.
+
 ## Security
-Never commit `bot/config.json`, GitHub tokens, Telegram bot tokens, or MT5 credentials.
+Never commit `bot/config.json`, GitHub tokens, Telegram bot tokens, OpenAI API keys, admin keys, or MT5 credentials.
