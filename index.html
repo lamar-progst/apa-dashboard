@@ -153,6 +153,107 @@ body.alert-flash .live-indicator .dot{background:#ff334f!important;box-shadow:0 
  .progress i:after{display:none}
 }
 
+
+/* COMMAND DECK — high-energy TradesByJay skin */
+:root{--bg:#07050f;--panel:#100c1d;--line:#38244f;--purple:#c49aff;--cyan:#7cecff;--red:#ff294f;--green:#58f0b3;--gold:#ffd36d}
+body{background:#07050f;isolation:isolate;overflow-x:hidden}
+body:before{z-index:-2;opacity:.14;background-size:48px 48px;background-image:linear-gradient(#b78aff16 1px,transparent 1px),linear-gradient(90deg,#b78aff16 1px,transparent 1px)}
+body:after{content:"";position:fixed;z-index:-1;inset:-20%;pointer-events:none;background:radial-gradient(ellipse at 12% 12%,#8a32ff32,transparent 32%),radial-gradient(ellipse at 85% 25%,#ff174b20,transparent 27%),radial-gradient(ellipse at 55% 100%,#00c9ff16,transparent 34%);filter:blur(22px);animation:ambientDrift 16s ease-in-out infinite alternate}
+.shell{max-width:1800px;padding:18px clamp(12px,2.8vw,44px) 58px}
+.topbar{border:1px solid #ffffff16;border-radius:17px;padding:12px 16px;background:linear-gradient(100deg,#160e29eF,#0d0b18eF);box-shadow:0 10px 40px #0008,0 0 35px #8c4dff12;backdrop-filter:blur(20px)}
+.mark{width:48px;height:48px;border-radius:15px;background:linear-gradient(145deg,#e5d2ff 0%,#a16bff 42%,#ff315f 100%);box-shadow:0 0 18px #a66aff99,0 0 42px #a66aff40;position:relative}
+.mark:after{content:"";position:absolute;inset:-5px;border:1px solid #c8a3ff66;border-radius:18px;animation:markRing 3s ease-out infinite}
+.brand-name{font-size:17px;letter-spacing:.16em;text-shadow:0 0 22px #c49aff66}
+.brand-sub{color:#b49ad4}
+.live-indicator{border-radius:8px;border-color:#ff315f66;background:#ff174b14;color:#ffb6c5;box-shadow:0 0 18px #ff174b1c}
+.live-indicator .dot{background:var(--red);box-shadow:0 0 6px var(--red),0 0 18px var(--red);animation:redBeacon .9s infinite}
+.live-indicator.stale .dot{animation:redBeacon .45s infinite}
+.hero{position:relative;overflow:hidden;min-height:225px;margin:18px 0 16px;padding:34px 28px;border:1px solid #9b69e844;border-radius:23px;background:linear-gradient(105deg,#1b1030ed 0%,#120d21ed 53%,#190d1bed 100%);box-shadow:0 24px 70px #0007,inset 0 1px #ffffff19}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 20%,#c59aff0d 45%,transparent 67%),repeating-linear-gradient(0deg,transparent 0 34px,#ffffff05 35px);pointer-events:none}
+.hero:after{content:"";position:absolute;width:290px;height:290px;right:7%;top:-115px;border:1px solid #b68bff30;border-radius:50%;box-shadow:0 0 0 25px #b68bff08,0 0 0 55px #b68bff06,0 0 80px #9c50ff22;animation:orbFloat 8s ease-in-out infinite}
+.hero>div{position:relative;z-index:1}
+.eyebrow{color:#d4b4ff;text-shadow:0 0 16px #b66bff66}
+.hero h1{font-size:clamp(39px,5.2vw,72px);max-width:850px;text-shadow:0 8px 40px #0008}
+.hero h1 span{background:linear-gradient(90deg,#fff 0%,#cba9ff 35%,#ff829c 75%,#80edff 100%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradientFlow 6s linear infinite}
+.hero p{color:#c2b5d6;max-width:570px}
+.hero-side{padding:16px 18px;border:1px solid #ffffff20;border-radius:14px;background:#0806119c;backdrop-filter:blur(12px);box-shadow:0 0 35px #b04cff15}
+.hero-side strong{font:700 27px 'DM Mono';color:#fff;text-shadow:0 0 20px #b68bff66}
+.kpi,.panel{background:linear-gradient(145deg,#1c1430ed,#0d0a18f2 65%);border:1px solid #ffffff1d;border-radius:16px;box-shadow:0 14px 44px #0007,inset 0 1px #ffffff12;backdrop-filter:blur(16px);transition:border-color .25s,box-shadow .25s,transform .25s}
+.kpi{padding:18px 19px;overflow:hidden}
+.kpi:after{display:block;background:#a65cff38;width:120px;height:120px;right:-62px;top:-70px;filter:blur(22px)}
+.kpi:hover,.panel:hover{border-color:#a66bff66;box-shadow:0 18px 55px #0009,0 0 28px #9c55ff16,inset 0 1px #ffffff19}
+.kpi-label{color:#b7a5d1}
+.kpi-value{font-size:31px;text-shadow:0 0 22px #bd91ff2b}
+.section-head{margin-top:27px}
+.section-title{font-size:17px}
+.view-tab,.filter,.search{border-radius:9px;background:#130d21;border-color:#49315e;color:#cfc0e6}
+.view-tab.active,.filter.active{background:linear-gradient(120deg,#a04bff32,#ff315f1b);border-color:#bd8cff;color:#fff;box-shadow:0 0 20px #a34fff26}
+.market-grid{gap:12px}
+.market{position:relative;overflow:hidden;background:linear-gradient(145deg,#1a1230f5,#0d0a18f5 75%);border:1px solid #ffffff1c;border-radius:15px;box-shadow:0 12px 30px #0005;transition:transform .25s,border-color .25s,box-shadow .25s}
+.market:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,#a66aff,#ff4167,transparent);opacity:.45}
+.market:hover,.market.selected{transform:translateY(-4px) scale(1.008);border-color:#b38aff;box-shadow:0 18px 40px #0008,0 0 24px #9d56ff29}
+.market.selected:before{height:3px;opacity:1;box-shadow:0 0 15px #b87aff}
+.market-price{font-size:21px;color:#fff;text-shadow:0 0 15px #a88bff30}
+.tag{border-radius:6px}
+.tag.sell{background:#ff24451c;box-shadow:0 0 14px #ff24451a;color:#ff8298;border-color:#ff41677a}
+.tag.buy{background:#25d99b17;box-shadow:0 0 14px #25d99b16;color:#75f5c1;border-color:#25d99b66}
+.waiting-reason{background:#ffd36d0a;border-color:#ffd36d35}
+.waiting-reason span{color:#ffda87}
+.progress{height:4px;background:#30223f}
+.progress i{background:linear-gradient(90deg,#8b50ff,#e65dff,#ff456b);box-shadow:0 0 12px #a65cff}
+.panel-head h3{font-size:14px}
+.chart-wrap{background:radial-gradient(ellipse at 50% 0%,#271642,#090711 75%);border-color:#49315e}
+.structure-item,.health-item,.detail-level,.setting-chip{background:linear-gradient(145deg,#1b1430,#100c1b);border-color:#ffffff17}
+.next-step{background:linear-gradient(110deg,#9e53ff1b,#ff3c6710);border-color:#a76aff55}
+.status-chip.sl{background:#ff315f17;box-shadow:0 0 14px #ff315f18}
+.bot-orb{background:linear-gradient(145deg,#e0c6ff,#9854ff 60%,#ff456d);box-shadow:0 0 24px #a45cff55}
+.footer{border-color:#ffffff20;color:#8c7da5}
+.ticker-strip{overflow:hidden;display:flex;align-items:center;gap:0;margin:0 0 18px;border:1px solid #ffffff1c;border-radius:10px;background:#0c0916d9;box-shadow:0 8px 28px #0006;min-height:37px}
+.ticker-label{flex:0 0 auto;padding:0 13px;font:9px 'DM Mono';letter-spacing:.16em;color:#ff9db0;border-right:1px solid #ffffff18}
+.ticker-window{overflow:hidden;white-space:nowrap;flex:1}
+.ticker-track{display:inline-flex;align-items:center;gap:34px;min-width:max-content;padding:10px 18px;animation:tickerScroll 32s linear infinite}
+.ticker-item{font:10px 'DM Mono';color:#d7c9e9}
+.ticker-item b{color:#fff;margin-right:7px}.ticker-item em{font-style:normal;color:#9c8baa}.ticker-item .up{color:#62f0b1}.ticker-item .down{color:#ff718d}
+.signal-toast{border-radius:10px;border:1px solid #ff416c;background:linear-gradient(110deg,#390b1bfa,#150b19fa);box-shadow:0 0 0 1px #ff416c25,0 15px 55px #ff174b55,0 0 30px #ff174b33}
+body.alert-flash:after{animation:redAlert .55s ease-out 3}
+@keyframes ambientDrift{from{transform:translate3d(-2%,0,0) scale(1)}to{transform:translate3d(2%,2%,0) scale(1.08)}}
+@keyframes orbFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(15px) rotate(9deg)}}
+@keyframes gradientFlow{to{background-position:220% center}}
+@keyframes markRing{0%{transform:scale(.92);opacity:.7}100%{transform:scale(1.28);opacity:0}}
+@keyframes redBeacon{0%,100%{opacity:1;box-shadow:0 0 5px var(--red),0 0 17px var(--red)}50%{opacity:.28;box-shadow:0 0 2px var(--red)}}
+@keyframes tickerScroll{to{transform:translateX(-50%)}}
+@media(max-width:760px){
+ .shell{padding:9px 9px 28px}
+ .topbar{border-radius:12px;padding:9px 10px;margin:0 -2px}
+ .mark{width:38px;height:38px}
+ .brand-name{font-size:12px;letter-spacing:.12em}
+ .brand-sub{font-size:7px}
+ .live-indicator{font-size:7px;padding:7px 8px;max-width:145px}
+ .hero{min-height:0;padding:23px 16px 20px;border-radius:17px;margin:12px 0}
+ .hero:after{right:-100px;top:-80px;opacity:.65}
+ .hero h1{font-size:clamp(35px,9vw,48px);max-width:95%}
+ .hero p{font-size:10px;max-width:90%}
+ .hero-side{justify-self:start;text-align:left;padding:9px 11px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:12px}
+ .hero-side strong{font-size:15px;margin:0}
+ .hero-side .label,.hero-side small{font-size:7px}
+ .kpi,.panel{border-radius:13px}
+ .kpi{padding:12px 11px}.kpi-value{font-size:22px}
+ .section-title{font-size:14px}
+ .market-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .market{padding:10px;border-radius:12px}
+ .market-price{font-size:15px;margin:10px 0 2px}
+ .waiting-reason{padding:8px}.waiting-reason p{font-size:9px}
+ .workspace{grid-template-columns:1fr;gap:8px}
+ .panel{padding:12px}
+ .chart-wrap{height:190px}
+ .bottom-grid{grid-template-columns:1fr;gap:8px}
+ .ticker-strip{margin-bottom:12px;min-height:33px}
+ .ticker-label{font-size:8px;padding:0 9px}.ticker-track{gap:24px;padding:9px 12px}
+ .signal-toast-wrap{top:8px;right:8px;width:calc(100vw - 16px)}
+}
+@media(max-width:390px){.hero h1{font-size:34px}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.brand-sub{letter-spacing:.07em}.live-indicator{max-width:120px}}
+@media(prefers-reduced-motion:reduce){body:after,.mark:after,.hero:after,.hero h1 span,.ticker-track,.live-indicator .dot{animation:none!important}.market,.kpi,.panel{transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -162,6 +263,7 @@ body.alert-flash .live-indicator .dot{background:#ff334f!important;box-shadow:0 
  <div class="brand"><div class="mark">TBJ</div><div><div class="brand-name">TRADESBYJAY</div><div class="brand-sub">MARKET COMMAND CENTER</div></div></div>
  <div class="top-actions"><div id="connection" class="live-indicator stale"><i class="dot"></i><span id="connectionText">CONNECTING TO MT5 FEED</span></div><a class="top-link" href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noopener">JOIN THE COMMUNITY ↗</a></div>
 </header>
+<div class="ticker-strip"><div class="ticker-label">MARKET PULSE</div><div class="ticker-window"><div class="ticker-track" id="tickerTrack"><span class="ticker-item">CONNECTING TO LIVE MARKETS…</span></div></div></div>
 <section class="hero">
  <div><div class="eyebrow">◈ THE MARKET, WITHOUT THE NOISE</div><h1>See the move.<br><span>Understand the why.</span></h1><p>A live command center for price action, market structure and liquidity. One clean view of the markets your MT5 scanner is watching.</p></div>
  <div class="hero-side"><span class="label">FEED LAST UPDATED</span><strong id="lastUpdated">—</strong><small id="feedMode">WAITING FOR BOT SNAPSHOT</small></div>
@@ -232,7 +334,8 @@ function renderDetail(){const m=(snapshot?.markets||[]).find(x=>x.symbol===selec
 function renderSignals(){const active=(snapshot?.signals||[]).filter(s=>['OPEN','PENDING'].includes(String(s.status||'').toUpperCase()));$('signals').innerHTML=active.length?active.map(s=>{const st=String(s.status||'').toUpperCase(),p=num(s.tp_progress),cl=st==='PENDING'?'wait':'open';return '<div class="signal-row"><div><strong>'+esc(s.symbol)+' · '+esc(s.side)+'</strong><small>'+esc(s.strategy||'MT5 order')+' · '+esc(st)+' · '+esc(time(s.sent_at||s.timestamp))+'</small></div><div class="signal-price">'+price(s.profit??s.current_price)+'</div><span class="status-chip '+cl+'">'+esc(st)+'</span>'+(p!==null?'<div style="grid-column:1/-1"><div class="market-foot"><span>TP PROGRESS</span><span>'+p.toFixed(1)+'%</span></div><div class="tp-track"><i style="width:'+Math.max(0,Math.min(100,p))+'%"></i></div></div>':'')+'</div>'}).join(''):'<div class="empty">No open positions or pending orders published.</div>';const tg=snapshot?.telegram||{};$('telegramNote').textContent=tg.configured?('Telegram: '+String(tg.status||'UNKNOWN')+(tg.updated?' · '+time(tg.updated):'')):'Telegram: '+String(tg.status||'NOT CONFIGURED')+'. The bot has not confirmed an alert delivery.';const positions=active.filter(p=>String(p.status).toUpperCase()==='OPEN');$('tradeMonitor').innerHTML=positions.length?positions.map(p=>'<div class="signal-row"><div><strong>'+esc(p.symbol)+' · '+esc(p.side)+'</strong><small>Entry '+price(p.entry)+' · SL '+price(p.stop)+' · TP '+price(p.target)+'</small></div><div class="signal-price">'+price(p.profit)+'</div><span class="status-chip open">OPEN</span></div>').join(''):'<div class="empty">No open MT5 positions currently published.</div>';const history=(snapshot?.signal_history||[]).slice(0,12);$('signalHistory').innerHTML=history.length?history.map(s=>'<div class="history-row"><div><strong>'+esc(s.symbol)+' · '+esc(s.side)+'</strong><small>'+esc(s.strategy||'Sweep-Wick')+' · '+esc(time(s.sent_at))+'</small></div><strong>'+price(s.entry)+'</strong><span class="history-status status-chip '+(String(s.telegram_status).toUpperCase()==='SENT'?'open':'wait')+'">'+esc(s.telegram_status||s.status||'RECORDED')+'</span></div>').join(''):'<div class="empty">No signal history has been recorded in this bot session yet.</div>'}
 function renderClosest(){const ms=snapshot?.markets||[],candidates=ms.filter(m=>stage(m)!=='READY'&&(side(m)==='BUY'||side(m)==='SELL')&&Number.isFinite(Number(m.progress)));candidates.sort((a,b)=>Number(b.progress)-Number(a.progress));const m=candidates[0];if(!m){$('closestContent').innerHTML='<div class="empty">No directional setup is currently closer to ready. The scanner has not reported a qualifying candidate.</div>';return}const p=Math.max(0,Math.min(100,Number(m.progress)||0));$('closestContent').innerHTML='<div style="display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap"><div><strong style="font-size:18px">'+esc(m.symbol)+' · '+esc(side(m))+'</strong><div style="color:var(--muted);margin-top:6px">'+esc(stage(m))+' · '+p+'% setup progress</div><div style="margin-top:10px">'+esc(waitingReason(m))+'</div></div><div style="min-width:150px;flex:1;max-width:260px"><div class="progress"><i style="width:'+p+'%"></i></div><small style="color:var(--muted)">'+p+'% · BOT-REPORTED</small></div><button class="filter" id="openClosest">View market</button></div>';$('openClosest').addEventListener('click',()=>{selected=m.symbol;renderMarkets();renderDetail();document.querySelector('.workspace')?.scrollIntoView({behavior:'smooth',block:'start'})})}
 function renderScanner(){const sc=snapshot?.scanner||{},cfg=snapshot?.settings||{},st=snapshot?.statistics||{};$('metricReady').textContent=sc.ready??'—';$('metricClosest').textContent=sc.closest_to_ready??'—';$('metricWaiting').textContent=sc.waiting??'—';$('metricProgress').textContent=sc.setup_in_progress??'—';const elapsed=num(sc.last_scan_cycle_seconds),target=num(sc.scan_target_seconds??sc.scan_interval_seconds);$('scanCycleMeta').textContent=elapsed!==null?'LAST CYCLE '+elapsed.toFixed(2)+'s'+(target!==null?' · TARGET '+target+'s':''):'SCAN TIMING NOT PUBLISHED';const statText=Object.entries(st).sort((a,b)=>b[1]-a[1]).map(([k,v])=>k+': '+v).join(' · ');$('scannerStats').textContent=statText||'No setup / rejection counters recorded yet.';$('botVersion').textContent=cfg.bot_version||snapshot.bot_version||'VERSION NOT PUBLISHED';$('botName').textContent=snapshot.bot||'TradesByJay Sweep-Wick Bot';$('strategyText').textContent=cfg.strategy||snapshot.strategy||'H4 trend → H1 liquidity sweep → M15 wick rejection.';$('executionMode').textContent='EXECUTION: '+(snapshot.mode==='DEMO'?(cfg.execution_mode||'DEMO ONLY · LIVE BLOCKED'):'MODE '+(snapshot.mode||'UNKNOWN'));const items=[['Sweep selection',cfg.sweep_mode||'—'],['Liquidity levels',(cfg.key_levels||[]).join(' / ')||'—'],['Take profit',cfg.take_profit_mode||'—'],['TP timeframe',cfg.take_profit_timeframe||'—'],['Minimum target RR',cfg.minimum_rr??'—'],['Risk budget',cfg.risk_budget??'—'],['Max positions',cfg.max_positions??'—'],['H1 sweep lookback',cfg.sweep_lookback_h1??'—'],['Setup expiry (H1)',cfg.setup_expiry_h1??'—'],['Invalidation cooldown (M15)',cfg.invalidation_cooldown_m15??'—'],['Minimum stop / spread',cfg.minimum_stop_spreads??'—'],['Maximum spread points',cfg.maximum_spread_points??'OFF'],['BUY enabled',cfg.buy_enabled===undefined?'—':(cfg.buy_enabled?'YES':'NO')],['SELL enabled',cfg.sell_enabled===undefined?'—':(cfg.sell_enabled?'YES':'NO')],['Auto-add symbols',(cfg.auto_add_keywords||[]).join(', ')||'—'],['Setup alerts',cfg.setup_alerts_enabled===undefined?'—':(cfg.setup_alerts_enabled?'ON':'OFF')]];$('settingsGrid').innerHTML=items.map(x=>'<div class="setting-chip"><span>'+esc(x[0])+'</span><strong>'+esc(x[1])+'</strong></div>').join('')}
-function render(){if(!snapshot)return;renderHealth();renderStats();renderScanner();renderClosest();renderMarkets();renderDetail();renderSignals()}
+function renderTicker(){const ms=snapshot?.markets||[];const rows=ms.slice(0,Math.min(ms.length,35));const html=rows.map(m=>{const d=String(m.h4_direction||'').toUpperCase(),cls=d==='BUY'?'up':d==='SELL'?'down':'';return '<span class="ticker-item"><b>'+esc(m.symbol)+'</b><em>'+esc(price(m.price))+'</em> <em class="'+cls+'">'+esc(d||'WATCH')+'</em></span>'}).join('');$('tickerTrack').innerHTML=html+html}
+function render(){if(!snapshot)return;renderHealth();renderStats();renderScanner();renderClosest();renderMarkets();renderDetail();renderSignals();renderTicker()}
 async function load(){let lastError=null;for(const base of FEEDS){try{const r=await fetch(base+'?t='+Date.now(),{cache:'no-store',headers:{'Cache-Control':'no-cache'}});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(!data||!Array.isArray(data.markets))throw Error('Invalid feed structure');checkNewSignals(data);snapshot=data;if(!selected||!data.markets.some(m=>m.symbol===selected))selected=data.markets[0]?.symbol||'';render();return}catch(e){lastError=e}}$('connection').classList.add('stale');$('connectionText').textContent='FEED UNAVAILABLE';$('feedMode').textContent='COULD NOT READ STATE.JSON';if(!snapshot)$('markets').innerHTML='<div class="empty">The dashboard cannot reach the bot feed. Check that the bot has published state.json to GitHub.</div>';console.warn('TradesByJay feed error:',lastError)}
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter==='ALL'));filter='ALL';renderMarkets()}));document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderMarkets()}));$('search').addEventListener('input',renderMarkets);load();setInterval(load,1000);setInterval(()=>{if(snapshot){renderHealth();$('connection').classList.toggle('stale',stale());$('connectionText').textContent=stale()?'FEED STALE · CHECK BOT':String(snapshot.mode||'UNKNOWN').toUpperCase()==='DEMO'?'DEMO FEED · NOT LIVE':'FEED CONNECTED · '+String(snapshot.mode||'UNKNOWN').toUpperCase()+' MODE'}},1000);
 })();
