@@ -258,6 +258,11 @@ body.alert-flash:after{animation:redAlert .55s ease-out 3}
 /* Live-feed stability: don't replay entrance effects on every one-second data refresh. */
 .market{animation:none!important}
 .ticker-track{will-change:transform}
+
+/* Stability pass: keep the interface at constant brightness. */
+.dot,.live-indicator .dot{animation:none!important;opacity:1!important}
+body:not(.alert-flash):after{animation:none!important;opacity:1!important}
+.mark:after,.hero:after,.hero h1 span{animation:none!important}
 </style>
 </head>
 <body>
