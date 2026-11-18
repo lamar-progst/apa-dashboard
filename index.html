@@ -20,7 +20,54 @@ button,input,select{font:inherit}button{cursor:pointer;color:inherit}.shell{max-
 @media(max-width:1100px){.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.workspace{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.hero-side{justify-self:start;text-align:left;display:flex;align-items:baseline;gap:12px}.hero-side strong{font-size:20px}}
 @media(max-width:900px){.bottom-grid{grid-template-columns:1fr 1fr}.health-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:720px){.shell{padding:14px 13px 35px}.brand-name{font-size:13px}.top-link{display:none}.hero{padding:28px 0 15px}.hero h1{font-size:42px}.kpis{grid-template-columns:repeat(2,1fr);gap:8px}.kpi{padding:13px}.kpi-value{font-size:22px}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.market{padding:12px}.market-price{font-size:16px}.bottom-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.toolbar{width:100%}.search{flex:1;min-width:120px}.chart-wrap{height:220px}}
 @media(max-width:390px){.market-grid{grid-template-columns:1fr}.live-indicator{font-size:9px;padding:8px}.structure{grid-template-columns:1fr 1fr}.hero h1{font-size:36px}}
-.detail-levels,.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.detail-level,.setting-chip{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:10px;padding:10px;min-width:0}.detail-level span,.setting-chip span{display:block;color:var(--muted);font-size:9px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}.detail-level strong,.setting-chip strong{display:block;font-size:12px;overflow-wrap:anywhere}.check-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}.check-row:last-child{border-bottom:0}.check-row strong{font-size:11px}.check-row small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.check-state{font-size:9px;letter-spacing:.06em;white-space:nowrap}.check-state.pass{color:var(--green)}.check-state.wait{color:var(--gold)}.history-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.history-row:last-child{border-bottom:0}.history-row strong{font-size:11px}.history-row small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.tp-track{height:5px;background:#27223a;border-radius:8px;overflow:hidden;margin-top:5px}.tp-track i{display:block;height:100%;background:var(--cyan)}@media(max-width:620px){.detail-levels,.settings-grid{grid-template-columns:1fr}.history-row{grid-template-columns:1fr auto}.history-row .history-status{grid-column:1/-1}}\n</style>
+.detail-levels,.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.detail-level,.setting-chip{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:10px;padding:10px;min-width:0}.detail-level span,.setting-chip span{display:block;color:var(--muted);font-size:9px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}.detail-level strong,.setting-chip strong{display:block;font-size:12px;overflow-wrap:anywhere}.check-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}.check-row:last-child{border-bottom:0}.check-row strong{font-size:11px}.check-row small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.check-state{font-size:9px;letter-spacing:.06em;white-space:nowrap}.check-state.pass{color:var(--green)}.check-state.wait{color:var(--gold)}.history-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.history-row:last-child{border-bottom:0}.history-row strong{font-size:11px}.history-row small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.tp-track{height:5px;background:#27223a;border-radius:8px;overflow:hidden;margin-top:5px}.tp-track i{display:block;height:100%;background:var(--cyan)}@media(max-width:620px){.detail-levels,.settings-grid{grid-template-columns:1fr}.history-row{grid-template-columns:1fr auto}.history-row .history-status{grid-column:1/-1}}\n
+/* TradesByJay visual refresh: restrained graphite + violet */
+:root{--bg:#0b0c12;--panel:#12141d;--panel2:#181a25;--line:#282b38;--muted:#9297a8;--text:#f2f3f8;--purple:#a78bfa;--cyan:#9aa8ff;--green:#62d6a6;--red:#f17e91;--gold:#e9bd70}
+body{background:#0b0c12}
+body:before{display:none}
+.shell{max-width:1680px;padding:24px 34px 52px}
+.topbar{border-bottom:1px solid #ffffff12;padding:8px 0 20px}
+.mark{border-radius:11px;background:#a78bfa;color:#11121a;box-shadow:none}
+.brand-name{letter-spacing:.09em}
+.live-indicator{border-radius:8px;background:#62d6a60c;border-color:#62d6a62b}
+.hero{padding:34px 0 23px;gap:28px}
+.eyebrow{color:#b7a5ff;letter-spacing:.17em}
+.hero h1{font-size:clamp(32px,4.3vw,54px);letter-spacing:-.055em;line-height:1.04;margin:11px 0}
+.hero h1 span{background:none;color:#b8a4ff}
+.hero p{font-size:12px;color:#a4a8b6;max-width:590px}
+.kpis{gap:10px;margin:10px 0 20px}
+.kpi,.panel{background:#12141d;border:1px solid #292c39;border-radius:12px;box-shadow:none}
+.kpi{padding:15px 17px}
+.kpi:after{display:none}
+.kpi-label,.section-meta,.eyebrow{font-size:9px}
+.kpi-value{font-size:25px}
+.section-head{margin:24px 0 12px}
+.section-title{font-size:15px}
+.view-tab,.filter,.top-link{border-radius:7px;background:#151721}
+.view-tab.active,.filter.active{background:#a78bfa18;border-color:#8068d8;color:#d7cbff;box-shadow:none}
+.search{border-radius:7px;background:#11131b}
+.market-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.market{background:#12141d;border:1px solid #292c39;border-radius:10px;box-shadow:none;transition:border-color .16s,background .16s}
+.market:hover,.market.selected{transform:none;border-color:#8872d8;background:#171824;box-shadow:0 0 0 1px #8872d81a}
+.market-price{font-size:18px}
+.waiting-reason{background:#e9bd7008;border-color:#e9bd7024;border-radius:7px}
+.waiting-reason span{color:#e9bd70}
+.progress{background:#292b37}
+.progress i{background:#a78bfa}
+.workspace{gap:10px}
+.panel{padding:16px}
+.chart-wrap{border-radius:8px;background:#0e1017;border-color:#282b38}
+.structure-item,.health-item,.detail-level,.setting-chip{background:#171923;border:1px solid #292c39;border-radius:8px}
+.next-step{border-color:#a78bfa30;background:#a78bfa0a;border-radius:8px}
+.status-chip{border-radius:5px}
+.signal-row,.history-row,.check-row{border-color:#252835}
+.bot-orb{border-radius:10px;background:#a78bfa;color:#11121a}
+.footer{border-color:#252835}
+@media(max-width:1100px){.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){.shell{padding:13px 12px 32px}.hero{padding:25px 0 14px}.hero h1{font-size:38px}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:12px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+</style>
 </head>
 <body>
 <div class="shell">
@@ -77,7 +124,7 @@ function renderClosest(){const ms=snapshot?.markets||[],candidates=ms.filter(m=>
 function renderScanner(){const sc=snapshot?.scanner||{},cfg=snapshot?.settings||{},st=snapshot?.statistics||{};$('metricReady').textContent=sc.ready??'—';$('metricClosest').textContent=sc.closest_to_ready??'—';$('metricWaiting').textContent=sc.waiting??'—';$('metricProgress').textContent=sc.setup_in_progress??'—';const elapsed=num(sc.last_scan_cycle_seconds),target=num(sc.scan_target_seconds??sc.scan_interval_seconds);$('scanCycleMeta').textContent=elapsed!==null?'LAST CYCLE '+elapsed.toFixed(2)+'s'+(target!==null?' · TARGET '+target+'s':''):'SCAN TIMING NOT PUBLISHED';const statText=Object.entries(st).sort((a,b)=>b[1]-a[1]).map(([k,v])=>k+': '+v).join(' · ');$('scannerStats').textContent=statText||'No setup / rejection counters recorded yet.';$('botVersion').textContent=cfg.bot_version||snapshot.bot_version||'VERSION NOT PUBLISHED';$('botName').textContent=snapshot.bot||'TradesByJay Sweep-Wick Bot';$('strategyText').textContent=cfg.strategy||snapshot.strategy||'H4 trend → H1 liquidity sweep → M15 wick rejection.';$('executionMode').textContent='EXECUTION: '+(snapshot.mode==='DEMO'?(cfg.execution_mode||'DEMO ONLY · LIVE BLOCKED'):'MODE '+(snapshot.mode||'UNKNOWN'));const items=[['Sweep selection',cfg.sweep_mode||'—'],['Liquidity levels',(cfg.key_levels||[]).join(' / ')||'—'],['Take profit',cfg.take_profit_mode||'—'],['TP timeframe',cfg.take_profit_timeframe||'—'],['Minimum target RR',cfg.minimum_rr??'—'],['Risk budget',cfg.risk_budget??'—'],['Max positions',cfg.max_positions??'—'],['H1 sweep lookback',cfg.sweep_lookback_h1??'—'],['Setup expiry (H1)',cfg.setup_expiry_h1??'—'],['Invalidation cooldown (M15)',cfg.invalidation_cooldown_m15??'—'],['Minimum stop / spread',cfg.minimum_stop_spreads??'—'],['Maximum spread points',cfg.maximum_spread_points??'OFF'],['BUY enabled',cfg.buy_enabled===undefined?'—':(cfg.buy_enabled?'YES':'NO')],['SELL enabled',cfg.sell_enabled===undefined?'—':(cfg.sell_enabled?'YES':'NO')],['Auto-add symbols',(cfg.auto_add_keywords||[]).join(', ')||'—'],['Setup alerts',cfg.setup_alerts_enabled===undefined?'—':(cfg.setup_alerts_enabled?'ON':'OFF')]];$('settingsGrid').innerHTML=items.map(x=>'<div class="setting-chip"><span>'+esc(x[0])+'</span><strong>'+esc(x[1])+'</strong></div>').join('')}
 function render(){if(!snapshot)return;renderHealth();renderStats();renderScanner();renderClosest();renderMarkets();renderDetail();renderSignals()}
 async function load(){try{const r=await fetch(FEED+'?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(!data||!Array.isArray(data.markets))throw Error('Invalid feed structure');snapshot=data;if(!selected||!data.markets.some(m=>m.symbol===selected))selected=data.markets[0]?.symbol||'';render()}catch(e){$('connection').classList.add('stale');$('connectionText').textContent='FEED UNAVAILABLE';$('feedMode').textContent='COULD NOT READ STATE.JSON';if(!snapshot)$('markets').innerHTML='<div class="empty">The dashboard cannot reach the bot feed. Check that the bot has published state.json to GitHub.</div>'}}
-document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter==='ALL'));filter='ALL';renderMarkets()}));document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderMarkets()}));$('search').addEventListener('input',renderMarkets);load();setInterval(load,15000);setInterval(()=>{if(snapshot){renderHealth();$('connection').classList.toggle('stale',stale());$('connectionText').textContent=stale()?'FEED STALE · CHECK BOT':String(snapshot.mode||'UNKNOWN').toUpperCase()==='DEMO'?'DEMO FEED · NOT LIVE':'FEED CONNECTED · '+String(snapshot.mode||'UNKNOWN').toUpperCase()+' MODE'}},5000);
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter==='ALL'));filter='ALL';renderMarkets()}));document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderMarkets()}));$('search').addEventListener('input',renderMarkets);load();setInterval(load,1000);setInterval(()=>{if(snapshot){renderHealth();$('connection').classList.toggle('stale',stale());$('connectionText').textContent=stale()?'FEED STALE · CHECK BOT':String(snapshot.mode||'UNKNOWN').toUpperCase()==='DEMO'?'DEMO FEED · NOT LIVE':'FEED CONNECTED · '+String(snapshot.mode||'UNKNOWN').toUpperCase()+' MODE'}},1000);
 })();
 </script>
 </body></html>
