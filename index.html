@@ -60,7 +60,7 @@ const $=id=>document.getElementById(id);let snapshot=null,selected='',filter='AL
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>v===null||v===undefined||v===''?null:Number(v);
 const price=v=>{const n=num(v);return n===null||!Number.isFinite(n)?'—':n.toLocaleString(undefined,{maximumFractionDigits:6})};
-const stage=m=>String(m?.stage||'WATCH').toUpperCase();
+const stage=m=>String(m?.setup_status||m?.stage||'WATCH').toUpperCase();
 const side=m=>String(m?.side||'WAIT').toUpperCase();
 function time(v){if(!v)return'—';const d=new Date(v);return Number.isNaN(d.getTime())?'—':d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
 function ageMs(){const d=Date.parse(snapshot?.updated||'');return Number.isFinite(d)?Date.now()-d:Infinity}
