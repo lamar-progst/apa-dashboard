@@ -67,9 +67,96 @@ body:before{display:none}
 @media(max-width:720px){.shell{padding:13px 12px 32px}.hero{padding:25px 0 14px}.hero h1{font-size:38px}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:12px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
+
+/* TradesByJay responsive glass + signal alert system */
+:root{--bg:#080711;--panel:#11101d;--line:#302844;--purple:#b49aff;--red:#ff334f;--redGlow:#ff173f}
+body{background:radial-gradient(ellipse at 12% 0%,#5d2b9a38,transparent 34%),radial-gradient(ellipse at 92% 12%,#164e7030,transparent 32%),#080711}
+body:before{display:block;opacity:.10;background-size:56px 56px}
+.shell{max-width:1720px;padding:22px clamp(14px,3vw,42px) 54px}
+.kpi,.panel,.market{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:linear-gradient(145deg,#ffffff0d,#ffffff03 42%,#11101deF);border-color:#ffffff18;box-shadow:0 18px 55px #0005,inset 0 1px #ffffff0a}
+.kpi,.panel{border-radius:18px}
+.market{border-radius:15px;transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease}
+.market:hover,.market.selected{transform:translateY(-3px);border-color:#ad91ff88;box-shadow:0 14px 35px #8b5cf633,inset 0 1px #ffffff18}
+.mark{background:linear-gradient(135deg,#d7c5ff,#8c68f4 58%,#4bd6df);box-shadow:0 0 28px #9d7aff55}
+.live-indicator{box-shadow:inset 0 1px #ffffff12}
+.dot{animation:pulse 1.35s infinite}
+.kpi{animation:riseIn .55s both}
+.kpi:nth-child(2){animation-delay:.06s}.kpi:nth-child(3){animation-delay:.12s}.kpi:nth-child(4){animation-delay:.18s}
+.panel{animation:riseIn .5s both}
+.market{animation:riseIn .35s both}
+.progress i{position:relative;overflow:hidden}
+.progress i:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,#ffffff88,transparent);transform:translateX(-100%);animation:shimmer 2.4s infinite}
+.section-title,.panel-head h3{letter-spacing:-.025em}
+.signal-toast-wrap{position:fixed;z-index:9999;top:18px;right:18px;width:min(390px,calc(100vw - 28px));display:grid;gap:10px;pointer-events:none}
+.signal-toast{position:relative;overflow:hidden;padding:15px 16px 14px 18px;border:1px solid #ff526b99;border-radius:15px;background:linear-gradient(120deg,#35101dF2,#17101df5 72%);box-shadow:0 16px 55px #ff173f30,0 0 28px #ff173f26,inset 0 1px #ffffff20;backdrop-filter:blur(18px);animation:toastIn .42s cubic-bezier(.2,.8,.2,1) both}
+.signal-toast:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#ff334f;box-shadow:0 0 18px #ff173f}
+.signal-toast .toast-kicker{font:10px 'DM Mono';letter-spacing:.17em;color:#ff9aaa}
+.signal-toast strong{display:block;font-size:16px;margin:7px 0 4px;color:#fff}
+.signal-toast p{font-size:11px;color:#e6cbd2;margin:0;line-height:1.5}
+.signal-toast .toast-time{display:block;font:9px 'DM Mono';color:#b78c98;margin-top:9px}
+body.alert-flash:after{content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;border:3px solid #ff334f;box-shadow:inset 0 0 85px #ff173f28;animation:redAlert .85s ease-out 2}
+body.alert-flash .live-indicator{border-color:#ff334f!important;color:#ffc0ca!important;box-shadow:0 0 22px #ff173f55!important}
+body.alert-flash .live-indicator .dot{background:#ff334f!important;box-shadow:0 0 16px #ff173f!important}
+@keyframes redAlert{0%,100%{opacity:0}25%,65%{opacity:1}}
+@keyframes toastIn{from{opacity:0;transform:translateX(28px) scale(.97)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{to{transform:translateX(100%)}}
+@media(max-width:760px){
+ .shell{padding:10px 10px 28px}
+ .topbar{position:sticky;top:0;z-index:100;padding:9px 0 11px;background:#090812eF;backdrop-filter:blur(18px);margin:0 -10px;padding-left:12px;padding-right:12px}
+ .mark{width:36px;height:36px;border-radius:11px;font-size:14px}
+ .brand{gap:9px}.brand-name{font-size:12px}.brand-sub{font-size:8px;letter-spacing:.12em}
+ .live-indicator{padding:8px 9px;font-size:8px;gap:6px;max-width:155px}
+ .hero{padding:23px 2px 14px;gap:12px}
+ .hero h1{font-size:clamp(34px,9vw,46px);line-height:1.01}
+ .hero p{font-size:11px;line-height:1.6}
+ .hero-side{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+ .hero-side strong{font-size:16px;margin:0}.hero-side .label,.hero-side small{font-size:8px}
+ .kpis{gap:8px;margin:10px 0 15px}
+ .kpi{padding:12px 11px;border-radius:13px}.kpi-label{font-size:8px}.kpi-value{font-size:21px;margin-top:6px}.kpi-foot{font-size:9px}
+ .section-head{margin:19px 0 10px;gap:9px}
+ .section-title{font-size:14px}
+ .toolbar{gap:6px}
+ .view-tab,.filter{padding:8px 9px;font-size:10px}
+ .search{min-width:100%;width:100%;flex:1}
+ .market-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .market{padding:11px;border-radius:13px}
+ .symbol{font-size:11px}.tag{font-size:8px;padding:4px 5px}
+ .market-price{font-size:15px;margin:11px 0 2px}
+ .market-foot{font-size:8px;gap:5px;flex-wrap:wrap}
+ .waiting-reason{padding:8px;margin-top:9px}.waiting-reason span{font-size:8px}.waiting-reason p{font-size:9px;line-height:1.45}
+ .workspace{grid-template-columns:minmax(0,1fr);gap:9px;margin-top:10px}
+ .panel{padding:13px;border-radius:14px}
+ .panel-head{margin-bottom:11px}.panel-head h3{font-size:12px}
+ .chart-wrap{height:205px}
+ .structure{gap:6px}.structure-item{padding:9px}.structure-item span{font-size:8px}.structure-item strong{font-size:11px}
+ .bottom-grid{grid-template-columns:minmax(0,1fr);gap:9px;margin-top:9px}
+ .health-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .health-item{padding:10px}.health-item span{font-size:8px}.health-item strong{font-size:12px}
+ .signal-row{gap:7px;padding:10px 0;font-size:10px}
+ .signal-price{font-size:9px}.status-chip{font-size:8px;padding:4px 5px}
+ .detail-levels,.settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .footer{font-size:8px;gap:8px;margin-top:20px}
+ .signal-toast-wrap{top:9px;right:9px;width:min(360px,calc(100vw - 18px))}
+ .signal-toast{padding:12px 13px 11px 16px;border-radius:13px}
+}
+@media(max-width:420px){
+ .top-actions{gap:5px}.live-indicator{max-width:126px;font-size:7px}
+ .market-grid{gap:6px}.market{padding:9px}
+ .hero h1{font-size:35px}
+ .kpi-value{font-size:19px}
+ .view-tab{gap:5px;padding:7px}
+ .detail-levels,.settings-grid{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){
+ .kpi,.panel,.market,.signal-toast{animation:none!important}
+ .progress i:after{display:none}
+}
+
 </style>
 </head>
 <body>
+<div class="signal-toast-wrap" id="signalToasts" aria-live="assertive" aria-atomic="false"></div>
 <div class="shell">
 <header class="topbar">
  <div class="brand"><div class="mark">TBJ</div><div><div class="brand-name">TRADESBYJAY</div><div class="brand-sub">MARKET COMMAND CENTER</div></div></div>
@@ -102,7 +189,30 @@ body:before{display:none}
 </div>
 <script>
 (()=>{'use strict';
+
 const FEEDS=['./state.json','https://raw.githubusercontent.com/lamar-progst/apa-dashboard/main/state.json'];
+let knownSignalKeys=null;
+function signalKey(s){return [s.id||'',s.symbol||'',s.side||'',s.sent_at||s.timestamp||'',s.entry||''].join('|')}
+function checkNewSignals(data){
+ const rows=[...(Array.isArray(data.signal_history)?data.signal_history:[]),...(Array.isArray(data.signals)?data.signals:[])];
+ const unique=new Map();rows.forEach(s=>{if(s&&s.symbol&&s.side){const k=signalKey(s);unique.set(k,s)}});
+ const keys=[...unique.keys()];
+ if(knownSignalKeys===null){knownSignalKeys=new Set(keys);return}
+ const fresh=keys.filter(k=>!knownSignalKeys.has(k));
+ keys.forEach(k=>knownSignalKeys.add(k));
+ fresh.slice(0,3).reverse().forEach(k=>showSignalAlert(unique.get(k)));
+ if(knownSignalKeys.size>250)knownSignalKeys=new Set(keys);
+}
+function showSignalAlert(s){
+ const host=$('signalToasts');if(!host)return;
+ const toast=document.createElement('div');toast.className='signal-toast';
+ const direction=String(s.side||'SIGNAL').toUpperCase();
+ toast.innerHTML='<div class="toast-kicker">⚠ NEW TRADING SIGNAL · TRADESBYJAY</div><strong>'+esc(s.symbol)+' · '+esc(direction)+'</strong><p>'+esc(s.strategy||'Sweep-Wick setup detected')+' · Entry '+esc(price(s.entry))+'</p><span class="toast-time">BOT ALERT · '+esc(time(s.sent_at||s.timestamp||new Date().toISOString()))+'</span>';
+ host.prepend(toast);document.body.classList.remove('alert-flash');void document.body.offsetWidth;document.body.classList.add('alert-flash');
+ setTimeout(()=>{toast.style.transition='opacity .35s,transform .35s';toast.style.opacity='0';toast.style.transform='translateX(25px)';setTimeout(()=>toast.remove(),380)},6500);
+ setTimeout(()=>document.body.classList.remove('alert-flash'),1900);
+}
+
 const $=id=>document.getElementById(id);let snapshot=null,selected='',filter='ALL',view='markets';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>v===null||v===undefined||v===''?null:Number(v);
@@ -123,7 +233,7 @@ function renderSignals(){const active=(snapshot?.signals||[]).filter(s=>['OPEN',
 function renderClosest(){const ms=snapshot?.markets||[],candidates=ms.filter(m=>stage(m)!=='READY'&&(side(m)==='BUY'||side(m)==='SELL')&&Number.isFinite(Number(m.progress)));candidates.sort((a,b)=>Number(b.progress)-Number(a.progress));const m=candidates[0];if(!m){$('closestContent').innerHTML='<div class="empty">No directional setup is currently closer to ready. The scanner has not reported a qualifying candidate.</div>';return}const p=Math.max(0,Math.min(100,Number(m.progress)||0));$('closestContent').innerHTML='<div style="display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap"><div><strong style="font-size:18px">'+esc(m.symbol)+' · '+esc(side(m))+'</strong><div style="color:var(--muted);margin-top:6px">'+esc(stage(m))+' · '+p+'% setup progress</div><div style="margin-top:10px">'+esc(waitingReason(m))+'</div></div><div style="min-width:150px;flex:1;max-width:260px"><div class="progress"><i style="width:'+p+'%"></i></div><small style="color:var(--muted)">'+p+'% · BOT-REPORTED</small></div><button class="filter" id="openClosest">View market</button></div>';$('openClosest').addEventListener('click',()=>{selected=m.symbol;renderMarkets();renderDetail();document.querySelector('.workspace')?.scrollIntoView({behavior:'smooth',block:'start'})})}
 function renderScanner(){const sc=snapshot?.scanner||{},cfg=snapshot?.settings||{},st=snapshot?.statistics||{};$('metricReady').textContent=sc.ready??'—';$('metricClosest').textContent=sc.closest_to_ready??'—';$('metricWaiting').textContent=sc.waiting??'—';$('metricProgress').textContent=sc.setup_in_progress??'—';const elapsed=num(sc.last_scan_cycle_seconds),target=num(sc.scan_target_seconds??sc.scan_interval_seconds);$('scanCycleMeta').textContent=elapsed!==null?'LAST CYCLE '+elapsed.toFixed(2)+'s'+(target!==null?' · TARGET '+target+'s':''):'SCAN TIMING NOT PUBLISHED';const statText=Object.entries(st).sort((a,b)=>b[1]-a[1]).map(([k,v])=>k+': '+v).join(' · ');$('scannerStats').textContent=statText||'No setup / rejection counters recorded yet.';$('botVersion').textContent=cfg.bot_version||snapshot.bot_version||'VERSION NOT PUBLISHED';$('botName').textContent=snapshot.bot||'TradesByJay Sweep-Wick Bot';$('strategyText').textContent=cfg.strategy||snapshot.strategy||'H4 trend → H1 liquidity sweep → M15 wick rejection.';$('executionMode').textContent='EXECUTION: '+(snapshot.mode==='DEMO'?(cfg.execution_mode||'DEMO ONLY · LIVE BLOCKED'):'MODE '+(snapshot.mode||'UNKNOWN'));const items=[['Sweep selection',cfg.sweep_mode||'—'],['Liquidity levels',(cfg.key_levels||[]).join(' / ')||'—'],['Take profit',cfg.take_profit_mode||'—'],['TP timeframe',cfg.take_profit_timeframe||'—'],['Minimum target RR',cfg.minimum_rr??'—'],['Risk budget',cfg.risk_budget??'—'],['Max positions',cfg.max_positions??'—'],['H1 sweep lookback',cfg.sweep_lookback_h1??'—'],['Setup expiry (H1)',cfg.setup_expiry_h1??'—'],['Invalidation cooldown (M15)',cfg.invalidation_cooldown_m15??'—'],['Minimum stop / spread',cfg.minimum_stop_spreads??'—'],['Maximum spread points',cfg.maximum_spread_points??'OFF'],['BUY enabled',cfg.buy_enabled===undefined?'—':(cfg.buy_enabled?'YES':'NO')],['SELL enabled',cfg.sell_enabled===undefined?'—':(cfg.sell_enabled?'YES':'NO')],['Auto-add symbols',(cfg.auto_add_keywords||[]).join(', ')||'—'],['Setup alerts',cfg.setup_alerts_enabled===undefined?'—':(cfg.setup_alerts_enabled?'ON':'OFF')]];$('settingsGrid').innerHTML=items.map(x=>'<div class="setting-chip"><span>'+esc(x[0])+'</span><strong>'+esc(x[1])+'</strong></div>').join('')}
 function render(){if(!snapshot)return;renderHealth();renderStats();renderScanner();renderClosest();renderMarkets();renderDetail();renderSignals()}
-async function load(){let lastError=null;for(const base of FEEDS){try{const r=await fetch(base+'?t='+Date.now(),{cache:'no-store',headers:{'Cache-Control':'no-cache'}});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(!data||!Array.isArray(data.markets))throw Error('Invalid feed structure');snapshot=data;if(!selected||!data.markets.some(m=>m.symbol===selected))selected=data.markets[0]?.symbol||'';render();return}catch(e){lastError=e}}$('connection').classList.add('stale');$('connectionText').textContent='FEED UNAVAILABLE';$('feedMode').textContent='COULD NOT READ STATE.JSON';if(!snapshot)$('markets').innerHTML='<div class="empty">The dashboard cannot reach the bot feed. Check that the bot has published state.json to GitHub.</div>';console.warn('TradesByJay feed error:',lastError)}
+async function load(){let lastError=null;for(const base of FEEDS){try{const r=await fetch(base+'?t='+Date.now(),{cache:'no-store',headers:{'Cache-Control':'no-cache'}});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(!data||!Array.isArray(data.markets))throw Error('Invalid feed structure');checkNewSignals(data);snapshot=data;if(!selected||!data.markets.some(m=>m.symbol===selected))selected=data.markets[0]?.symbol||'';render();return}catch(e){lastError=e}}$('connection').classList.add('stale');$('connectionText').textContent='FEED UNAVAILABLE';$('feedMode').textContent='COULD NOT READ STATE.JSON';if(!snapshot)$('markets').innerHTML='<div class="empty">The dashboard cannot reach the bot feed. Check that the bot has published state.json to GitHub.</div>';console.warn('TradesByJay feed error:',lastError)}
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter==='ALL'));filter='ALL';renderMarkets()}));document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderMarkets()}));$('search').addEventListener('input',renderMarkets);load();setInterval(load,1000);setInterval(()=>{if(snapshot){renderHealth();$('connection').classList.toggle('stale',stale());$('connectionText').textContent=stale()?'FEED STALE · CHECK BOT':String(snapshot.mode||'UNKNOWN').toUpperCase()==='DEMO'?'DEMO FEED · NOT LIVE':'FEED CONNECTED · '+String(snapshot.mode||'UNKNOWN').toUpperCase()+' MODE'}},1000);
 })();
 </script>
