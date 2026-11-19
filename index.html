@@ -270,6 +270,88 @@ body:not(.alert-flash):after{animation:none!important;opacity:1!important}
 .test-telegram.sent{border-color:#62d6a6;color:#9af0c9;background:#62d6a610}
 .test-telegram.failed{border-color:#f17e91;color:#ffb1bf;background:#f17e9110}
 @media(max-width:620px){.top-actions{gap:6px}.test-telegram{font-size:9px;padding:8px 9px}.live-indicator{padding:8px 9px}}
+
+/* TRADESBYJAY — LIVE ENERGY REDESIGN */
+:root{
+ --bg:#080612;--panel:#121024;--panel2:#19142f;--line:#39305b;
+ --purple:#b99aff;--cyan:#66e7f4;--green:#62efb5;--red:#ff5878;--gold:#ffd27c;
+}
+html{scroll-padding-top:18px}
+body{
+ background:
+  radial-gradient(ellipse 55% 38% at 8% 0%,#7138bd38,transparent 72%),
+  radial-gradient(ellipse 48% 34% at 96% 12%,#087e9c28,transparent 70%),
+  radial-gradient(ellipse 60% 45% at 50% 100%,#39216c24,transparent 75%),var(--bg);
+ background-attachment:fixed;
+}
+body:before{opacity:.12;background-size:54px 54px;mask-image:linear-gradient(#000 0%,transparent 82%)}
+.shell{max-width:1760px}
+.topbar{position:relative;border-bottom-color:#a98cff2c}
+.topbar:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,#a98cff88,#65e5f488,transparent)}
+.mark{position:relative;overflow:hidden;box-shadow:0 0 24px #a78bfa55,0 0 55px #6ee7f522}
+.brand-name{letter-spacing:.13em;text-shadow:0 0 24px #b99aff35}
+.live-indicator{border-radius:999px;box-shadow:0 0 22px #55e6ae12,inset 0 1px #ffffff12}
+.hero{position:relative;isolation:isolate;padding-top:42px}
+.hero:before{content:"";position:absolute;z-index:-1;right:7%;top:0;width:min(36vw,430px);height:230px;border-radius:50%;background:radial-gradient(ellipse,#8054ed25,transparent 68%);filter:blur(12px);pointer-events:none}
+.hero h1{max-width:900px;font-size:clamp(38px,5.4vw,72px);letter-spacing:-.07em;text-shadow:0 10px 55px #8b5cf622}
+.hero h1 span{background:linear-gradient(100deg,#fff 0%,#c9b5ff 38%,#75e8f4 78%,#fff 100%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:13px;max-width:700px}
+.eyebrow{color:#82e8f4}
+.kpi,.panel{background:linear-gradient(145deg,#ffffff0d,#ffffff02 45%,#17122beF);border:1px solid #a88bff26;box-shadow:0 18px 50px #0005,inset 0 1px #ffffff0c}
+.kpi{position:relative;overflow:hidden;transition:border-color .2s,box-shadow .2s,transform .2s}
+.kpi:before{content:"";position:absolute;left:16px;right:16px;top:0;height:1px;background:linear-gradient(90deg,transparent,#b99aff99,transparent)}
+.kpi:hover{transform:translateY(-2px);border-color:#b99aff70;box-shadow:0 16px 42px #8b5cf622,inset 0 1px #ffffff14}
+.kpi-value{font-size:clamp(23px,2.2vw,31px);text-shadow:0 0 26px #b99aff20}
+.section-head{margin-top:30px}
+.section-title{font-size:16px}
+.view-tab,.filter,.search,.top-link{transition:border-color .18s,background .18s,color .18s,box-shadow .18s}
+.view-tab.active{box-shadow:0 0 22px #a78bfa20,inset 0 0 18px #a78bfa0c}
+.market-grid{gap:12px}
+.market{
+ position:relative;overflow:hidden;isolation:isolate;
+ background:linear-gradient(145deg,#1b1732ed,#100e1ff5 68%);
+ border:1px solid #a98cff27;
+ box-shadow:0 12px 32px #0003,inset 0 1px #ffffff0b;
+ transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,background .2s ease;
+}
+.market:before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,#a78bfa,#69e5f4,transparent);opacity:.55}
+.market:after{content:"";position:absolute;z-index:-1;width:150px;height:100px;right:-95px;bottom:-75px;border-radius:50%;background:#8054ed25;filter:blur(28px);pointer-events:none}
+.market:hover,.market.selected{transform:translateY(-3px);border-color:#b99aff99;background:linear-gradient(145deg,#241c43f2,#131025f7 70%);box-shadow:0 16px 38px #7c4de52a,inset 0 1px #ffffff16}
+.market.selected{box-shadow:0 0 0 1px #b99aff35,0 16px 38px #7c4de52a}
+.symbol{font-size:13px;letter-spacing:.015em}
+.market-price{font-size:clamp(16px,1.6vw,21px);text-shadow:0 0 20px #a78bfa18}
+.tag{border-radius:999px;padding:5px 9px}
+.tag.buy{box-shadow:0 0 16px #55e6ae16}.tag.sell{box-shadow:0 0 16px #ff718e16}
+.waiting-reason{border-radius:10px;background:linear-gradient(110deg,#f5ca7810,#f5ca7805);border-color:#f5ca7838}
+.progress{height:4px;background:#302747}
+.progress i{background:linear-gradient(90deg,#8b6bfa,#6ee7f5);box-shadow:0 0 12px #9b7bff55}
+.panel{border-radius:17px}
+.panel-head h3{font-size:14px}
+.chart-wrap{background:radial-gradient(ellipse at 50% 0%,#34245b38,transparent 70%),#0b0a16;border-color:#51416e}
+.structure-item,.health-item,.detail-level,.setting-chip{background:linear-gradient(145deg,#ffffff0b,#ffffff03);border-color:#ffffff16}
+.stage.active .stage-icon{box-shadow:0 0 18px #ffd27c35}
+.next-step{background:linear-gradient(110deg,#a78bfa16,#6ee7f408);border-color:#a78bfa55}
+.status-chip{border-radius:999px}
+.bot-orb{box-shadow:0 0 24px #a78bfa42}
+.signal-toast{box-shadow:0 18px 60px #ff173f35,0 0 32px #ff173f20,inset 0 1px #ffffff20}
+.footer{border-top-color:#a78bfa26}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #9c83ff;outline-offset:3px}
+@media(max-width:720px){
+ .shell{padding:13px 12px 34px}
+ .hero{padding-top:30px}
+ .hero:before{right:0;width:70vw;height:160px}
+ .hero h1{font-size:clamp(35px,10vw,48px);line-height:1.02}
+ .market-grid{gap:9px}
+ .market{border-radius:13px}
+ .market:hover,.market.selected{transform:translateY(-1px)}
+ .panel{border-radius:14px;padding:14px}
+ .section-head{margin-top:23px}
+}
+@media(prefers-reduced-motion:reduce){
+ .kpi,.market{transition:none!important}
+ .kpi:hover,.market:hover,.market.selected{transform:none}
+}
+
 </style>
 </head>
 <body>
