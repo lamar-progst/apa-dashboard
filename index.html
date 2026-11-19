@@ -181,43 +181,44 @@ body:before{opacity:.18;background-image:radial-gradient(#8eb7e5 0.7px,transpare
 @media(prefers-reduced-motion:reduce){.hero-mascot,.panel,.kpi,.hero-side{animation:none!important}}
 </style>
 
-<style id="tradesbyjay-readability-fix">
-/* Readability-first light dashboard: override every leftover dark-theme text rule. */
-:root{color-scheme:light!important;--bg:#f4f8ff;--panel:#fff;--line:#d8e5f4;--muted:#607895;--text:#193654;--purple:#397fca;--cyan:#268bbd;--green:#168365;--red:#c94f68;--gold:#946716}
-body{color:#193654!important;background:linear-gradient(180deg,#f7fbff 0%,#edf5ff 55%,#f8fbff 100%)!important;background-attachment:fixed}
-.shell{max-width:1480px}
-.brand-name,.hero h1,.panel-head h3,.kpi-value,.symbol,.structure-item strong,.detail-level strong,.health-item strong,.setting-chip strong,.check-row strong,.bot-card strong{color:#193654!important}
-.brand-sub,.top-link,.ticker-item,.ticker-item b,.ticker-item em,.hero p,.hero-side .label,.hero-side small,.kpi-label,.kpi-foot,.market-foot,.market-count,.subhead,.chart-caption,.structure-item span,.detail-level span,.health-item span,.setting-chip span,.check-row small,.health-note,.footer,.bot-card p{color:#607895!important}
-.ticker-item b{font-weight:800}
-.topbar,.ticker-strip,.panel,.kpi,.hero-side{background:rgba(255,255,255,.94)!important;border:1px solid #dce8f6!important;box-shadow:0 8px 26px rgba(62,112,166,.08)!important;backdrop-filter:blur(12px)}
+<style id="tradesbyjay-dark-contrast">
+/* Restore the intended dark purple/blue terminal. High-contrast text on every panel. */
+:root{color-scheme:dark!important;--bg:#080a12;--panel:#101522;--line:#2b3852;--muted:#9aa9c2;--text:#f4f7ff;--purple:#a99aff;--cyan:#70def4;--green:#6ce8b8;--red:#ff829a;--gold:#f5cf7e}
+html,body{background-color:#080a12!important;color:#f4f7ff!important}
+body{background:radial-gradient(ellipse at 8% 0%,#5a43b52b,transparent 34%),radial-gradient(ellipse at 92% 12%,#1e91b42b,transparent 30%),linear-gradient(180deg,#0a0d17 0%,#080a12 60%,#0b0d18 100%)!important;background-attachment:fixed}
+.brand-name,.hero h1,.panel-head h3,.kpi-value,.symbol,.structure-item strong,.detail-level strong,.health-item strong,.setting-chip strong,.check-row strong,.bot-card strong,.market-price,.signal-row strong{color:#f1f5ff!important}
+.brand-sub,.top-link,.ticker-item,.ticker-item em,.hero p,.hero-side .label,.hero-side small,.kpi-label,.kpi-foot,.market-foot,.market-count,.subhead,.chart-caption,.structure-item span,.detail-level span,.health-item span,.setting-chip span,.check-row small,.health-note,.footer,.bot-card p,.signal-row small{color:#a0aec5!important}
+.topbar,.ticker-strip,.panel,.kpi,.hero-side{background:linear-gradient(145deg,#151e31 0%,#0e1422 78%)!important;border:1px solid #ffffff18!important;box-shadow:0 14px 38px #0005!important;backdrop-filter:blur(14px)}
 .kpi,.panel,.hero-side{animation:none!important}
-.market{background:#fff!important;border:1px solid #dce8f6!important;box-shadow:0 2px 8px rgba(56,102,151,.04)}
-.market:hover,.market.selected{background:#edf6ff!important;border-color:#75a9df!important;box-shadow:0 5px 15px rgba(56,102,151,.10)}
-.market .symbol{color:#193654!important}
-.market .tag{background:#f1f6fc!important;color:#526d8b!important;border-color:#d7e4f2!important}
-.market .tag.buy{color:#13785f!important;background:#eaf8f2!important;border-color:#b8e4d4!important}
-.market .tag.sell{color:#b63e59!important;background:#fff0f3!important;border-color:#f0c7d0!important}
-.waiting-reason{background:#f4f8fd!important;border-color:#dce8f5!important}
-.waiting-reason span{color:#426f9e!important}.waiting-reason p{color:#526d8b!important}
-.progress{background:#e5edf7!important}.progress i{background:linear-gradient(90deg,#4e8bd3,#5bb8d5)!important}
-.search{background:#fff!important;color:#193654!important;border-color:#cfdeef!important}
-.view-tab,.filter{background:#f5f9fe!important;color:#526d8b!important;border-color:#d8e5f3!important}
-.view-tab.active,.filter.active{background:#e4f1ff!important;color:#245d96!important;border-color:#8bb7e4!important}
-.structure-item,.detail-level,.health-item,.setting-chip{background:#f7faff!important;border-color:#dce8f5!important}
-.check-row{border-color:#e4edf7!important}.check-state{color:#946716!important}.check-state.pass{color:#168365!important}
-.next-step{background:#eef6ff!important;border-color:#c8def4!important}.next-step span{color:#376fa9!important}.next-step p{color:#48698d!important}
-.status-chip{background:#f5f9fe!important;color:#526d8b!important;border-color:#d7e4f2!important}
-.chart-wrap{background:#f7fbff!important;border-color:#d9e7f6!important}
-.chart-wrap .empty{color:#526d8b!important}
-.chart-wrap svg text{fill:#526d8b!important}
-.chart-wrap svg line{stroke:#dce7f4!important}
-.bot-meta span{background:#f5f9fe!important;color:#526d8b!important;border-color:#dce8f5!important}
-.empty{color:#607895!important;border-color:#cfdeef!important;background:#f8fbff!important}
-.signal-row,.history-row{color:#193654!important;border-color:#e4edf7!important}
-.signal-row small,.history-row small{color:#607895!important}
-.signal-price{color:#365b83!important}
-.footer{border-color:#dce8f5!important}.footer a{color:#286eae!important}
-.signal-toast{background:#fff!important}
+.market{background:linear-gradient(145deg,#172033,#101725)!important;border:1px solid #ffffff16!important;box-shadow:0 4px 14px #0003!important}
+.market:hover,.market.selected{background:linear-gradient(120deg,#292449,#142336)!important;border-color:#9385ff!important;box-shadow:0 7px 20px #0005!important}
+.market .symbol{color:#f1f5ff!important}
+.market .tag{background:#202b40!important;color:#c4cee0!important;border-color:#3b4963!important}
+.market .tag.buy{color:#73edbf!important;background:#10392f!important;border-color:#287d65!important}
+.market .tag.sell{color:#ff91a6!important;background:#421d2b!important;border-color:#91435a!important}
+.market .waiting-reason{background:#111a2a!important;border:1px solid #34415b!important}
+.market .waiting-reason span,.waiting-reason span{color:#c0adff!important}
+.market .waiting-reason p,.waiting-reason p{color:#d1d9e9!important}
+.progress{background:#303b52!important}.progress i{background:linear-gradient(90deg,#9a83ff,#62d9ef)!important}
+.search{background:#0b1220!important;color:#f4f7ff!important;border-color:#34415b!important}
+.search::placeholder{color:#8291aa!important}
+.view-tab,.filter{background:#151f31!important;color:#bac6da!important;border-color:#35435e!important}
+.view-tab.active,.filter.active{background:#302b58!important;color:#e4deff!important;border-color:#9a8bff!important}
+.structure-item,.detail-level,.health-item,.setting-chip{background:#131d2e!important;border-color:#ffffff18!important}
+.check-row{border-color:#ffffff16!important}.check-state{color:#f5cf7e!important}.check-state.pass{color:#6ce8b8!important}
+.next-step{background:linear-gradient(120deg,#29234c,#122536)!important;border-color:#7569c9!important}.next-step span{color:#d0c4ff!important}.next-step p{color:#e0e7f4!important}
+.status-chip{background:#172238!important;color:#c5d0e3!important;border-color:#3a4965!important}
+.chart-wrap{background:#0b1220!important;border-color:#34415b!important}
+.chart-wrap .empty{color:#c0cce0!important}
+.chart-wrap svg text{fill:#c0cce0!important}
+.chart-wrap svg line{stroke:#35435b!important}
+.bot-meta span{background:#172238!important;color:#c4cee0!important;border-color:#35435b!important}
+.empty{color:#c1cce0!important;border-color:#43516a!important;background:#111a2a!important}
+.signal-row,.history-row{color:#f1f5ff!important;border-color:#ffffff18!important}
+.signal-row small,.history-row small{color:#a0aec5!important}
+.signal-price{color:#dbe6f8!important}
+.footer{border-color:#ffffff18!important}.footer a{color:#b9aaff!important}
+.signal-toast{background:linear-gradient(120deg,#3a1024f5,#171020f7 72%)!important}
 .hero-mascot{animation:mascotFloat 7s ease-in-out infinite!important}
 @media(max-width:760px){.shell{padding:10px 10px 25px}.market-grid{grid-template-columns:1fr!important}.hero-mascot{opacity:.95}.panel{border-radius:14px!important}}
 @media(prefers-reduced-motion:reduce){.hero-mascot{animation:none!important}}
