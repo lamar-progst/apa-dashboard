@@ -151,6 +151,44 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 @media(max-width:900px){.apa-flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.apa-heading{flex-direction:column;gap:9px}.apa-flow{grid-template-columns:1fr 1fr;gap:7px}.apa-step{padding:11px}.apa-step h3{font-size:12px}.apa-step p{font-size:9px}.apa-step ul{font-size:8px}.apa-bottom{grid-template-columns:1fr}.apa-rules ul{grid-template-columns:1fr 1fr}}
 @media(max-width:370px){.apa-flow{grid-template-columns:1fr}.apa-rules ul{grid-template-columns:1fr}}
+
+/* TradesByJay visual refinement — calmer premium terminal */
+:root{--bg:#070711;--surface:#0e0e1a;--surface2:#141326;--line:#25233a;--line2:#383250;--purple:#ad91ff;--cyan:#69e5f3;--green:#55e3ad;--red:#ff6684}
+body{background:radial-gradient(ellipse 62% 38% at 50% -12%,#6f4ac52a,transparent 70%),radial-gradient(ellipse 35% 35% at 100% 32%,#08778b12,transparent 75%),#070711}
+body:before{opacity:.035;background-size:80px 80px}
+.shell{width:min(1680px,100%);padding-top:24px}
+.topbar{padding:8px 0 20px;border-bottom-color:#ffffff12}
+.mark{border-radius:14px;box-shadow:0 8px 30px #9c78ff35}
+.brand-name{letter-spacing:.12em}
+.hero{padding:42px 3px 26px}
+.hero h1{font-size:clamp(40px,5.6vw,72px);letter-spacing:-.08em}
+.hero p{font-size:13px;max-width:680px;color:#aaa6bd}
+.kpis{gap:12px;margin-bottom:18px}
+.kpi{padding:17px 18px;border-radius:15px;background:linear-gradient(145deg,#ffffff0b,transparent 62%),#10101c;border-color:#ffffff14;transition:transform .18s ease,border-color .18s ease}
+.kpi:hover{transform:translateY(-2px);border-color:#a78bfa55}
+.kpi-value{font-size:29px}
+.panel{border-radius:16px;background:linear-gradient(145deg,#ffffff08,transparent 56%),#10101b;border-color:#ffffff16;box-shadow:0 18px 50px #0004}
+.watch-panel,.chart-panel,.setup-panel,.bottom-grid>.panel{padding:18px}
+.panel-head{margin-bottom:17px}
+.panel-head h3{font-size:13px;letter-spacing:-.025em}
+.command-grid{gap:14px;grid-template-columns:minmax(260px,315px) minmax(360px,1fr) minmax(280px,325px)}
+.market{padding:11px;border-radius:10px;background:#ffffff03;border-color:#ffffff10}
+.market:hover,.market.selected{background:linear-gradient(100deg,#a78bfa12,#ffffff04);border-color:#a78bfa75;box-shadow:inset 0 0 18px #a78bfa08}
+.market-grid{gap:7px}
+.chart-wrap{border-radius:12px;background:radial-gradient(ellipse at 50% 0%,#4b34752a,transparent 70%),#090912}
+.structure-item,.health-item,.detail-level,.setting-chip{border-radius:9px;background:#ffffff04;border-color:#ffffff12}
+.next-step{border-radius:11px;background:linear-gradient(110deg,#a78bfa12,#66e7f408);border-color:#a78bfa35}
+.bottom-grid{gap:14px;margin-top:14px}
+.ticker-strip{border-radius:12px;background:linear-gradient(90deg,#a78bfa0e,#66e7f407 55%,#ffffff03);border-color:#ffffff13}
+.apa-section{border-radius:16px}
+.apa-step,.apa-example,.apa-rules{border-radius:12px}
+.signal-toast{box-shadow:0 18px 55px #0008,0 0 30px #ff173f16}
+button,.market,.kpi{ -webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #b39aff;outline-offset:3px}
+@media(max-width:1180px){.command-grid{grid-template-columns:minmax(245px,300px) minmax(0,1fr);gap:12px}}
+@media(max-width:760px){.shell{padding:12px 12px 30px}.hero{padding:30px 2px 20px}.hero h1{font-size:clamp(39px,10vw,54px)}.kpi{padding:13px}.kpi-value{font-size:23px}.watch-panel,.chart-panel,.setup-panel,.bottom-grid>.panel{padding:13px}.command-grid{gap:10px}.chart-wrap{height:250px}.market-grid{gap:6px}.panel{border-radius:13px}}
+@media(prefers-reduced-motion:no-preference){.mark,.bot-orb{animation:softGlow 5s ease-in-out infinite alternate}@keyframes softGlow{from{filter:drop-shadow(0 0 0 #9c78ff00)}to{filter:drop-shadow(0 0 8px #9c78ff38)}}}
+
 </style>
 </head>
 <body>
