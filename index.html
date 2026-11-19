@@ -126,12 +126,66 @@ body:before{opacity:.035;background-size:72px 72px}
 @media(max-width:850px){.workspace{grid-template-columns:1fr}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.shell{padding:10px 10px 30px}.topbar{padding:10px;border-radius:13px}.hero{padding:28px 3px 18px}.hero-side{width:100%;min-width:0;display:grid;grid-template-columns:1fr auto;gap:4px 10px}.hero-side .label{grid-column:1/-1}.hero-side strong{font-size:17px}.kpi{padding:13px}.kpi-value{font-size:25px}.workspace .chart-panel,.workspace .setup-panel,.market-explorer,.closest-panel,.bottom-grid>.panel{padding:13px}.market-grid{grid-template-columns:1fr}.market{min-height:0}.chart-wrap{height:245px}.panel{border-radius:13px}}
 </style>
+
+<style id="tradesbyjay-blue-glass-refresh">
+:root{color-scheme:light;--bg:#f4f8ff;--panel:#ffffffd9;--panel2:#f2f7ff;--line:#d8e6f8;--muted:#71839f;--text:#172b49;--purple:#5d8fe8;--pink:#78bdf4;--cyan:#3a9fe5;--green:#159b78;--red:#dc6275;--gold:#a97721}
+html{background:#f4f8ff}
+body{color:#172b49;background:radial-gradient(ellipse at 10% 0%,#b8dcff66,transparent 34%),radial-gradient(ellipse at 92% 8%,#d4eaff88,transparent 32%),linear-gradient(180deg,#f8fbff,#eef5ff 65%,#f8fbff);background-attachment:fixed}
+body:before{opacity:.18;background-image:radial-gradient(#8eb7e5 0.7px,transparent .7px);background-size:22px 22px;mask-image:linear-gradient(#000,transparent 80%)}
+.shell{width:min(1500px,100%);padding:22px clamp(14px,3vw,42px) 42px}
+.topbar,.ticker-strip,.panel,.kpi,.hero-side{background:rgba(255,255,255,.72);border:1px solid #dce9f8;box-shadow:0 12px 36px #7fa8d51a;backdrop-filter:blur(18px)}
+.topbar{border-radius:18px;padding:11px 15px}
+.mark,.bot-orb{background:linear-gradient(145deg,#dff2ff,#9cc9f3 55%,#5d91df);color:#17416f;box-shadow:0 7px 22px #7aaee544}
+.brand-name{color:#18385e}.brand-sub,.top-link,.ticker-item,.hero p,.kpi-foot,.market-foot,.subhead,.health-note,.footer{color:#71839f}
+.top-link,.test-telegram,.live-indicator{background:#f4f9ff;border-color:#d6e5f7;color:#42658e;border-radius:10px}
+.test-telegram{background:linear-gradient(110deg,#e6f3ff,#d6eaff);border-color:#a9c9ee;color:#28598d}
+.live-indicator{color:#168366;border-color:#b9e7d9;background:#edfbf6}
+.live-indicator.stale{color:#bd596a;border-color:#f1c9d0;background:#fff5f6}
+.ticker-strip{border-radius:12px;padding:9px 13px}.ticker-label,.eyebrow,.section-meta{color:#5689c9}
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:22px;padding:34px 4px 23px}
+.hero h1{color:#19395f;font-size:clamp(38px,5vw,62px);letter-spacing:-.07em}.hero h1 span{background:linear-gradient(100deg,#4386d7,#54b5df);background-clip:text;-webkit-background-clip:text}
+.hero p{max-width:560px;color:#71839f}
+.hero-mascot{width:145px;height:170px;display:grid;place-items:center;position:relative;animation:mascotFloat 5s ease-in-out infinite}
+.hero-mascot:before{content:"";position:absolute;inset:20px 10px 4px;border-radius:48% 48% 42% 42%;background:linear-gradient(145deg,#dff2ffb8,#9cc9f344);filter:blur(5px)}
+.hero-mascot svg{position:relative;width:100%;height:100%;filter:drop-shadow(0 12px 15px #5e91ca24)}
+.hero-side{min-width:185px;border-radius:15px;padding:15px 17px;text-align:left}
+.hero-side .label,.hero-side small{color:#7d91ad}.hero-side strong{color:#244b78}
+.kpi{border-radius:15px;padding:16px 18px;box-shadow:0 9px 25px #85a9d21c}
+.kpi:after{background:#a8d5ff55}.kpi-label,.structure-item span,.detail-level span,.health-item span,.setting-chip span{color:#7186a3}
+.kpi-value{color:#1b426f}
+.panel{border-radius:17px;box-shadow:0 12px 32px #86a9d51b}
+.panel-head h3,.symbol,.structure-item strong,.detail-level strong,.health-item strong,.setting-chip strong{color:#1c3d64}
+.section-meta{letter-spacing:.14em}
+.search{background:#f7fbff;border-color:#d7e5f5;color:#1e3d62}.search:focus{border-color:#78a9e4}
+.view-tab,.filter{background:#f6faff;border-color:#d8e6f6;color:#6c819e}.view-tab.active,.filter.active{background:#e4f1ff;border-color:#8db9ec;color:#285d96}
+.market{background:#f9fcff;border-color:#e1ebf7}.market:hover,.market.selected{background:linear-gradient(110deg,#e9f4ff,#fff);border-color:#8db9ec;box-shadow:0 7px 18px #8cb5df20}
+.market .tag{background:#f1f6fc;color:#6f829e;border-color:#dce7f4}.market .tag.buy{color:#168366;background:#edfbf6;border-color:#bce8da}.market .tag.sell{color:#bd596a;background:#fff3f5;border-color:#f2cbd2}
+.market-foot{color:#788ca8}
+.progress{background:#e4edf8}.progress i{background:linear-gradient(90deg,#75a9ed,#55b9dc)}
+.waiting-reason{background:#f2f8ff;border-color:#d8e9fb}.waiting-reason span{color:#477ebd}.waiting-reason p{color:#637d9c}
+.chart-wrap{background:linear-gradient(145deg,#f9fcff,#edf5ff);border-color:#d9e8f8}
+.chart-caption{color:#7a90ad}.structure-item,.detail-level,.health-item,.setting-chip{background:#f7fbff;border-color:#e0ebf7}
+.check-row{border-color:#e7eef7}.check-row strong{color:#28496f}.check-row small{color:#7a8da8}.check-state{color:#9a741f}.check-state.pass{color:#168366}
+.next-step{background:linear-gradient(120deg,#eaf5ff,#f7fbff);border-color:#c6def6}.next-step span{color:#477ebd}.next-step p{color:#587595}
+.status-chip{border-color:#d8e6f5;color:#69809d}.status-chip.open{color:#2787b6;border-color:#b9dff0}.status-chip.wait{color:#9a741f;border-color:#ead9b4}.status-chip.tp{color:#168366;border-color:#bce8da}.status-chip.sl{color:#bd596a;border-color:#f2cbd2}
+.bot-meta span{background:#f5f9fe;border-color:#dce8f5;color:#637d9b}
+.footer{border-color:#dce8f5}.footer a{color:#397fc1}
+.signal-toast{background:rgba(255,248,250,.96);border-color:#edb9c4;box-shadow:0 14px 38px #d8788b24}.signal-toast strong{color:#9f4054}.signal-toast p{color:#785c65}.toast-kicker,.toast-time{color:#bd596a}
+@keyframes mascotFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}
+@keyframes softGlow{0%,100%{box-shadow:0 0 0 0 #77b8ef00}50%{box-shadow:0 0 22px 1px #77b8ef2c}}
+.panel,.kpi,.hero-side{animation:softGlow 7s ease-in-out infinite}
+.market{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.market:hover{transform:translateY(-2px)}
+@media(max-width:850px){.hero{grid-template-columns:minmax(0,1fr) auto;gap:10px}.hero-mascot{width:104px;height:125px;grid-column:2;grid-row:1}.hero-side{grid-column:1/-1;min-width:0}.hero>div:first-child{grid-column:1;grid-row:1}}
+@media(max-width:560px){.hero{display:flex;flex-wrap:wrap;gap:6px}.hero>div:first-child{flex:1 1 60%}.hero-mascot{width:86px;height:110px;flex:0 0 86px}.hero-side{width:100%;display:flex;align-items:center;gap:10px;justify-content:space-between;padding:11px 13px}.hero-side strong{font-size:13px;margin:0}.hero-side small,.hero-side .label{font-size:8px}.kpi{padding:12px}.kpi-value{font-size:22px}}
+@media(prefers-reduced-motion:reduce){.hero-mascot,.panel,.kpi,.hero-side{animation:none!important}}
+</style>
 </head>
 <body><div class="shell">
 <header class="topbar"><div class="brand"><div class="mark">TJ</div><div><div class="brand-name">TRADESBYJAY</div><div class="brand-sub">MARKET INTELLIGENCE TERMINAL</div></div></div>
 <div class="top-actions"><a class="top-link" href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noreferrer">TELEGRAM ↗</a><button id="telegramTestBtn" class="test-telegram">✉ TEST TELEGRAM</button><div class="live-indicator stale" id="connection"><i class="dot"></i><span id="connectionText">CONNECTING TO BOT</span></div></div></header>
 <div class="ticker-strip"><span class="ticker-label">LIVE WATCHLIST</span><div class="ticker-window"><div class="ticker-track" id="tickerTrack"><span class="ticker-item">Connecting to market feed…</span></div></div></div>
-<section class="hero"><div><div class="eyebrow">PRICE ACTION · LIVE SCANNER · SIGNAL INTELLIGENCE</div><h1>Trade the move.<br><span>Not the noise.</span></h1><p>Your market command center. Track the bot's real scanner state, see exactly what each setup is waiting for, and monitor confirmed alerts without fake signals or made-up progress.</p></div><div class="hero-side"><div class="label">LATEST BOT UPDATE</div><strong id="lastUpdated">CONNECTING…</strong><small id="feedMode">WAITING FOR STATE.JSON</small></div></section>
+<section class="hero"><div><div class="eyebrow">PRICE ACTION · LIVE SCANNER · SIGNAL INTELLIGENCE</div><h1>Trade the move.<br><span>Not the noise.</span></h1><p>Your market command center. Track the bot's real scanner state, see exactly what each setup is waiting for, and monitor confirmed alerts without fake signals or made-up progress.</p></div><div class="hero-mascot" aria-hidden="true"><svg viewBox="0 0 220 250" role="img"><defs><linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9ddcff"/><stop offset="1" stop-color="#4679d8"/></linearGradient><linearGradient id="coat" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d9f3ff"/><stop offset="1" stop-color="#8db8ed"/></linearGradient></defs><ellipse cx="112" cy="232" rx="74" ry="10" fill="#5d91d8" opacity=".15"/><path d="M50 225Q48 166 76 145L105 132 143 143Q176 165 174 225Z" fill="url(#coat)" stroke="#6598d8" stroke-width="2"/><path d="M75 154Q108 176 146 151L160 225H64Z" fill="#edf8ff"/><path d="M76 84Q65 35 111 28Q163 28 161 91L151 132Q134 153 107 145Q76 137 69 111Z" fill="url(#hair)" stroke="#4779c4" stroke-width="2"/><path d="M78 95Q72 58 105 51Q135 44 153 68L146 117Q135 136 111 135Q85 129 78 108Z" fill="#ffe8d9"/><path d="M72 90Q51 42 91 20Q124 1 156 28Q179 48 156 89L145 70Q124 51 102 66L82 103Z" fill="url(#hair)"/><path d="M78 57Q55 84 65 119L51 101Q43 67 65 42Z" fill="#5d91df"/><path d="M151 58Q180 75 163 117L153 103Z" fill="#5d91df"/><path d="M92 99Q101 92 109 99M125 99Q134 92 142 99" fill="none" stroke="#385d9c" stroke-width="3" stroke-linecap="round"/><path d="M108 119Q118 126 128 118" fill="none" stroke="#d47f88" stroke-width="2" stroke-linecap="round"/><path d="M78 151L105 177 131 151 145 164 118 203 91 203 63 164Z" fill="#c2e4ff" stroke="#6598d8" stroke-width="2"/><path d="M105 177L118 203 131 177" fill="none" stroke="#6598d8" stroke-width="2"/><path d="M87 218L96 186 110 200 124 186 137 218" fill="none" stroke="#4c78b8" stroke-width="3" stroke-linecap="round"/><path d="M157 24l5-12 5 12 12 5-12 5-5 12-5-12-12-5z" fill="#75c9f7"/><path d="M39 130l4-9 4 9 9 4-9 4-4 9-4-9-9-4z" fill="#8ab8ff"/></svg></div><div class="hero-side"><div class="label">LATEST BOT UPDATE</div><strong id="lastUpdated">CONNECTING…</strong><small id="feedMode">WAITING FOR STATE.JSON</small></div></section>
 <section class="kpis"><div class="kpi"><div class="kpi-label">MARKETS SCANNED</div><div class="kpi-value" id="kMarkets">—</div><div class="kpi-foot" id="scanSymbols">Waiting for scanner data</div></div><div class="kpi"><div class="kpi-label">READY SETUPS</div><div class="kpi-value" id="kReady">—</div><div class="kpi-foot">Bot-confirmed readiness only</div></div><div class="kpi"><div class="kpi-label">OPEN + PENDING</div><div class="kpi-value" id="kSignals">—</div><div class="kpi-foot"><span id="scanPositions">OPEN: —</span> · <span id="scanPending">PENDING: —</span></div></div><div class="kpi"><div class="kpi-label">ACCOUNT MODE</div><div class="kpi-value" id="kMode">—</div><div class="kpi-foot" id="kAccount">Mode reported by bot</div></div></section>
 <main>
 <section class="workspace">
