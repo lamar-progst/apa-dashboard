@@ -1,276 +1,62 @@
 <!doctype html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080713">
-<title>📡 TradesByJay — Market Command</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E📡%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#090611"><title>TradesByJay — Market Terminal</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E⚡%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800;900&display=swap');
-:root{color-scheme:dark;--bg:#080810;--surface:#10101b;--surface2:#151525;--line:#29283d;--line2:#393451;--text:#f5f3ff;--muted:#89879f;--purple:#a78bfa;--cyan:#66e7f4;--green:#58e5ad;--red:#ff617c;--gold:#f3c978}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;min-height:100vh;color:var(--text);font-family:Manrope,system-ui,sans-serif;background:radial-gradient(ellipse 50% 40% at 12% -10%,#6936a938,transparent 72%),radial-gradient(ellipse 45% 34% at 100% 10%,#075f7826,transparent 72%),radial-gradient(ellipse 50% 40% at 50% 110%,#39216b25,transparent 75%),var(--bg)}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.1;background-image:linear-gradient(#ffffff 1px,transparent 1px),linear-gradient(90deg,#ffffff 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(#000,transparent 85%);z-index:-1}
-button,input{font:inherit}button{cursor:pointer;color:inherit}
-.shell{width:min(1800px,100%);margin:auto;padding:20px clamp(14px,2.4vw,38px) 38px}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 0 17px;border-bottom:1px solid #ffffff17}
-.brand{display:flex;align-items:center;gap:12px;min-width:0}
-.mark{width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#e4d6ff,#9873f7 55%,#53d8e5);color:#0a0912;font-weight:1000;letter-spacing:-1px;box-shadow:0 0 26px #9c78ff66}
-.brand-name{font-size:14px;font-weight:900;letter-spacing:.15em}
-.brand-sub{font:9px 'DM Mono';color:#9a92b6;letter-spacing:.19em;margin-top:4px}
-.top-actions{display:flex;align-items:center;gap:9px}
-.test-telegram,.top-link,.live-indicator{white-space:nowrap;border:1px solid var(--line2);border-radius:9px;padding:9px 12px;background:#ffffff07;font:10px 'DM Mono';letter-spacing:.04em;text-decoration:none;color:#ded8f4}
-.test-telegram{border-color:#8d75dc;background:#a78bfa17;color:#e9e0ff}
-.test-telegram:hover,.top-link:hover{border-color:var(--purple);background:#a78bfa22}
-.test-telegram:disabled{opacity:.6;cursor:wait}.test-telegram.sent{border-color:var(--green);color:var(--green)}.test-telegram.failed{border-color:var(--red);color:var(--red)}
-.live-indicator{display:flex;align-items:center;gap:8px;border-radius:99px;border-color:#58e5ad45;color:#a8f4d3;background:#58e5ad0b}
-.live-indicator.stale{border-color:#ff617c55;color:#ffadba;background:#ff617c0b}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
-.live-indicator.stale .dot{background:var(--red);box-shadow:0 0 12px var(--red)}
-.ticker-strip{display:flex;align-items:center;gap:14px;margin:14px 0 0;padding:10px 13px;border:1px solid #ffffff16;border-radius:10px;background:linear-gradient(90deg,#a78bfa13,#66e7f408 55%,#ffffff04);min-width:0}
-.ticker-label{flex:none;color:var(--cyan);font:9px 'DM Mono';letter-spacing:.15em}
-.ticker-window{overflow-x:auto;min-width:0;scrollbar-width:none}.ticker-window::-webkit-scrollbar{display:none}
-.ticker-track{display:flex;align-items:center;gap:25px;width:max-content}
-.ticker-item{display:inline-flex;align-items:center;gap:8px;color:#aaa6bd;font:10px 'DM Mono';white-space:nowrap}
-.ticker-item b{color:#f0ecff;font-weight:500}.ticker-item em{font-style:normal;color:#bcb5d4}.ticker-item .up{color:var(--green)}.ticker-item .down{color:var(--red)}
-.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:34px 2px 22px}
-.eyebrow{font:10px 'DM Mono';letter-spacing:.2em;color:var(--cyan)}
-.hero h1{font-size:clamp(36px,5vw,65px);line-height:.98;letter-spacing:-.075em;margin:12px 0 10px;font-weight:900}
-.hero h1 span{background:linear-gradient(100deg,#cbb8ff,#8bceff 58%,#66e7f4);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{max-width:620px;margin:0;color:#a5a1b8;font-size:12px;line-height:1.75}
-.hero-side{flex:none;text-align:right;padding:0 3px 4px}
-.hero-side .label{font:9px 'DM Mono';letter-spacing:.15em;color:var(--muted)}
-.hero-side strong{display:block;font:23px 'DM Mono';margin:8px 0 5px}
-.hero-side small{color:var(--muted);font:9px 'DM Mono'}
-.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 15px}
-.kpi{position:relative;overflow:hidden;padding:14px 16px;border:1px solid #ffffff19;border-radius:12px;background:linear-gradient(135deg,#ffffff0b,transparent 65%),#11101c}
-.kpi:after{content:"";position:absolute;width:80px;height:80px;right:-44px;top:-48px;border-radius:50%;background:#a78bfa27;filter:blur(15px)}
-.kpi-label{color:#9c98b1;font:9px 'DM Mono';letter-spacing:.13em;text-transform:uppercase}
-.kpi-value{font-size:25px;font-weight:800;letter-spacing:-.05em;margin-top:7px}
-.kpi-foot{font-size:9px;color:#77748b;margin-top:3px;overflow-wrap:anywhere}
-.panel{min-width:0;border:1px solid #ffffff18;border-radius:14px;background:linear-gradient(145deg,#ffffff09,transparent 52%),#11101d;box-shadow:0 16px 45px #0003}
-.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-.panel-head h3{font-size:12px;font-weight:800;letter-spacing:-.015em;margin:0}
-.section-meta{font:9px 'DM Mono';color:#8c87a4;letter-spacing:.09em}
-.command-grid{display:grid;grid-template-columns:minmax(255px,310px) minmax(360px,1fr) minmax(270px,320px);gap:12px;align-items:stretch}
-.watch-panel,.chart-panel,.setup-panel{padding:15px}
-.watch-panel{display:flex;flex-direction:column}
-.watch-toolbar{display:grid;grid-template-columns:1fr auto;gap:7px;margin-bottom:10px}
-.search{min-width:0;width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 10px;background:#090912;color:var(--text);font-size:11px;outline:none}
-.search:focus{border-color:var(--purple)}
-.view-tabs{display:flex;gap:5px;margin-bottom:9px}
-.view-tab,.filter{border:1px solid var(--line);border-radius:7px;padding:7px 9px;background:#ffffff05;color:#a9a4bd;font-size:10px}
-.view-tab.active,.filter.active{border-color:#9d83f3;color:#e6dcff;background:#a78bfa19}
-.waiting-count{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 4px;border-radius:99px;background:#f3c97820;color:var(--gold);font:9px 'DM Mono'}
-.filters{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:11px}
-.market-count{font:9px 'DM Mono';color:#8b86a2;margin:0 0 9px}
-.market-grid{display:flex;flex-direction:column;gap:6px;max-height:690px;overflow:auto;padding-right:3px;scrollbar-width:thin;scrollbar-color:#51436f transparent}
-.market{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 8px;align-items:center;padding:10px 10px 9px;border:1px solid #ffffff12;border-radius:9px;background:#ffffff04;cursor:pointer;transition:border-color .16s,background .16s}
-.market:before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:#77718a}
-.market:has(.tag.buy):before{background:var(--green)}.market:has(.tag.sell):before{background:var(--red)}
-.market:hover,.market.selected{border-color:#a78bfa8a;background:linear-gradient(90deg,#a78bfa16,#ffffff05);box-shadow:inset 0 0 22px #a78bfa08}
-.market-top{display:flex;align-items:center;gap:7px;min-width:0}
-.symbol{font-size:11px;font-weight:800;overflow-wrap:anywhere}
-.tag{font:8px 'DM Mono';letter-spacing:.06em;padding:4px 6px;border:1px solid #ffffff17;border-radius:99px;color:#aaa4bd;background:#ffffff07}
-.tag.buy{color:var(--green);border-color:#58e5ad44;background:#58e5ad0c}.tag.sell{color:var(--red);border-color:#ff617c44;background:#ff617c0c}
-.market-price{grid-column:2;grid-row:1;font:11px 'DM Mono';text-align:right;color:#e9e5f5}
-.market-foot{display:flex;justify-content:space-between;gap:7px;color:#8f8aa5;font:8px 'DM Mono';grid-column:1/-1}
-.market-foot .direction-buy{color:var(--green)}.market-foot .direction-sell{color:var(--red)}
-.progress{grid-column:1/-1;height:3px;background:#29253a;border-radius:9px;overflow:hidden;margin:4px 0 1px}
-.progress i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#9a75f4,#62dff0)}
-.waiting-reason{grid-column:1/-1;margin-top:5px;padding:7px 8px;border:1px solid #f3c97825;border-radius:7px;background:#f3c97808}
-.waiting-reason span{font:8px 'DM Mono';letter-spacing:.1em;color:var(--gold)}
-.waiting-reason p{font-size:9px;line-height:1.45;color:#c7bfd1;margin:3px 0 0}
-.empty{padding:18px 12px;text-align:center;color:#8d88a2;border:1px dashed #3b3550;border-radius:9px;font-size:10px;line-height:1.6}
-.chart-panel{display:flex;flex-direction:column}
-.chart-wrap{height:clamp(250px,32vw,390px);min-height:230px;border:1px solid #29263d;border-radius:10px;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#38255c35,transparent 68%),#090912}
-.chart-wrap svg{display:block;width:100%;height:100%}
-.chart-caption{display:flex;justify-content:space-between;gap:8px;margin:9px 1px 12px;color:#88839c;font:8px 'DM Mono'}
-.structure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:auto}
-.structure-item{padding:10px;border:1px solid #ffffff13;border-radius:8px;background:#ffffff05;min-width:0}
-.structure-item span{display:block;color:#8e89a4;font:8px 'DM Mono';letter-spacing:.1em;margin-bottom:6px}
-.structure-item strong{font-size:11px;overflow-wrap:anywhere}
-.direction-buy{color:var(--green)}.direction-sell{color:var(--red)}
-.setup-panel{display:flex;flex-direction:column}
-.journey{display:flex;flex-direction:column;gap:0}
-.check-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #ffffff10}
-.check-row:last-child{border:0}
-.check-row strong{font-size:10px}.check-row small{display:block;color:#8d88a2;font-size:9px;line-height:1.5;margin-top:4px}
-.check-state{font:8px 'DM Mono';white-space:nowrap;color:var(--gold)}.check-state.pass{color:var(--green)}
-.next-step{margin-top:auto;padding:11px;border:1px solid #a78bfa40;border-radius:9px;background:linear-gradient(110deg,#a78bfa14,#66e7f408)}
-.next-step span{font:8px 'DM Mono';color:#c0aaff;letter-spacing:.12em}
-.next-step p{font-size:10px;line-height:1.55;color:#d4cce8;margin:6px 0 0}
-.detail-levels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:9px}
-.detail-level{padding:8px;border:1px solid #ffffff12;border-radius:7px;background:#ffffff04;min-width:0}
-.detail-level span{display:block;font:8px 'DM Mono';color:#8c87a2;margin-bottom:5px}
-.detail-level strong{font-size:10px;overflow-wrap:anywhere}
-.bottom-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.85fr);gap:12px;margin-top:12px}
-.bottom-grid>.panel{padding:15px}
-.health-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
-.health-item{min-width:0;padding:10px;border:1px solid #ffffff12;border-radius:8px;background:#ffffff04}
-.health-item span{display:block;font:8px 'DM Mono';letter-spacing:.09em;color:#89849e}
-.health-item strong{display:block;font:12px 'DM Mono';margin-top:6px;overflow-wrap:anywhere}
-.health-note{font-size:9px;line-height:1.55;color:#8d88a2;margin-top:9px}
-.scanner-stats{margin-top:10px;padding-top:10px;border-top:1px solid #ffffff12}
-.signal-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #ffffff10;font-size:10px}
-.signal-row:last-child{border:0}.signal-row strong{display:block}.signal-row small{display:block;color:#8d88a2;font:8px 'DM Mono';margin-top:4px}
-.signal-price{font:9px 'DM Mono';color:#d4cdec}
-.status-chip{font:8px 'DM Mono';border:1px solid var(--line2);border-radius:99px;padding:5px 7px;color:#bbb4cc;white-space:nowrap}
-.status-chip.open{color:var(--cyan);border-color:#66e7f444}.status-chip.wait{color:var(--gold);border-color:#f3c97844}
-.status-chip.tp{color:var(--green);border-color:#58e5ad44}.status-chip.sl{color:var(--red);border-color:#ff617c44}
-.tp-track{height:4px;background:#29253a;border-radius:8px;overflow:hidden;margin-top:5px}.tp-track i{display:block;height:100%;background:linear-gradient(90deg,#8c73ee,#66e7f4)}
-.bot-card{display:flex;align-items:center;gap:11px}
-.bot-orb{width:38px;height:38px;display:grid;place-items:center;flex:none;border-radius:11px;background:linear-gradient(135deg,#c8b3ff,#8b6df0 65%,#58d8e7);color:#0b0912;font-weight:1000;box-shadow:0 0 20px #9c78ff38}
-.bot-card strong{font-size:10px}.bot-card p{font-size:9px;color:#8e89a4;line-height:1.5;margin:4px 0 0}
-.bot-meta{display:flex;flex-wrap:wrap;gap:5px;margin:12px 0}
-.bot-meta span{font:8px 'DM Mono';padding:6px 7px;border:1px solid #ffffff13;border-radius:6px;color:#aaa4bc;background:#ffffff05}
-.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
-.setting-chip{padding:8px;border:1px solid #ffffff12;border-radius:7px;background:#ffffff04;min-width:0}
-.setting-chip span{display:block;font:8px 'DM Mono';color:#8d88a2;margin-bottom:4px}.setting-chip strong{font-size:9px;overflow-wrap:anywhere}
-.footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:22px;padding-top:13px;border-top:1px solid #ffffff14;color:#77728a;font:8px 'DM Mono';line-height:1.7}
-.footer a{color:#b9a7ed;text-decoration:none}
-.signal-toast-wrap{position:fixed;z-index:9999;top:15px;right:15px;width:min(370px,calc(100vw - 30px));display:grid;gap:9px;pointer-events:none}
-.signal-toast{padding:14px 15px;border:1px solid #ff617c99;border-radius:12px;background:linear-gradient(120deg,#35101df5,#17101df7 72%);box-shadow:0 16px 50px #ff173f30,inset 0 1px #ffffff20;backdrop-filter:blur(16px)}
-.signal-toast strong{display:block;font-size:14px;margin:6px 0}.signal-toast p{font-size:10px;color:#e0cbd2;margin:0 0 7px}.toast-kicker,.toast-time{font:8px 'DM Mono';letter-spacing:.08em;color:#ff9aac}
-body.alert-flash{animation:alertEdge .55s ease 2}
-@keyframes alertEdge{0%,100%{box-shadow:inset 0 0 0 transparent}50%{box-shadow:inset 0 0 0 3px #ff315c66}}
+:root{color-scheme:dark;--bg:#090611;--panel:#151020;--panel2:#1b1429;--line:#342746;--muted:#9b90ae;--text:#f8f3ff;--purple:#b58aff;--pink:#fa7bc8;--cyan:#73e6ef;--green:#55e3aa;--red:#ff6689;--gold:#f3cc7a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--text);font-family:Manrope,system-ui,sans-serif;background:radial-gradient(ellipse at 12% -12%,#803de64a,transparent 42%),radial-gradient(ellipse at 100% 4%,#b3318c24,transparent 34%),radial-gradient(ellipse at 50% 110%,#3030a62b,transparent 42%),var(--bg)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(#000,transparent 80%);z-index:-1}
+button,input{font:inherit}button{cursor:pointer;color:inherit}.shell{width:min(1680px,100%);margin:auto;padding:22px clamp(14px,3vw,46px) 40px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:5px 0 18px;border-bottom:1px solid #ffffff19}
+.brand{display:flex;align-items:center;gap:13px}.mark{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(140deg,#f4d9ff,#ad7cff 48%,#60dce8);color:#170d23;font-size:22px;font-weight:1000;box-shadow:0 8px 34px #a76bff55}.brand-name{font-size:15px;font-weight:900;letter-spacing:.17em}.brand-sub{font:9px 'DM Mono';letter-spacing:.2em;color:#b39bcf;margin-top:5px}
+.top-actions{display:flex;align-items:center;gap:8px}.top-link,.test-telegram,.live-indicator{border:1px solid var(--line);border-radius:99px;padding:10px 14px;background:#ffffff08;color:#e9dff8;text-decoration:none;font:9px 'DM Mono';white-space:nowrap}.top-link:hover,.test-telegram:hover{border-color:var(--purple);background:#b58aff18}.test-telegram{border-color:#a979e7;color:#e7d5ff;background:#a979e71c}.test-telegram:disabled{opacity:.5}.test-telegram.sent{color:var(--green)}.test-telegram.failed{color:var(--red)}
+.live-indicator{display:flex;align-items:center;gap:8px;color:#a9f6d4;border-color:#55e3aa50;background:#55e3aa0d}.live-indicator.stale{color:#ffb0c1;border-color:#ff668950}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}.stale .dot{background:var(--red);box-shadow:0 0 12px var(--red)}
+.ticker-strip{display:flex;align-items:center;gap:15px;margin:17px 0 0;padding:12px 15px;border:1px solid #ffffff19;border-radius:13px;background:linear-gradient(100deg,#a45cf51c,#ed65b60b,#ffffff04);overflow:hidden}.ticker-label{color:var(--pink);font:9px 'DM Mono';letter-spacing:.16em;white-space:nowrap}.ticker-window{overflow:auto;scrollbar-width:none;min-width:0}.ticker-track{display:flex;gap:28px;width:max-content}.ticker-item{display:inline-flex;gap:8px;align-items:center;color:#c5b7d7;font:10px 'DM Mono';white-space:nowrap}.ticker-item b{color:#fff}.ticker-item em{font-style:normal}.ticker-item .up{color:var(--green)}.ticker-item .down{color:var(--red)}
+.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:42px 2px 25px}.eyebrow,.section-meta{font:9px 'DM Mono';letter-spacing:.19em;color:var(--cyan)}.hero h1{font-size:clamp(40px,6vw,76px);line-height:.94;letter-spacing:-.08em;margin:14px 0 13px;font-weight:900}.hero h1 span{background:linear-gradient(100deg,#e2c6ff,#b78cff 42%,#72e5ef 85%);background-clip:text;-webkit-background-clip:text;color:transparent}.hero p{font-size:12px;line-height:1.8;color:#b2a6c2;max-width:600px;margin:0}.hero-side{text-align:right;flex:none;padding-bottom:4px}.hero-side .label{font:9px 'DM Mono';color:var(--muted);letter-spacing:.15em}.hero-side strong{display:block;font:25px 'DM Mono';margin:8px 0}.hero-side small{font:9px 'DM Mono';color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:15px}.kpi{position:relative;overflow:hidden;padding:18px 19px;border:1px solid #ffffff1d;border-radius:17px;background:linear-gradient(145deg,#ffffff12,transparent 58%),#171020;box-shadow:0 15px 40px #0003}.kpi:after{content:"";position:absolute;width:110px;height:110px;right:-55px;top:-65px;background:#b58aff55;filter:blur(24px);border-radius:50%}.kpi-label{font:9px 'DM Mono';letter-spacing:.14em;color:#b2a5c4}.kpi-value{font-size:29px;font-weight:900;letter-spacing:-.06em;margin-top:8px}.kpi-foot{font-size:9px;color:#8f829f;margin-top:4px;overflow-wrap:anywhere}
+.panel{min-width:0;border:1px solid #ffffff1c;border-radius:18px;background:linear-gradient(145deg,#ffffff0d,transparent 55%),#151020;box-shadow:0 20px 55px #0004}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.panel-head h3{font-size:13px;font-weight:800;margin:0;letter-spacing:-.02em}
+.command-grid{display:grid;grid-template-columns:minmax(250px,310px) minmax(350px,1fr) minmax(260px,315px);gap:13px;align-items:stretch}.watch-panel,.chart-panel,.setup-panel{padding:17px}.watch-panel,.chart-panel,.setup-panel{display:flex;flex-direction:column}
+.watch-toolbar{display:grid;grid-template-columns:1fr auto;gap:7px;margin-bottom:10px}.search{width:100%;min-width:0;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#0d0915;color:var(--text);font-size:11px;outline:none}.search:focus{border-color:var(--purple)}.view-tabs,.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.view-tab,.filter{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#ffffff06;color:#b5a8c6;font-size:10px}.view-tab.active,.filter.active{border-color:#b58aff;color:#f0e3ff;background:#b58aff20}.waiting-count{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 4px;border-radius:99px;background:#f3cc7a22;color:var(--gold);font:9px 'DM Mono'}.market-count{font:9px 'DM Mono';color:#9c90ae;margin:0 0 9px}.market-grid{display:flex;flex-direction:column;gap:7px;max-height:680px;overflow:auto;padding-right:3px;scrollbar-width:thin;scrollbar-color:#604778 transparent}
+.market{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;padding:11px;border:1px solid #ffffff14;border-radius:11px;background:#ffffff05;cursor:pointer;transition:.18s}.market:before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:4px;background:#81738f}.market:has(.tag.buy):before{background:var(--green)}.market:has(.tag.sell):before{background:var(--red)}.market:hover,.market.selected{border-color:#b58aff9c;background:linear-gradient(100deg,#a45cf522,#ffffff05);transform:translateY(-1px)}.market-top{display:flex;align-items:center;gap:7px;min-width:0}.symbol{font-size:11px;font-weight:800;overflow-wrap:anywhere}.tag{font:8px 'DM Mono';padding:4px 7px;border:1px solid #ffffff1c;border-radius:99px;color:#b8abc8;background:#ffffff08}.tag.buy{color:var(--green);border-color:#55e3aa55;background:#55e3aa10}.tag.sell{color:var(--red);border-color:#ff668955;background:#ff668910}.market-price{grid-column:2;grid-row:1;font:11px 'DM Mono';text-align:right}.market-foot{display:flex;justify-content:space-between;gap:7px;color:#9d91ae;font:8px 'DM Mono';grid-column:1/-1}.direction-buy{color:var(--green)}.direction-sell{color:var(--red)}.progress{grid-column:1/-1;height:4px;background:#34273e;border-radius:8px;overflow:hidden;margin:4px 0 1px}.progress i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#a56cf4,#e47acb,#73e6ef)}.waiting-reason{grid-column:1/-1;margin-top:5px;padding:8px;border:1px solid #f3cc7a30;border-radius:8px;background:#f3cc7a0b}.waiting-reason span{font:8px 'DM Mono';letter-spacing:.1em;color:var(--gold)}.waiting-reason p{font-size:9px;line-height:1.5;color:#d0c2d9;margin:4px 0 0}.empty{padding:20px 13px;text-align:center;color:#a194b1;border:1px dashed #493754;border-radius:11px;font-size:10px;line-height:1.7}
+.chart-wrap{height:clamp(250px,31vw,390px);min-height:230px;border:1px solid #392a4a;border-radius:13px;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#743fa62b,transparent 68%),#0d0915}.chart-wrap svg{display:block;width:100%;height:100%}.chart-caption{display:flex;justify-content:space-between;gap:8px;margin:10px 1px 14px;color:#a094b0;font:8px 'DM Mono'}.structure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:auto}.structure-item{padding:11px;border:1px solid #ffffff15;border-radius:10px;background:#ffffff06;min-width:0}.structure-item span{display:block;color:#a092b2;font:8px 'DM Mono';margin-bottom:7px;letter-spacing:.1em}.structure-item strong{font-size:11px;overflow-wrap:anywhere}
+.journey{display:flex;flex-direction:column}.check-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid #ffffff12}.check-row:last-child{border:0}.check-row strong{font-size:10px}.check-row small{display:block;color:#a092b2;font-size:9px;line-height:1.5;margin-top:4px}.check-state{font:8px 'DM Mono';white-space:nowrap;color:var(--gold)}.check-state.pass{color:var(--green)}.next-step{margin-top:auto;padding:13px;border:1px solid #b58aff55;border-radius:11px;background:linear-gradient(120deg,#b58aff1c,#73e6ef0b)}.next-step span{font:8px 'DM Mono';color:#d1b5ff;letter-spacing:.13em}.next-step p{font-size:10px;line-height:1.6;color:#e0d3ed;margin:7px 0 0}.detail-levels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}.detail-level{padding:9px;border:1px solid #ffffff14;border-radius:9px;background:#ffffff05;min-width:0}.detail-level span{display:block;font:8px 'DM Mono';color:#a092b2;margin-bottom:5px}.detail-level strong{font-size:10px;overflow-wrap:anywhere}
+.bottom-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.9fr);gap:13px;margin-top:13px}.bottom-grid>.panel{padding:17px}.health-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.health-item{padding:11px;border:1px solid #ffffff15;border-radius:10px;background:#ffffff05;min-width:0}.health-item span{display:block;font:8px 'DM Mono';letter-spacing:.09em;color:#a092b2}.health-item strong{display:block;font:12px 'DM Mono';margin-top:7px;overflow-wrap:anywhere}.health-note{font-size:9px;line-height:1.6;color:#a092b2;margin-top:10px}.scanner-stats{margin-top:11px;padding-top:11px;border-top:1px solid #ffffff14}.signal-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #ffffff12;font-size:10px}.signal-row:last-child{border:0}.signal-row strong{display:block}.signal-row small{display:block;color:#a092b2;font:8px 'DM Mono';margin-top:4px}.signal-price{font:9px 'DM Mono';color:#e0d5eb}.status-chip{font:8px 'DM Mono';border:1px solid var(--line);border-radius:99px;padding:6px 8px;color:#c1b3d0;white-space:nowrap}.status-chip.open{color:var(--cyan);border-color:#73e6ef55}.status-chip.wait{color:var(--gold);border-color:#f3cc7a55}.status-chip.tp{color:var(--green);border-color:#55e3aa55}.status-chip.sl{color:var(--red);border-color:#ff668955}.tp-track{height:4px;background:#34273e;border-radius:8px;overflow:hidden;margin-top:5px}.tp-track i{display:block;height:100%;background:linear-gradient(90deg,#a56cf4,#73e6ef)}
+.bot-card{display:flex;align-items:center;gap:12px}.bot-orb{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(140deg,#f4d9ff,#ad7cff 48%,#60dce8);color:#170d23;font-weight:1000;font-size:17px;box-shadow:0 0 25px #a76bff45}.bot-card strong{font-size:11px}.bot-card p{font-size:9px;color:#a092b2;line-height:1.5;margin:4px 0 0}.bot-meta{display:flex;flex-wrap:wrap;gap:6px;margin:13px 0}.bot-meta span{font:8px 'DM Mono';padding:7px 8px;border:1px solid #ffffff17;border-radius:7px;color:#c4b5d3;background:#ffffff06}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.setting-chip{padding:9px;border:1px solid #ffffff14;border-radius:9px;background:#ffffff05;min-width:0}.setting-chip span{display:block;font:8px 'DM Mono';color:#a092b2;margin-bottom:5px}.setting-chip strong{font-size:9px;overflow-wrap:anywhere}
+.footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:25px;padding-top:15px;border-top:1px solid #ffffff17;color:#8f829f;font:8px 'DM Mono';line-height:1.7}.footer a{color:#d0adff;text-decoration:none}
+.signal-toast-wrap{position:fixed;z-index:9999;top:15px;right:15px;width:min(370px,calc(100vw - 30px));display:grid;gap:9px;pointer-events:none}.signal-toast{padding:15px;border:1px solid #ff6689aa;border-radius:14px;background:linear-gradient(120deg,#3a1024f5,#171020f7 72%);box-shadow:0 16px 50px #ff173f30,inset 0 1px #ffffff20;backdrop-filter:blur(16px)}.signal-toast strong{display:block;font-size:14px;margin:6px 0}.signal-toast p{font-size:10px;color:#e8d2dd;margin:0 0 7px}.toast-kicker,.toast-time{font:8px 'DM Mono';color:#ff9db5;letter-spacing:.08em}
 button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
-@media(max-width:1180px){.command-grid{grid-template-columns:minmax(235px,290px) minmax(0,1fr)}.setup-panel{grid-column:1/-1}.setup-panel .journey{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px}.setup-panel .next-step{margin-top:12px}.market-grid{max-height:530px}}
-@media(max-width:760px){.shell{padding:12px 11px 28px}.topbar{align-items:flex-start}.brand-name{font-size:12px}.brand-sub{font-size:8px}.top-actions{gap:5px;flex-wrap:wrap;justify-content:flex-end}.top-link{display:none}.test-telegram{font-size:8px;padding:8px}.live-indicator{font-size:8px;padding:8px}.ticker-strip{margin-top:10px;padding:9px;gap:9px}.ticker-label{font-size:8px}.hero{padding:26px 2px 17px;align-items:flex-start;flex-direction:column;gap:13px}.hero h1{font-size:clamp(36px,10vw,49px)}.hero p{font-size:11px}.hero-side{display:flex;align-items:center;gap:9px;text-align:left;padding:0}.hero-side strong{font-size:15px;margin:0}.hero-side small{font-size:8px}.hero-side .label{font-size:8px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.kpi{padding:11px}.kpi-value{font-size:21px}.kpi-foot{font-size:8px}.command-grid{grid-template-columns:1fr;gap:9px}.watch-panel{order:2}.chart-panel{order:1}.setup-panel{order:3;grid-column:auto}.chart-wrap{height:260px}.market-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:520px}.market{padding:9px}.market-price{font-size:10px}.setup-panel .journey{display:flex}.bottom-grid{grid-template-columns:1fr}.health-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.footer{font-size:7px}}
-@media(max-width:390px){.market-grid{grid-template-columns:1fr}.top-actions{max-width:210px}.live-indicator{max-width:120px;overflow:hidden}.structure{grid-template-columns:repeat(3,minmax(0,1fr))}.structure-item{padding:8px}.structure-item strong{font-size:9px}}
+@media(max-width:1150px){.command-grid{grid-template-columns:minmax(230px,290px) minmax(0,1fr)}.setup-panel{grid-column:1/-1}.setup-panel .journey{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px}}
+@media(max-width:760px){.shell{padding:12px 11px 28px}.topbar{align-items:flex-start}.brand-name{font-size:12px}.brand-sub{font-size:8px}.top-actions{gap:5px;flex-wrap:wrap;justify-content:flex-end}.top-link{display:none}.test-telegram{font-size:8px;padding:8px 10px}.live-indicator{font-size:8px;padding:8px}.ticker-strip{margin-top:10px;padding:9px;gap:9px}.hero{padding:28px 2px 19px;align-items:flex-start;flex-direction:column;gap:14px}.hero h1{font-size:clamp(39px,11vw,53px)}.hero p{font-size:11px}.hero-side{display:flex;align-items:center;gap:9px;text-align:left}.hero-side strong{font-size:15px;margin:0}.hero-side small,.hero-side .label{font-size:8px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.kpi{padding:13px}.kpi-value{font-size:23px}.command-grid{grid-template-columns:1fr;gap:10px}.chart-panel{order:1}.watch-panel{order:2}.setup-panel{order:3;grid-column:auto}.chart-wrap{height:260px}.market-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:550px}.market{padding:9px}.bottom-grid{grid-template-columns:1fr}.health-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.setup-panel .journey{display:flex}.footer{font-size:7px}}
+@media(max-width:390px){.market-grid{grid-template-columns:1fr}.top-actions{max-width:205px}.live-indicator{max-width:120px;overflow:hidden}.structure-item{padding:8px}.structure-item strong{font-size:9px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
-
-/* APA beginner playbook */
-.apa-section{margin-top:14px;padding:clamp(15px,2vw,23px);position:relative;overflow:hidden;background:radial-gradient(ellipse at 0% 0%,#9c78ff18,transparent 42%),linear-gradient(145deg,#ffffff09,transparent 55%),#11101d}
-.apa-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:17px}.apa-heading h2{font-size:clamp(19px,2.4vw,27px);letter-spacing:-.055em;margin:7px 0 5px}.apa-heading p{font-size:10px;color:#a5a1b8;line-height:1.65;margin:0;max-width:650px}.apa-pill{flex:none;border:1px solid #a78bfa55;background:#a78bfa12;color:#d8caff;border-radius:99px;padding:7px 10px;font:8px 'DM Mono';letter-spacing:.1em}
-.apa-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;position:relative}.apa-step{position:relative;min-width:0;padding:14px;border:1px solid #ffffff17;border-radius:11px;background:linear-gradient(145deg,#ffffff08,transparent 65%),#0c0b16}.apa-step:before{content:attr(data-step);display:grid;place-items:center;width:27px;height:27px;border-radius:8px;background:#a78bfa20;border:1px solid #a78bfa55;color:#d7c8ff;font:10px 'DM Mono';margin-bottom:12px}.apa-step:nth-child(2):before{background:#66e7f414;border-color:#66e7f44a;color:var(--cyan)}.apa-step:nth-child(3):before{background:#f3c97812;border-color:#f3c9784a;color:var(--gold)}.apa-step:nth-child(4):before{background:#58e5ad12;border-color:#58e5ad4a;color:var(--green)}.apa-step .tf{font:9px 'DM Mono';letter-spacing:.13em;color:#aaa3c3}.apa-step h3{font-size:14px;margin:6px 0 7px;letter-spacing:-.03em}.apa-step p{font-size:10px;line-height:1.6;color:#a6a1b8;margin:0 0 10px}.apa-step ul{padding-left:15px;margin:0;color:#d1cce0;font-size:9px;line-height:1.8}.apa-step .purpose{display:block;margin-top:11px;padding-top:9px;border-top:1px solid #ffffff12;color:#bfaeff;font:8px 'DM Mono';letter-spacing:.04em}
-.apa-bottom{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:10px;margin-top:10px}.apa-example,.apa-rules{padding:14px;border:1px solid #ffffff15;border-radius:10px;background:#ffffff04;min-width:0}.apa-example h3,.apa-rules h3{font-size:11px;margin:0 0 10px}.apa-sequence{display:flex;align-items:center;flex-wrap:wrap;gap:6px}.apa-sequence span{padding:7px 9px;border:1px solid #ffffff17;border-radius:7px;background:#ffffff06;color:#d8d2e8;font:8px 'DM Mono'}.apa-sequence b{color:#827b9b;font:10px 'DM Mono'}.apa-example p,.apa-rules p{font-size:9px;line-height:1.6;color:#9994ab;margin:10px 0 0}.apa-rules ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 13px;padding:0;margin:0;list-style:none}.apa-rules li{display:flex;gap:7px;align-items:flex-start;font-size:9px;line-height:1.5;color:#c8c2d8}.apa-rules li i{font-style:normal;color:var(--green)}.apa-warning{margin-top:10px;padding:10px 12px;border:1px solid #f3c97830;border-radius:8px;background:#f3c97808;color:#cfc3a5;font-size:9px;line-height:1.6}.apa-warning strong{color:var(--gold)}
-@media(max-width:900px){.apa-flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.apa-heading{flex-direction:column;gap:9px}.apa-flow{grid-template-columns:1fr 1fr;gap:7px}.apa-step{padding:11px}.apa-step h3{font-size:12px}.apa-step p{font-size:9px}.apa-step ul{font-size:8px}.apa-bottom{grid-template-columns:1fr}.apa-rules ul{grid-template-columns:1fr 1fr}}
-@media(max-width:370px){.apa-flow{grid-template-columns:1fr}.apa-rules ul{grid-template-columns:1fr}}
-
-/* TradesByJay visual refinement — calmer premium terminal */
-:root{--bg:#070711;--surface:#0e0e1a;--surface2:#141326;--line:#25233a;--line2:#383250;--purple:#ad91ff;--cyan:#69e5f3;--green:#55e3ad;--red:#ff6684}
-body{background:radial-gradient(ellipse 62% 38% at 50% -12%,#6f4ac52a,transparent 70%),radial-gradient(ellipse 35% 35% at 100% 32%,#08778b12,transparent 75%),#070711}
-body:before{opacity:.035;background-size:80px 80px}
-.shell{width:min(1680px,100%);padding-top:24px}
-.topbar{padding:8px 0 20px;border-bottom-color:#ffffff12}
-.mark{border-radius:14px;box-shadow:0 8px 30px #9c78ff35}
-.brand-name{letter-spacing:.12em}
-.hero{padding:42px 3px 26px}
-.hero h1{font-size:clamp(40px,5.6vw,72px);letter-spacing:-.08em}
-.hero p{font-size:13px;max-width:680px;color:#aaa6bd}
-.kpis{gap:12px;margin-bottom:18px}
-.kpi{padding:17px 18px;border-radius:15px;background:linear-gradient(145deg,#ffffff0b,transparent 62%),#10101c;border-color:#ffffff14;transition:transform .18s ease,border-color .18s ease}
-.kpi:hover{transform:translateY(-2px);border-color:#a78bfa55}
-.kpi-value{font-size:29px}
-.panel{border-radius:16px;background:linear-gradient(145deg,#ffffff08,transparent 56%),#10101b;border-color:#ffffff16;box-shadow:0 18px 50px #0004}
-.watch-panel,.chart-panel,.setup-panel,.bottom-grid>.panel{padding:18px}
-.panel-head{margin-bottom:17px}
-.panel-head h3{font-size:13px;letter-spacing:-.025em}
-.command-grid{gap:14px;grid-template-columns:minmax(260px,315px) minmax(360px,1fr) minmax(280px,325px)}
-.market{padding:11px;border-radius:10px;background:#ffffff03;border-color:#ffffff10}
-.market:hover,.market.selected{background:linear-gradient(100deg,#a78bfa12,#ffffff04);border-color:#a78bfa75;box-shadow:inset 0 0 18px #a78bfa08}
-.market-grid{gap:7px}
-.chart-wrap{border-radius:12px;background:radial-gradient(ellipse at 50% 0%,#4b34752a,transparent 70%),#090912}
-.structure-item,.health-item,.detail-level,.setting-chip{border-radius:9px;background:#ffffff04;border-color:#ffffff12}
-.next-step{border-radius:11px;background:linear-gradient(110deg,#a78bfa12,#66e7f408);border-color:#a78bfa35}
-.bottom-grid{gap:14px;margin-top:14px}
-.ticker-strip{border-radius:12px;background:linear-gradient(90deg,#a78bfa0e,#66e7f407 55%,#ffffff03);border-color:#ffffff13}
-.apa-section{border-radius:16px}
-.apa-step,.apa-example,.apa-rules{border-radius:12px}
-.signal-toast{box-shadow:0 18px 55px #0008,0 0 30px #ff173f16}
-button,.market,.kpi{ -webkit-tap-highlight-color:transparent}
-button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #b39aff;outline-offset:3px}
-@media(max-width:1180px){.command-grid{grid-template-columns:minmax(245px,300px) minmax(0,1fr);gap:12px}}
-@media(max-width:760px){.shell{padding:12px 12px 30px}.hero{padding:30px 2px 20px}.hero h1{font-size:clamp(39px,10vw,54px)}.kpi{padding:13px}.kpi-value{font-size:23px}.watch-panel,.chart-panel,.setup-panel,.bottom-grid>.panel{padding:13px}.command-grid{gap:10px}.chart-wrap{height:250px}.market-grid{gap:6px}.panel{border-radius:13px}}
-@media(prefers-reduced-motion:no-preference){.mark,.bot-orb{animation:softGlow 5s ease-in-out infinite alternate}@keyframes softGlow{from{filter:drop-shadow(0 0 0 #9c78ff00)}to{filter:drop-shadow(0 0 8px #9c78ff38)}}}
-
-</style>
-</head>
-<body>
-<div class="signal-toast-wrap" id="signalToasts" aria-live="assertive" aria-atomic="false"></div>
-<div class="shell">
-<header class="topbar">
- <div class="brand"><div class="mark">TBJ</div><div><div class="brand-name">TRADESBYJAY</div><div class="brand-sub">LIVE MARKET TERMINAL</div></div></div>
- <div class="top-actions"><button id="telegramTestBtn" class="test-telegram" type="button">✉ TEST TELEGRAM</button><div id="connection" class="live-indicator stale"><i class="dot"></i><span id="connectionText">CONNECTING TO MT5 FEED</span></div><a class="top-link" href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noopener">TELEGRAM ↗</a></div>
-</header>
-<div class="ticker-strip"><div class="ticker-label">LIVE MARKET PULSE</div><div class="ticker-window"><div class="ticker-track" id="tickerTrack"><span class="ticker-item">CONNECTING TO LIVE MARKETS…</span></div></div></div>
-<section class="hero">
- <div><div class="eyebrow">◈ TRADESBYJAY / MARKET INTELLIGENCE</div><h1>Read the market.<br><span>Catch the moment.</span></h1><p>Your MT5 scanner, market structure and live setup progress — all in one command centre. No guesswork about what the bot is waiting for.</p></div>
- <div class="hero-side"><span class="label">LAST UPDATE</span><strong id="lastUpdated">—</strong><small id="feedMode">WAITING FOR BOT SNAPSHOT</small></div>
+</style></head>
+<body><div class="shell">
+<header class="topbar"><div class="brand"><div class="mark">TJ</div><div><div class="brand-name">TRADESBYJAY</div><div class="brand-sub">MARKET INTELLIGENCE TERMINAL</div></div></div>
+<div class="top-actions"><a class="top-link" href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noreferrer">TELEGRAM ↗</a><button id="telegramTestBtn" class="test-telegram">✉ TEST TELEGRAM</button><div class="live-indicator stale" id="connection"><i class="dot"></i><span id="connectionText">CONNECTING TO BOT</span></div></div></header>
+<div class="ticker-strip"><span class="ticker-label">LIVE WATCHLIST</span><div class="ticker-window"><div class="ticker-track" id="tickerTrack"><span class="ticker-item">Connecting to market feed…</span></div></div></div>
+<section class="hero"><div><div class="eyebrow">PRICE ACTION · LIVE SCANNER · SIGNAL INTELLIGENCE</div><h1>Trade the move.<br><span>Not the noise.</span></h1><p>Your market command center. Track the bot's real scanner state, see exactly what each setup is waiting for, and monitor confirmed alerts without fake signals or made-up progress.</p></div><div class="hero-side"><div class="label">LATEST BOT UPDATE</div><strong id="lastUpdated">CONNECTING…</strong><small id="feedMode">WAITING FOR STATE.JSON</small></div></section>
+<section class="kpis"><div class="kpi"><div class="kpi-label">MARKETS SCANNED</div><div class="kpi-value" id="kMarkets">—</div><div class="kpi-foot" id="scanSymbols">Waiting for scanner data</div></div><div class="kpi"><div class="kpi-label">READY SETUPS</div><div class="kpi-value" id="kReady">—</div><div class="kpi-foot">Bot-confirmed readiness only</div></div><div class="kpi"><div class="kpi-label">OPEN + PENDING</div><div class="kpi-value" id="kSignals">—</div><div class="kpi-foot"><span id="scanPositions">OPEN: —</span> · <span id="scanPending">PENDING: —</span></div></div><div class="kpi"><div class="kpi-label">ACCOUNT MODE</div><div class="kpi-value" id="kMode">—</div><div class="kpi-foot" id="kAccount">Mode reported by bot</div></div></section>
+<main>
+<section class="command-grid">
+<article class="panel chart-panel"><div class="panel-head"><div><div class="section-meta">01 / PRICE ACTION</div><h3 id="chartSymbol">Select a market</h3></div><span class="section-meta" id="chartPrice">LIVE PRICE</span></div><div class="chart-wrap" id="chart"><div class="empty">Waiting for candle data from the bot.</div></div><div class="chart-caption"><span>BOT-PUBLISHED CANDLES</span><span>H1 ZONE · CURRENT PRICE</span></div><div class="structure"><div class="structure-item"><span>H4 DIRECTION</span><strong id="detailBias">—</strong></div><div class="structure-item"><span>SETUP STAGE</span><strong id="detailStage">—</strong></div><div class="structure-item"><span>SIDE</span><strong id="detailSide">—</strong></div></div></article>
+<article class="panel watch-panel"><div class="panel-head"><div><div class="section-meta">02 / MARKET RADAR</div><h3>Scanner watchlist</h3></div><span class="waiting-count" id="waitingCount">—</span></div><div class="watch-toolbar"><input class="search" id="search" placeholder="Search any market…" autocomplete="off"><span class="section-meta" style="align-self:center">FIND</span></div><div class="view-tabs"><button class="view-tab active" data-view="all">All markets</button><button class="view-tab" data-view="waiting">Waiting <span class="waiting-count" id="waitingCountMirror">•</span></button></div><div class="filters"><button class="filter active" data-filter="ALL">ALL</button><button class="filter" data-filter="READY">READY</button><button class="filter" data-filter="BUY">BUY</button><button class="filter" data-filter="SELL">SELL</button></div><div class="market-count" id="marketCount">LOADING MARKET LIST</div><div class="market-grid" id="markets"><div class="empty">Connecting to scanner…</div></div></article>
+<article class="panel setup-panel"><div class="panel-head"><div><div class="section-meta">03 / SETUP BREAKDOWN</div><h3>What are we waiting for?</h3></div><span class="status-chip wait">LIVE CHECKS</span></div><div class="journey" id="journey"><div class="empty">Select a market to see its setup checks.</div></div><div class="next-step"><span>NEXT REQUIRED CONDITION</span><p id="nextRequired">Waiting for bot data…</p></div><div class="detail-levels" id="detailLevels"></div></article>
 </section>
-<section class="kpis">
- <div class="kpi"><div class="kpi-label">Markets tracked</div><div class="kpi-value" id="kMarkets">—</div><div class="kpi-foot">Symbols published by MT5</div></div>
- <div class="kpi"><div class="kpi-label">Ready setups</div><div class="kpi-value" id="kReady">—</div><div class="kpi-foot">Scanner-confirmed only</div></div>
- <div class="kpi"><div class="kpi-label">Open + pending</div><div class="kpi-value" id="kSignals">—</div><div class="kpi-foot">Live MT5 positions and orders</div></div>
- <div class="kpi"><div class="kpi-label">Bot environment</div><div class="kpi-value" id="kMode">—</div><div class="kpi-foot" id="kAccount">Account mode not verified</div></div>
+<section class="panel" style="margin-top:13px;padding:17px"><div class="panel-head"><div><div class="section-meta">04 / CLOSEST TO READY</div><h3>Markets approaching confirmation</h3></div><span class="status-chip wait">BOT REPORTED</span></div><div id="closestContent"><div class="empty">Waiting for scanner candidates…</div></div></section>
+<section class="bottom-grid">
+<article class="panel"><div class="panel-head"><div><div class="section-meta">05 / FEED HEALTH</div><h3>Connection & scanner status</h3></div><span class="status-chip" id="healthStatus">CONNECTING</span></div><div class="health-grid"><div class="health-item"><span>FEED STATUS</span><strong id="healthFeed">—</strong></div><div class="health-item"><span>LAST UPDATE AGE</span><strong id="healthAge">—</strong></div><div class="health-item"><span>ACCOUNT MODE</span><strong id="healthMode">—</strong></div><div class="health-item"><span>LAST SCAN</span><strong id="healthScan">—</strong></div></div><div class="health-note" id="healthNote">Waiting for bot connection.</div><div class="scanner-stats"><div class="section-meta">SCANNER COUNTERS</div><div class="health-grid" style="margin-top:8px"><div class="health-item"><span>READY</span><strong id="metricReady">—</strong></div><div class="health-item"><span>CLOSEST</span><strong id="metricClosest">—</strong></div><div class="health-item"><span>WAITING</span><strong id="metricWaiting">—</strong></div><div class="health-item"><span>IN PROGRESS</span><strong id="metricProgress">—</strong></div></div><div class="health-note" id="scanCycleMeta"></div><div class="health-note" id="scannerStats"></div></div></article>
+<article class="panel"><div class="panel-head"><div><div class="section-meta">06 / BOT CONTROL ROOM</div><h3>Engine information</h3></div><span class="status-chip" id="executionMode">MODE UNKNOWN</span></div><div class="bot-card"><div class="bot-orb">TJ</div><div><strong id="botName">TradesByJay Scanner</strong><p id="strategyText">Waiting for strategy details from the bot.</p></div></div><div class="bot-meta"><span id="botVersion">VERSION UNKNOWN</span><span id="kMode">MODE UNKNOWN</span></div><div class="settings-grid" id="settingsGrid"><div class="empty">Bot settings will appear when published.</div></div></article>
 </section>
-<section class="panel" id="closestPanel" style="padding:13px 15px;margin-bottom:12px"><div class="panel-head"><h3>🎯 Closest to ready</h3><span class="section-meta">HIGHEST BOT-REPORTED PROGRESS</span></div><div id="closestContent" class="empty">Waiting for scanner data…</div></section>
-<section class="command-grid workspace">
- <section class="panel watch-panel">
-  <div class="panel-head"><h3>◉ Market watch</h3><span class="section-meta" id="marketCount">ALL SYMBOLS</span></div>
-  <div class="watch-toolbar"><input id="search" class="search" placeholder="Search markets…" autocomplete="off"><span class="section-meta" style="align-self:center">MT5</span></div>
-  <div class="view-tabs"><button class="view-tab active" data-view="markets">All markets</button><button class="view-tab" data-view="waiting">Waiting <span class="waiting-count" id="waitingCount">—</span></button></div>
-  <div class="filters"><button class="filter active" data-filter="ALL">All</button><button class="filter" data-filter="READY">Ready</button><button class="filter" data-filter="BUY">Buy</button><button class="filter" data-filter="SELL">Sell</button></div>
-  <div class="market-grid" id="markets"><div class="empty">Connecting to your MT5 market feed…</div></div>
- </section>
- <section class="panel chart-panel">
-  <div class="panel-head"><h3>◈ Price action / market structure</h3><span class="chart-symbol" id="chartSymbol">SELECT A MARKET</span></div>
-  <div class="chart-wrap" id="chart"><svg viewBox="0 0 700 260" preserveAspectRatio="none"><text x="350" y="130" fill="#77728f" text-anchor="middle" font-size="12">Waiting for verified candle history</text></svg></div>
-  <div class="chart-caption"><span>MT5 PUBLISHED M15 CANDLES</span><span id="chartPrice">NO PRICE SELECTED</span></div>
-  <div class="structure"><div class="structure-item"><span>H4 DIRECTION</span><strong id="detailBias">—</strong></div><div class="structure-item"><span>SETUP STAGE</span><strong id="detailStage">—</strong></div><div class="structure-item"><span>TRADE SIDE</span><strong id="detailSide">—</strong></div></div>
- </section>
- <aside class="panel setup-panel">
-  <div class="panel-head"><h3>◎ Setup readiness</h3><span class="section-meta">LIVE BOT STATE</span></div>
-  <div class="journey" id="journey"><div class="empty">Select a market to inspect its setup.</div></div>
-  <div class="next-step"><span>NEXT REQUIRED ACTION</span><p id="nextRequired">Choose a market to see what the scanner is waiting for.</p></div>
-  <div class="section-meta" style="margin:13px 0 0">TRADE LEVELS</div>
-  <div class="detail-levels" id="detailLevels"><div class="empty">Select a market to inspect its levels.</div></div>
- </aside>
+<section class="bottom-grid">
+<article class="panel"><div class="panel-head"><div><div class="section-meta">07 / ACTIVE ORDERS</div><h3>Positions & pending orders</h3></div><span class="status-chip open">LIVE STATE</span></div><div id="signals"><div class="empty">No order data yet.</div></div><div class="health-note" id="telegramNote">Telegram delivery status has not been confirmed.</div><div class="panel-head" style="margin:18px 0 8px"><h3>Active trade monitor</h3></div><div id="tradeMonitor"><div class="empty">Waiting for open positions.</div></div></article>
+<article class="panel"><div class="panel-head"><div><div class="section-meta">08 / SIGNAL LOG</div><h3>Recent alert history</h3></div><span class="section-meta">BOT REPORTED</span></div><div id="signalHistory"><div class="empty">No signal history yet.</div></div></article>
 </section>
-<section class="panel" id="scannerMetrics" style="padding:14px 15px;margin-top:12px">
- <div class="panel-head"><h3>📊 Scanner activity</h3><span class="section-meta" id="scanCycleMeta">WAITING FOR BOT METRICS</span></div>
- <div class="health-grid"><div class="health-item"><span>READY</span><strong id="metricReady">—</strong></div><div class="health-item"><span>CLOSEST TO READY</span><strong id="metricClosest">—</strong></div><div class="health-item"><span>WAITING</span><strong id="metricWaiting">—</strong></div><div class="health-item"><span>SETUP IN PROGRESS</span><strong id="metricProgress">—</strong></div></div>
- <div class="health-note scanner-stats" id="scannerStats">Scanner counters will appear when the bot publishes them.</div>
-</section>
-<div class="bottom-grid">
- <section class="panel">
-  <div class="panel-head"><h3>⇄ Live positions &amp; pending</h3><span class="section-meta">FROM MT5 ACCOUNT</span></div>
-  <div id="signals"><div class="empty">No active orders published.</div></div>
-  <div id="telegramNote" class="health-note">Telegram delivery status will appear when the bot publishes it.</div>
-  <div class="section-meta" style="margin-top:14px">OPEN POSITIONS</div><div id="tradeMonitor"><div class="empty">No position records published.</div></div>
-  <div class="section-meta" style="margin-top:14px">RECENT SIGNAL HISTORY</div><div id="signalHistory"><div class="empty">No signal history published.</div></div>
- </section>
- <section class="panel">
-  <div class="panel-head"><h3>🛰️ System health &amp; scanner config</h3><span class="section-meta" id="healthStatus">CHECKING</span><span class="section-meta" id="botVersion">BOT DETAILS</span></div>
-  <div class="health-grid"><div class="health-item"><span>FEED STATUS</span><strong id="healthFeed">—</strong></div><div class="health-item"><span>LAST PUBLISHED</span><strong id="healthAge">—</strong></div><div class="health-item"><span>BOT MODE</span><strong id="healthMode">—</strong></div><div class="health-item"><span>LAST SCAN</span><strong id="healthScan">—</strong></div></div>
-  <div class="health-note" id="healthNote">Waiting for a verified bot snapshot.</div>
-  <div style="height:1px;background:#ffffff12;margin:14px 0"></div>
-  <div class="bot-card"><div class="bot-orb">TBJ</div><div><strong id="botName">TradesByJay Sweep-Wick Scanner</strong><p id="strategyText">Strategy details will appear from the bot feed.</p></div></div>
-  <div class="bot-meta"><span id="scanSymbols">SYMBOLS: —</span><span id="scanPositions">OPEN: —</span><span id="scanPending">PENDING: —</span><span id="executionMode">EXECUTION: —</span></div>
-  <div id="settingsGrid" class="settings-grid"><div class="empty">Bot configuration will appear after the publisher sends settings.</div></div>
- </section>
-</div>
-<section class="panel apa-section" id="apaPlaybook">
- <div class="apa-heading"><div><div class="eyebrow">◈ TRADESBYJAY / LEARN THE SETUP</div><h2>APA strategy, made simple.</h2><p>A top-down process: use the bigger chart to understand direction, find an important price area, wait for a setup, then use the smaller chart to time the entry.</p></div><span class="apa-pill">BEGINNER PLAYBOOK</span></div>
- <div class="apa-flow">
-  <article class="apa-step" data-step="01"><span class="tf">H4 · THE COMPASS</span><h3>Macro direction</h3><p>Decide which side of the market you want to trade.</p><ul><li>Bullish structure → look for BUYs</li><li>Bearish structure → look for SELLs</li><li>Use the swing structure and trend context</li></ul><span class="purpose">PURPOSE: DIRECTION</span></article>
-  <article class="apa-step" data-step="02"><span class="tf">H1 · THE MAP</span><h3>Key price zones</h3><p>Mark where price may react. You are looking for location, not an entry yet.</p><ul><li>Support / resistance</li><li>Supply / demand</li><li>Liquidity pools and swing highs/lows</li></ul><span class="purpose">PURPOSE: LOCATION</span></article>
-  <article class="apa-step" data-step="03"><span class="tf">M15 · THE SETUP</span><h3>Wait for confirmation</h3><p>Watch how price behaves when it reaches an H1 area.</p><ul><li>Liquidity sweep</li><li>Rejection candle</li><li>Break and retest</li></ul><span class="purpose">PURPOSE: CONFIRMATION</span></article>
-  <article class="apa-step" data-step="04"><span class="tf">M5 / M1 · THE TRIGGER</span><h3>Time the entry</h3><p>Once the M15 setup appears, zoom in and wait for a clear trigger.</p><ul><li>Momentum shift</li><li>Market Structure Shift (MSS)</li><li>Small structure break</li></ul><span class="purpose">PURPOSE: ENTRY TIMING</span></article>
- </div>
- <div class="apa-bottom">
-  <div class="apa-example"><h3>Example · A potential BUY setup</h3><div class="apa-sequence"><span>H4 bullish</span><b>→</b><span>H1 demand zone</span><b>→</b><span>M15 sweep / rejection</span><b>→</b><span>M5 or M1 bullish trigger</span></div><p>Only consider the BUY after the sequence develops. The reverse logic applies to a SELL in a bearish H4 direction.</p></div>
-  <div class="apa-rules"><h3>Before you enter</h3><ul><li><i>✓</i> H4 direction is clear</li><li><i>✓</i> Price is at an H1 key area</li><li><i>✓</i> M15 setup has formed</li><li><i>✓</i> M5/M1 trigger is present</li><li><i>✓</i> Stop loss has a clear invalidation point</li><li><i>✓</i> Take profit has a logical target</li></ul></div>
- </div>
- <div class="apa-warning"><strong>Remember:</strong> H4 gives direction · H1 gives location · M15 gives setup confirmation · M5/M1 gives entry timing. A sweep is one possible M15 confirmation, not the only one. Wait for your actual trigger and manage risk; no setup is guaranteed.</div>
-</section>
-<footer class="footer"><span>TRADESBYJAY © 2026 · MARKET DATA PROVIDED BY YOUR MT5 BOT.</span><span>READ-ONLY MONITOR · <a href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noopener">TELEGRAM COMMUNITY</a></span><span>Trading involves risk. Verify every setup in your terminal.</span></footer>
-</div>
+</main>
+<footer class="footer"><span>© TRADESBYJAY · MARKET INTELLIGENCE TERMINAL</span><span>LIVE STATUS IS BASED ON THE BOT'S LAST PUBLISHED SNAPSHOT · <a href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noreferrer">JOIN TELEGRAM ↗</a></span></footer>
+</div><div class="signal-toast-wrap" id="signalToasts"></div>
 <script>
 (()=>{'use strict';
 
