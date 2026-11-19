@@ -56,7 +56,77 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 @media(max-width:1150px){.workspace{grid-template-columns:minmax(0,1.3fr) minmax(290px,.9fr)}.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.workspace{grid-template-columns:1fr}.workspace .chart-wrap{height:280px}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.explorer-controls{grid-template-columns:1fr auto}.explorer-controls .filters{grid-column:1/-1}}
 @media(max-width:560px){.hero{padding:25px 2px 18px}.hero h1{font-size:clamp(35px,10vw,47px)}.market-explorer,.closest-panel,.workspace .chart-panel,.workspace .setup-panel,.bottom-grid>.panel{padding:13px}.market-grid{grid-template-columns:1fr}.explorer-controls{grid-template-columns:1fr}.explorer-controls .view-tabs,.explorer-controls .filters{grid-column:auto}.explorer-controls .filters{flex-wrap:wrap}.market{min-height:0}.workspace .chart-wrap{height:245px}.hero-side{margin-top:2px}}
-</style></head>
+</style>
+<style id="tradesbyjay-redesign">
+/* TRADESBYJAY / premium terminal refresh */
+:root{--bg:#080a12;--panel:#101522;--panel2:#151c2d;--line:#273249;--muted:#8d9ab2;--text:#f4f7ff;--purple:#9d8cff;--pink:#cf8cff;--cyan:#62d9f4;--green:#64e6b5;--red:#ff718e;--gold:#f5ca77}
+html{background:#080a12}
+body{background:radial-gradient(ellipse at 8% 0%,#5a43b52b,transparent 34%),radial-gradient(ellipse at 92% 12%,#1e91b42b,transparent 30%),linear-gradient(180deg,#0a0d17 0%,#080a12 60%,#0b0d18 100%);background-attachment:fixed}
+body:before{opacity:.035;background-size:72px 72px}
+.shell{width:min(1740px,100%);padding:20px clamp(14px,3.1vw,52px) 48px}
+.topbar{border:1px solid #ffffff12;border-radius:18px;padding:12px 15px;background:#0d1220c9;backdrop-filter:blur(18px);box-shadow:0 16px 50px #0004}
+.mark{width:44px;height:44px;border-radius:13px;background:linear-gradient(145deg,#d7ccff,#8f7cff 48%,#55d9ee);box-shadow:0 0 32px #927cff45}
+.brand-name{font-size:14px;letter-spacing:.2em}.brand-sub{color:#8493b3}
+.top-link,.test-telegram,.live-indicator{border-radius:10px;padding:10px 13px;font-size:9px}
+.live-indicator{background:#122b29;border-color:#2c806d;color:#86f2cd}
+.ticker-strip{margin-top:12px;border:1px solid #ffffff10;border-radius:12px;background:#0e1421;padding:10px 14px}
+.ticker-label{color:#9b8cff}.ticker-item{color:#91a0ba}.ticker-item b{color:#eef3ff}
+.hero{padding:46px 4px 27px;align-items:center}
+.eyebrow,.section-meta{color:#8f9cff;letter-spacing:.2em;font-size:9px}
+.hero h1{font-size:clamp(42px,5.7vw,72px);line-height:.98;letter-spacing:-.075em;margin:13px 0 15px}
+.hero h1 span{background:linear-gradient(100deg,#b9a8ff 5%,#7fdaf5 85%);background-clip:text;-webkit-background-clip:text}
+.hero p{font-size:12px;color:#9eabc1;max-width:560px}
+.hero-side{min-width:210px;text-align:left;padding:16px 18px;border:1px solid #ffffff12;border-radius:15px;background:linear-gradient(145deg,#171e31,#0d1220)}
+.hero-side strong{font-size:21px;color:#f0f3ff}
+.kpis{gap:10px;margin-bottom:13px}
+.kpi{border:1px solid #ffffff12;border-radius:15px;background:linear-gradient(145deg,#171e30,#101522 75%);padding:17px 18px;box-shadow:0 12px 32px #0003}
+.kpi:after{background:#8e7cff35}
+.kpi-label{color:#8795b1;letter-spacing:.16em}.kpi-value{font-size:31px;color:#f5f7ff}.kpi-foot{color:#8794ad}
+.panel{border:1px solid #ffffff12;border-radius:16px;background:linear-gradient(145deg,#151d2e 0%,#0e1421 70%);box-shadow:0 18px 45px #0003}
+.workspace{gap:12px;grid-template-columns:minmax(0,1.55fr) minmax(320px,.85fr)}
+.workspace .chart-panel,.workspace .setup-panel,.market-explorer,.closest-panel,.bottom-grid>.panel{padding:18px}
+.panel-head{margin-bottom:16px}.panel-head h3{font-size:14px;letter-spacing:-.025em;color:#f0f3ff}
+.subhead{color:#8795ad;font-size:10px}
+.chart-wrap{border:1px solid #26334b;border-radius:12px;background:radial-gradient(ellipse at 50% 0%,#28375a55,transparent 70%),#090e19}
+.chart-caption{color:#7888a4}
+.structure-item,.detail-level,.health-item,.setting-chip{border:1px solid #ffffff10;border-radius:10px;background:#ffffff04}
+.structure-item span,.detail-level span,.health-item span,.setting-chip span{color:#8492ad}
+.structure-item strong,.detail-level strong{color:#e7ecf8}
+.check-row{border-color:#ffffff10;padding:13px 0}.check-row strong{font-size:11px;color:#e7ecf8}.check-row small{color:#8c9ab3}
+.next-step{border:1px solid #7769ce66;border-radius:11px;background:linear-gradient(110deg,#7562d51e,#4aaac50c)}
+.next-step span{color:#b9adff}
+.market-explorer,.closest-panel{margin-top:12px}
+.explorer-controls{margin:14px 0 12px}
+.search{border:1px solid #2a3650;border-radius:10px;background:#0a101c;padding:11px 13px;color:#f2f5ff}
+.search::placeholder{color:#687894}
+.view-tab,.filter{border:1px solid #29344a;border-radius:9px;background:#ffffff04;color:#98a6bd}
+.view-tab.active,.filter.active{border-color:#8f82ff;background:#7869e51c;color:#d6d0ff}
+.market-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.market{min-height:112px;border:1px solid #ffffff10;border-radius:12px;background:linear-gradient(145deg,#ffffff08,#ffffff02);padding:12px;transition:border-color .18s,background .18s,transform .18s}
+.market:hover,.market.selected{border-color:#8f82ff99;background:linear-gradient(135deg,#7061d522,#4ab4ce0b);transform:translateY(-2px)}
+.market:before{width:2px;top:12px;bottom:12px}
+.symbol{color:#e8edfa;font-size:11px}.market-price{color:#dce5f6}.market-foot{color:#8391aa}
+.tag{border-radius:6px;background:#ffffff07;color:#aab6ca}
+.tag.buy{color:#6ce8ba;border-color:#3e9d7b66;background:#48c99612}.tag.sell{color:#ff829a;border-color:#c0526c66;background:#ff718e12}
+.progress{height:3px;background:#29334a}.progress i{background:linear-gradient(90deg,#8979ff,#64d8ed)}
+.market .waiting-reason{border:0;border-radius:0;background:transparent;padding:4px 0 0;margin-top:2px}
+.market .waiting-reason span{font-size:7px;color:#9a8fe0;letter-spacing:.15em}
+.market .waiting-reason p{font-size:9px;color:#8d9ab2}
+.waiting-count{background:#26233e;color:#c2b9ff}
+.status-chip{border-color:#29344b;background:#ffffff04;color:#aebbd0;border-radius:7px}
+.bottom-grid{gap:12px;margin-top:12px}
+.health-grid{gap:8px}.health-item{padding:12px}
+.health-item strong{color:#e4eafa}
+.bot-orb{border-radius:12px;background:linear-gradient(145deg,#d7ccff,#8f7cff 48%,#55d9ee);box-shadow:0 0 24px #927cff35}
+.bot-meta span{border-color:#ffffff12;background:#ffffff05;color:#9eabc1}
+.signal-row{border-color:#ffffff10}.signal-row strong{color:#e8edf8}
+.footer{border-color:#ffffff12;color:#77859f}.footer a{color:#aaa0ff}
+.signal-toast{border-color:#ff718e88;background:linear-gradient(120deg,#321322f5,#111827f7)}
+@media(max-width:1150px){.workspace{grid-template-columns:minmax(0,1.2fr) minmax(290px,.9fr)}.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:850px){.workspace{grid-template-columns:1fr}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.shell{padding:10px 10px 30px}.topbar{padding:10px;border-radius:13px}.hero{padding:28px 3px 18px}.hero-side{width:100%;min-width:0;display:grid;grid-template-columns:1fr auto;gap:4px 10px}.hero-side .label{grid-column:1/-1}.hero-side strong{font-size:17px}.kpi{padding:13px}.kpi-value{font-size:25px}.workspace .chart-panel,.workspace .setup-panel,.market-explorer,.closest-panel,.bottom-grid>.panel{padding:13px}.market-grid{grid-template-columns:1fr}.market{min-height:0}.chart-wrap{height:245px}.panel{border-radius:13px}}
+</style>
+</head>
 <body><div class="shell">
 <header class="topbar"><div class="brand"><div class="mark">TJ</div><div><div class="brand-name">TRADESBYJAY</div><div class="brand-sub">MARKET INTELLIGENCE TERMINAL</div></div></div>
 <div class="top-actions"><a class="top-link" href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noreferrer">TELEGRAM ↗</a><button id="telegramTestBtn" class="test-telegram">✉ TEST TELEGRAM</button><div class="live-indicator stale" id="connection"><i class="dot"></i><span id="connectionText">CONNECTING TO BOT</span></div></div></header>
@@ -154,7 +224,7 @@ function renderClosest(){
  }));
 }
 function renderScanner(){const ms=snapshot?.markets||[],sc=snapshot?.scanner||{},cfg=snapshot?.settings||{},st=snapshot?.statistics||{};const ready=ms.filter(m=>stage(m)==='READY'&&(side(m)==='BUY'||side(m)==='SELL')).length;const directional=ms.filter(m=>side(m)==='BUY'||side(m)==='SELL');const closest=directional.filter(m=>stage(m)!=='READY'&&Number(m.progress)>=66).length;const waiting=ms.filter(m=>stage(m)!=='READY'&&(!Number.isFinite(Number(m.progress))||Number(m.progress)<=0)).length;const inProgress=ms.filter(m=>stage(m)!=='READY'&&Number(m.progress)>0).length;$('metricReady').textContent=sc.ready??ready;$('metricClosest').textContent=sc.closest_to_ready??closest;$('metricWaiting').textContent=sc.waiting??waiting;$('metricProgress').textContent=sc.setup_in_progress??inProgress;const hasCycle=sc.last_scan_cycle_seconds!==undefined&&sc.last_scan_cycle_seconds!==null;const elapsed=num(sc.last_scan_cycle_seconds),target=num(sc.scan_target_seconds??sc.scan_interval_seconds);$('scanCycleMeta').textContent=elapsed!==null?'LAST CYCLE '+elapsed.toFixed(2)+'s'+(target!==null?' · TARGET '+target+'s':''):hasCycle?'SCAN TIMING UNAVAILABLE':'COUNTS FROM PUBLISHED MARKET PROGRESS';const statText=Object.entries(st).sort((a,b)=>Number(b[1])-Number(a[1])).map(([k,v])=>k+': '+v).join(' · ');$('scannerStats').textContent=statText||'Live counts are derived from each market’s published progress. Detailed rejection counters are not included in this feed.';$('botVersion').textContent=cfg.bot_version||snapshot.bot_version||'VERSION NOT PUBLISHED';$('botName').textContent=snapshot.bot||'TradesByJay Sweep-Wick Bot';$('strategyText').textContent=cfg.strategy||snapshot.strategy||'Strategy not published.';$('executionMode').textContent='EXECUTION: '+(snapshot.mode==='DEMO'?(cfg.execution_mode||'DEMO ONLY · LIVE BLOCKED'):'MODE '+(snapshot.mode||'UNKNOWN'));const items=[['Strategy',cfg.strategy||snapshot.strategy||'—'],['Configured markets',sc.configured_symbols??ms.length],['Scanned markets',sc.scanned_symbols??ms.length],['Take profit',cfg.take_profit_mode||'—'],['TP timeframe',cfg.take_profit_timeframe||'—'],['Minimum target RR',cfg.minimum_rr??'—'],['Risk budget',cfg.risk_budget??'—'],['Max positions',cfg.max_positions??'—'],['BUY enabled',cfg.buy_enabled===undefined?'—':(cfg.buy_enabled?'YES':'NO')],['SELL enabled',cfg.sell_enabled===undefined?'—':(cfg.sell_enabled?'YES':'NO')],['Setup alerts',cfg.setup_alerts_enabled===undefined?'—':(cfg.setup_alerts_enabled?'ON':'OFF')]];$('settingsGrid').innerHTML=items.map(x=>'<div class="setting-chip"><span>'+esc(x[0])+'</span><strong>'+esc(x[1])+'</strong></div>').join('')}
-function renderTicker(){const ms=snapshot?.markets||[];const rows=ms.slice(0,Math.min(ms.length,35));const html=rows.map(m=>{const d=String(m.h4_direction||'').toUpperCase(),cls=d==='BUY'?'up':d==='SELL'?'down':'';return '<span class="ticker-item"><b>'+esc(m.symbol)+'</b><em>'+esc(price(m.price))+'</em> <em class="'+cls+'">'+esc(d||'WATCH')+'</em></span>'}).join('');const track=$('tickerTrack'),next=html+html;if(track.dataset.rendered!==next){track.innerHTML=next;track.dataset.rendered=next}}
+function renderTicker(){const ms=snapshot?.markets||[];const rows=ms;const html=rows.map(m=>{const d=String(m.h4_direction||'').toUpperCase(),cls=d==='BUY'?'up':d==='SELL'?'down':'';return '<span class="ticker-item"><b>'+esc(m.symbol)+'</b><em>'+esc(price(m.price))+'</em> <em class="'+cls+'">'+esc(d||'WATCH')+'</em></span>'}).join('');const track=$('tickerTrack'),next=html+html;if(track.dataset.rendered!==next){track.innerHTML=next;track.dataset.rendered=next}}
 function render(){if(!snapshot)return;renderHealth();renderStats();renderScanner();renderClosest();renderMarkets();renderDetail();renderSignals();renderTicker()}
 async function load(){let lastError=null;for(const base of FEEDS){try{const r=await fetch(base+'?t='+Date.now(),{cache:'no-store',headers:{'Cache-Control':'no-cache'}});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(!data||!Array.isArray(data.markets))throw Error('Invalid feed structure');checkNewSignals(data);snapshot=data;if(!selected||!data.markets.some(m=>m.symbol===selected))selected=data.markets[0]?.symbol||'';render();return}catch(e){lastError=e}}$('connection').classList.add('stale');$('connectionText').textContent='FEED UNAVAILABLE';$('feedMode').textContent='COULD NOT READ STATE.JSON';if(!snapshot)$('markets').innerHTML='<div class="empty">The dashboard cannot reach the bot feed. Check that the bot has published state.json to GitHub.</div>';console.warn('TradesByJay feed error:',lastError)}
 
