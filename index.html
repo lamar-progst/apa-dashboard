@@ -8,384 +8,207 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--bg:#080713;--panel:#100e20;--panel2:#15122a;--line:#292443;--muted:#8985a5;--text:#f5f1ff;--purple:#a78bfa;--cyan:#6ee7f5;--green:#55e6ae;--red:#ff718e;--gold:#f5ca78}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 10% -10%,#4c25804d,transparent 38%),radial-gradient(ellipse at 100% 0%,#163e6240,transparent 34%),var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;min-height:100vh}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,#000,transparent 70%);z-index:-1}
-button,input,select{font:inherit}button{cursor:pointer;color:inherit}.shell{max-width:1600px;margin:auto;padding:22px 28px 50px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px 0 22px;border-bottom:1px solid #ffffff13}.brand{display:flex;align-items:center;gap:12px}.mark{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(140deg,#a78bfa,#5a4bc3 60%,#45c9d8);box-shadow:0 0 30px #9674ff55;color:#090713;font-size:17px;font-weight:1000;letter-spacing:-2px}.brand-name{font-size:16px;font-weight:900;letter-spacing:.12em}.brand-sub{font:10px 'DM Mono';color:var(--muted);letter-spacing:.16em;margin-top:3px}.top-actions{display:flex;align-items:center;gap:10px}.live-indicator{display:flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid #55e6ae45;border-radius:99px;background:#55e6ae0b;color:#a8f5d8;font:11px 'DM Mono';letter-spacing:.06em}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);animation:pulse 1.8s infinite}.live-indicator.stale{border-color:#ff718e55;color:#ffadbd;background:#ff718e0b}.live-indicator.stale .dot{background:var(--red);box-shadow:0 0 12px var(--red)}@keyframes pulse{50%{opacity:.35;box-shadow:0 0 2px var(--green)}}.top-link{border:1px solid var(--line);border-radius:10px;padding:9px 13px;text-decoration:none;color:#d8d1ef;font-size:12px;background:#ffffff06}.top-link:hover{border-color:var(--purple);color:#fff}
-.hero{display:grid;grid-template-columns:1.4fr .6fr;gap:20px;padding:38px 0 25px;align-items:end}.eyebrow{font:10px 'DM Mono';letter-spacing:.22em;color:var(--cyan);text-transform:uppercase}.hero h1{font-size:clamp(34px,5vw,66px);line-height:.99;letter-spacing:-.065em;margin:13px 0 12px;max-width:800px}.hero h1 span{background:linear-gradient(100deg,#fff 5%,#c8b7ff 48%,#6ee7f5);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{color:#aaa5c2;max-width:650px;line-height:1.7;font-size:13px;margin:0}.hero-side{justify-self:end;text-align:right}.hero-side .label{font:10px 'DM Mono';color:var(--muted);letter-spacing:.15em}.hero-side strong{display:block;font-size:27px;letter-spacing:-.04em;margin-top:7px}.hero-side small{display:block;color:var(--muted);font:10px 'DM Mono';margin-top:5px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 24px}.kpi,.panel{border:1px solid var(--line);background:linear-gradient(145deg,#ffffff09,transparent 55%),#100e20d9;border-radius:17px;box-shadow:0 15px 45px #0003}.kpi{padding:17px 18px;position:relative;overflow:hidden}.kpi:after{content:"";position:absolute;width:90px;height:90px;right:-45px;top:-45px;border-radius:50%;background:#9b7bff1b;filter:blur(5px)}.kpi-label{font:10px 'DM Mono';letter-spacing:.12em;color:var(--muted);text-transform:uppercase}.kpi-value{font-size:27px;font-weight:800;letter-spacing:-.04em;margin-top:8px}.kpi-foot{font-size:10px;color:#77728f;margin-top:4px}
-.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:29px 0 13px}.section-title{font-size:16px;font-weight:800;letter-spacing:-.02em}.section-meta{font:10px 'DM Mono';color:var(--muted)}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.search{min-width:190px;background:#0d0b19;border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:#fff;font-size:12px;outline:none}.search:focus{border-color:var(--purple)}.filter{background:#100e20;border:1px solid var(--line);border-radius:9px;padding:8px 11px;color:#aaa5c2;font-size:11px}.filter.active{border-color:#9e84f6;color:#e7dcff;background:#9e84f61b}.view-tab{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#100e20;color:#aaa5c2;font-size:11px}.view-tab.active{border-color:#a78bfa;color:#eee7ff;background:#a78bfa18;box-shadow:0 0 18px #987df51a}.tab-icon{font-size:15px;color:var(--cyan)}.tab-image{width:17px;height:17px;color:var(--gold)}.waiting-count{min-width:18px;height:18px;padding:0 5px;display:inline-grid;place-items:center;border-radius:99px;background:#f5ca7818;color:var(--gold);font:10px "DM Mono"}
-.market-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.market{padding:15px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(150deg,#ffffff09,transparent 60%),#100e20;min-width:0;cursor:pointer;transition:.2s}.market:hover,.market.selected{border-color:#987df5;transform:translateY(-2px);box-shadow:0 10px 30px #7656db20}.market-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.symbol{font-weight:800;font-size:12px;overflow-wrap:anywhere}.tag{font:9px 'DM Mono';padding:5px 7px;border-radius:6px;background:#ffffff0a;color:#b6b0cc;border:1px solid #ffffff12}.tag.buy{color:var(--green);border-color:#55e6ae35;background:#55e6ae0c}.tag.sell{color:var(--red);border-color:#ff718e35;background:#ff718e0c}.market-price{font:19px 'DM Mono';margin:15px 0 3px;letter-spacing:-.05em}.market-foot{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font:9px 'DM Mono';margin-top:10px}.waiting-reason{margin-top:12px;padding:10px;border:1px solid #f5ca7830;background:#f5ca7809;border-radius:9px}.waiting-reason span{font:9px 'DM Mono';letter-spacing:.1em;color:var(--gold)}.waiting-reason p{font-size:10px;line-height:1.55;color:#d9d0b9;margin:5px 0 0}.progress{height:3px;background:#25213a;border-radius:5px;overflow:hidden;margin-top:10px}.progress i{display:block;height:100%;background:linear-gradient(90deg,#7b6bf1,#67d9e8);border-radius:5px}.empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:15px;grid-column:1/-1;font-size:12px}
-.workspace{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(290px,.7fr);gap:13px;margin-top:14px}.panel{padding:18px;min-width:0}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}.panel-head h3{font-size:13px;margin:0;font-weight:800}.chart-symbol{font:10px 'DM Mono';color:var(--cyan)}.chart-wrap{height:260px;background:linear-gradient(180deg,#0b1020,#0b0a17);border:1px solid #25213b;border-radius:12px;overflow:hidden;position:relative}.chart-wrap svg{width:100%;height:100%;display:block}.chart-caption{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font:9px 'DM Mono';margin-top:10px}.structure{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.structure-item{padding:11px;border-radius:10px;background:#ffffff06;border:1px solid #ffffff0d}.structure-item span{display:block;font:9px 'DM Mono';color:var(--muted);margin-bottom:7px}.structure-item strong{font-size:12px}.direction-buy{color:var(--green)}.direction-sell{color:var(--red)}.journey{display:flex;flex-direction:column;gap:0}.stage{display:grid;grid-template-columns:26px 1fr;gap:10px;position:relative;padding-bottom:17px}.stage:not(:last-child):before{content:"";position:absolute;left:10px;top:21px;bottom:0;width:1px;background:#39324f}.stage-icon{width:21px;height:21px;border:1px solid #4b4567;border-radius:50%;display:grid;place-items:center;font:9px 'DM Mono';color:#aaa1c6;background:#151127;z-index:1}.stage.done .stage-icon{border-color:#55e6ae;color:var(--green);background:#55e6ae12}.stage.active .stage-icon{border-color:var(--gold);color:var(--gold);box-shadow:0 0 13px #f5ca7825}.stage strong{display:block;font-size:11px}.stage small{display:block;color:var(--muted);font-size:10px;line-height:1.55;margin-top:4px}.next-step{padding:12px;border:1px solid #a78bfa38;border-radius:11px;background:#a78bfa0b;margin-top:4px}.next-step span{font:9px 'DM Mono';color:var(--purple);letter-spacing:.1em}.next-step p{font-size:11px;line-height:1.6;color:#d0c9e4;margin:7px 0 0}
-.bottom-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:13px}.health-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.health-item{padding:13px;border:1px solid #ffffff10;background:#ffffff06;border-radius:10px}.health-item span{display:block;font:9px 'DM Mono';color:var(--muted);letter-spacing:.08em}.health-item strong{display:block;font:13px 'DM Mono';margin-top:7px;overflow-wrap:anywhere}.health-note{font-size:10px;color:var(--muted);margin-top:12px;line-height:1.6}.signal-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #ffffff0d;font-size:11px}.signal-row:last-child{border:0}.signal-row strong{display:block}.signal-row small{color:var(--muted);font:9px 'DM Mono';display:block;margin-top:4px}.signal-price{font:10px 'DM Mono';color:#d4cdec}.status-chip{font:9px 'DM Mono';border:1px solid var(--line);border-radius:6px;padding:5px 7px;color:#b8b0cb}.status-chip.open{color:var(--cyan);border-color:#6ee7f540}.status-chip.wait{color:var(--gold);border-color:#f5ca7840}.status-chip.tp{color:var(--green);border-color:#55e6ae40}.status-chip.sl{color:var(--red);border-color:#ff718e40}.bot-card{display:flex;align-items:center;gap:13px}.bot-orb{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(140deg,#9e82f5,#4d9bd2);color:#0a0814;font-weight:1000}.bot-card strong{font-size:12px}.bot-card p{font-size:10px;color:var(--muted);line-height:1.6;margin:4px 0 0}.bot-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.bot-meta span{font:9px 'DM Mono';padding:6px 8px;border-radius:7px;background:#ffffff08;color:#aaa3c0;border:1px solid #ffffff10}.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid #ffffff12;margin-top:30px;padding-top:16px;color:#6e6984;font:9px 'DM Mono';line-height:1.7}.footer a{color:#aaa0d4;text-decoration:none}
-@media(max-width:1100px){.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.workspace{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.hero-side{justify-self:start;text-align:left;display:flex;align-items:baseline;gap:12px}.hero-side strong{font-size:20px}}
-@media(max-width:900px){.bottom-grid{grid-template-columns:1fr 1fr}.health-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:720px){.shell{padding:14px 13px 35px}.brand-name{font-size:13px}.top-link{display:none}.hero{padding:28px 0 15px}.hero h1{font-size:42px}.kpis{grid-template-columns:repeat(2,1fr);gap:8px}.kpi{padding:13px}.kpi-value{font-size:22px}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.market{padding:12px}.market-price{font-size:16px}.bottom-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.toolbar{width:100%}.search{flex:1;min-width:120px}.chart-wrap{height:220px}}
-@media(max-width:390px){.market-grid{grid-template-columns:1fr}.live-indicator{font-size:9px;padding:8px}.structure{grid-template-columns:1fr 1fr}.hero h1{font-size:36px}}
-.detail-levels,.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.detail-level,.setting-chip{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:10px;padding:10px;min-width:0}.detail-level span,.setting-chip span{display:block;color:var(--muted);font-size:9px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}.detail-level strong,.setting-chip strong{display:block;font-size:12px;overflow-wrap:anywhere}.check-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}.check-row:last-child{border-bottom:0}.check-row strong{font-size:11px}.check-row small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.check-state{font-size:9px;letter-spacing:.06em;white-space:nowrap}.check-state.pass{color:var(--green)}.check-state.wait{color:var(--gold)}.history-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.history-row:last-child{border-bottom:0}.history-row strong{font-size:11px}.history-row small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.tp-track{height:5px;background:#27223a;border-radius:8px;overflow:hidden;margin-top:5px}.tp-track i{display:block;height:100%;background:var(--cyan)}@media(max-width:620px){.detail-levels,.settings-grid{grid-template-columns:1fr}.history-row{grid-template-columns:1fr auto}.history-row .history-status{grid-column:1/-1}}\n
-/* TradesByJay visual refresh: restrained graphite + violet */
-:root{--bg:#0b0c12;--panel:#12141d;--panel2:#181a25;--line:#282b38;--muted:#9297a8;--text:#f2f3f8;--purple:#a78bfa;--cyan:#9aa8ff;--green:#62d6a6;--red:#f17e91;--gold:#e9bd70}
-body{background:#0b0c12}
-body:before{display:none}
-.shell{max-width:1680px;padding:24px 34px 52px}
-.topbar{border-bottom:1px solid #ffffff12;padding:8px 0 20px}
-.mark{border-radius:11px;background:#a78bfa;color:#11121a;box-shadow:none}
-.brand-name{letter-spacing:.09em}
-.live-indicator{border-radius:8px;background:#62d6a60c;border-color:#62d6a62b}
-.hero{padding:34px 0 23px;gap:28px}
-.eyebrow{color:#b7a5ff;letter-spacing:.17em}
-.hero h1{font-size:clamp(32px,4.3vw,54px);letter-spacing:-.055em;line-height:1.04;margin:11px 0}
-.hero h1 span{background:none;color:#b8a4ff}
-.hero p{font-size:12px;color:#a4a8b6;max-width:590px}
-.kpis{gap:10px;margin:10px 0 20px}
-.kpi,.panel{background:#12141d;border:1px solid #292c39;border-radius:12px;box-shadow:none}
-.kpi{padding:15px 17px}
-.kpi:after{display:none}
-.kpi-label,.section-meta,.eyebrow{font-size:9px}
-.kpi-value{font-size:25px}
-.section-head{margin:24px 0 12px}
-.section-title{font-size:15px}
-.view-tab,.filter,.top-link{border-radius:7px;background:#151721}
-.view-tab.active,.filter.active{background:#a78bfa18;border-color:#8068d8;color:#d7cbff;box-shadow:none}
-.search{border-radius:7px;background:#11131b}
-.market-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
-.market{background:#12141d;border:1px solid #292c39;border-radius:10px;box-shadow:none;transition:border-color .16s,background .16s}
-.market:hover,.market.selected{transform:none;border-color:#8872d8;background:#171824;box-shadow:0 0 0 1px #8872d81a}
-.market-price{font-size:18px}
-.waiting-reason{background:#e9bd7008;border-color:#e9bd7024;border-radius:7px}
-.waiting-reason span{color:#e9bd70}
-.progress{background:#292b37}
-.progress i{background:#a78bfa}
-.workspace{gap:10px}
-.panel{padding:16px}
-.chart-wrap{border-radius:8px;background:#0e1017;border-color:#282b38}
-.structure-item,.health-item,.detail-level,.setting-chip{background:#171923;border:1px solid #292c39;border-radius:8px}
-.next-step{border-color:#a78bfa30;background:#a78bfa0a;border-radius:8px}
-.status-chip{border-radius:5px}
-.signal-row,.history-row,.check-row{border-color:#252835}
-.bot-orb{border-radius:10px;background:#a78bfa;color:#11121a}
-.footer{border-color:#252835}
-@media(max-width:1100px){.market-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:720px){.shell{padding:13px 12px 32px}.hero{padding:25px 0 14px}.hero h1{font-size:38px}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:12px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-
-
-/* TradesByJay responsive glass + signal alert system */
-:root{--bg:#080711;--panel:#11101d;--line:#302844;--purple:#b49aff;--red:#ff334f;--redGlow:#ff173f}
-body{background:radial-gradient(ellipse at 12% 0%,#5d2b9a38,transparent 34%),radial-gradient(ellipse at 92% 12%,#164e7030,transparent 32%),#080711}
-body:before{display:block;opacity:.10;background-size:56px 56px}
-.shell{max-width:1720px;padding:22px clamp(14px,3vw,42px) 54px}
-.kpi,.panel,.market{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:linear-gradient(145deg,#ffffff0d,#ffffff03 42%,#11101deF);border-color:#ffffff18;box-shadow:0 18px 55px #0005,inset 0 1px #ffffff0a}
-.kpi,.panel{border-radius:18px}
-.market{border-radius:15px;transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease}
-.market:hover,.market.selected{transform:translateY(-3px);border-color:#ad91ff88;box-shadow:0 14px 35px #8b5cf633,inset 0 1px #ffffff18}
-.mark{background:linear-gradient(135deg,#d7c5ff,#8c68f4 58%,#4bd6df);box-shadow:0 0 28px #9d7aff55}
-.live-indicator{box-shadow:inset 0 1px #ffffff12}
-.dot{animation:pulse 1.35s infinite}
-.kpi{animation:riseIn .55s both}
-.kpi:nth-child(2){animation-delay:.06s}.kpi:nth-child(3){animation-delay:.12s}.kpi:nth-child(4){animation-delay:.18s}
-.panel{animation:riseIn .5s both}
-.market{animation:riseIn .35s both}
-.progress i{position:relative;overflow:hidden}
-.progress i:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,#ffffff88,transparent);transform:translateX(-100%);animation:shimmer 2.4s infinite}
-.section-title,.panel-head h3{letter-spacing:-.025em}
-.signal-toast-wrap{position:fixed;z-index:9999;top:18px;right:18px;width:min(390px,calc(100vw - 28px));display:grid;gap:10px;pointer-events:none}
-.signal-toast{position:relative;overflow:hidden;padding:15px 16px 14px 18px;border:1px solid #ff526b99;border-radius:15px;background:linear-gradient(120deg,#35101dF2,#17101df5 72%);box-shadow:0 16px 55px #ff173f30,0 0 28px #ff173f26,inset 0 1px #ffffff20;backdrop-filter:blur(18px);animation:toastIn .42s cubic-bezier(.2,.8,.2,1) both}
-.signal-toast:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#ff334f;box-shadow:0 0 18px #ff173f}
-.signal-toast .toast-kicker{font:10px 'DM Mono';letter-spacing:.17em;color:#ff9aaa}
-.signal-toast strong{display:block;font-size:16px;margin:7px 0 4px;color:#fff}
-.signal-toast p{font-size:11px;color:#e6cbd2;margin:0;line-height:1.5}
-.signal-toast .toast-time{display:block;font:9px 'DM Mono';color:#b78c98;margin-top:9px}
-body.alert-flash:after{content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;border:3px solid #ff334f;box-shadow:inset 0 0 85px #ff173f28;animation:redAlert .85s ease-out 2}
-body.alert-flash .live-indicator{border-color:#ff334f!important;color:#ffc0ca!important;box-shadow:0 0 22px #ff173f55!important}
-body.alert-flash .live-indicator .dot{background:#ff334f!important;box-shadow:0 0 16px #ff173f!important}
-@keyframes redAlert{0%,100%{opacity:0}25%,65%{opacity:1}}
-@keyframes toastIn{from{opacity:0;transform:translateX(28px) scale(.97)}to{opacity:1;transform:translateX(0) scale(1)}}
-@keyframes riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes shimmer{to{transform:translateX(100%)}}
-@media(max-width:760px){
- .shell{padding:10px 10px 28px}
- .topbar{position:sticky;top:0;z-index:100;padding:9px 0 11px;background:#090812eF;backdrop-filter:blur(18px);margin:0 -10px;padding-left:12px;padding-right:12px}
- .mark{width:36px;height:36px;border-radius:11px;font-size:14px}
- .brand{gap:9px}.brand-name{font-size:12px}.brand-sub{font-size:8px;letter-spacing:.12em}
- .live-indicator{padding:8px 9px;font-size:8px;gap:6px;max-width:155px}
- .hero{padding:23px 2px 14px;gap:12px}
- .hero h1{font-size:clamp(34px,9vw,46px);line-height:1.01}
- .hero p{font-size:11px;line-height:1.6}
- .hero-side{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
- .hero-side strong{font-size:16px;margin:0}.hero-side .label,.hero-side small{font-size:8px}
- .kpis{gap:8px;margin:10px 0 15px}
- .kpi{padding:12px 11px;border-radius:13px}.kpi-label{font-size:8px}.kpi-value{font-size:21px;margin-top:6px}.kpi-foot{font-size:9px}
- .section-head{margin:19px 0 10px;gap:9px}
- .section-title{font-size:14px}
- .toolbar{gap:6px}
- .view-tab,.filter{padding:8px 9px;font-size:10px}
- .search{min-width:100%;width:100%;flex:1}
- .market-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
- .market{padding:11px;border-radius:13px}
- .symbol{font-size:11px}.tag{font-size:8px;padding:4px 5px}
- .market-price{font-size:15px;margin:11px 0 2px}
- .market-foot{font-size:8px;gap:5px;flex-wrap:wrap}
- .waiting-reason{padding:8px;margin-top:9px}.waiting-reason span{font-size:8px}.waiting-reason p{font-size:9px;line-height:1.45}
- .workspace{grid-template-columns:minmax(0,1fr);gap:9px;margin-top:10px}
- .panel{padding:13px;border-radius:14px}
- .panel-head{margin-bottom:11px}.panel-head h3{font-size:12px}
- .chart-wrap{height:205px}
- .structure{gap:6px}.structure-item{padding:9px}.structure-item span{font-size:8px}.structure-item strong{font-size:11px}
- .bottom-grid{grid-template-columns:minmax(0,1fr);gap:9px;margin-top:9px}
- .health-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
- .health-item{padding:10px}.health-item span{font-size:8px}.health-item strong{font-size:12px}
- .signal-row{gap:7px;padding:10px 0;font-size:10px}
- .signal-price{font-size:9px}.status-chip{font-size:8px;padding:4px 5px}
- .detail-levels,.settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .footer{font-size:8px;gap:8px;margin-top:20px}
- .signal-toast-wrap{top:9px;right:9px;width:min(360px,calc(100vw - 18px))}
- .signal-toast{padding:12px 13px 11px 16px;border-radius:13px}
-}
-@media(max-width:420px){
- .top-actions{gap:5px}.live-indicator{max-width:126px;font-size:7px}
- .market-grid{gap:6px}.market{padding:9px}
- .hero h1{font-size:35px}
- .kpi-value{font-size:19px}
- .view-tab{gap:5px;padding:7px}
- .detail-levels,.settings-grid{grid-template-columns:1fr 1fr}
-}
-@media(prefers-reduced-motion:reduce){
- .kpi,.panel,.market,.signal-toast{animation:none!important}
- .progress i:after{display:none}
-}
-
-
-/* COMMAND DECK — high-energy TradesByJay skin */
-:root{--bg:#07050f;--panel:#100c1d;--line:#38244f;--purple:#c49aff;--cyan:#7cecff;--red:#ff294f;--green:#58f0b3;--gold:#ffd36d}
-body{background:#07050f;isolation:isolate;overflow-x:hidden}
-body:before{z-index:-2;opacity:.14;background-size:48px 48px;background-image:linear-gradient(#b78aff16 1px,transparent 1px),linear-gradient(90deg,#b78aff16 1px,transparent 1px)}
-body:after{content:"";position:fixed;z-index:-1;inset:-20%;pointer-events:none;background:radial-gradient(ellipse at 12% 12%,#8a32ff32,transparent 32%),radial-gradient(ellipse at 85% 25%,#ff174b20,transparent 27%),radial-gradient(ellipse at 55% 100%,#00c9ff16,transparent 34%);filter:blur(22px);animation:ambientDrift 16s ease-in-out infinite alternate}
-.shell{max-width:1800px;padding:18px clamp(12px,2.8vw,44px) 58px}
-.topbar{border:1px solid #ffffff16;border-radius:17px;padding:12px 16px;background:linear-gradient(100deg,#160e29eF,#0d0b18eF);box-shadow:0 10px 40px #0008,0 0 35px #8c4dff12;backdrop-filter:blur(20px)}
-.mark{width:48px;height:48px;border-radius:15px;background:linear-gradient(145deg,#e5d2ff 0%,#a16bff 42%,#ff315f 100%);box-shadow:0 0 18px #a66aff99,0 0 42px #a66aff40;position:relative}
-.mark:after{content:"";position:absolute;inset:-5px;border:1px solid #c8a3ff66;border-radius:18px;animation:markRing 3s ease-out infinite}
-.brand-name{font-size:17px;letter-spacing:.16em;text-shadow:0 0 22px #c49aff66}
-.brand-sub{color:#b49ad4}
-.live-indicator{border-radius:8px;border-color:#ff315f66;background:#ff174b14;color:#ffb6c5;box-shadow:0 0 18px #ff174b1c}
-.live-indicator .dot{background:var(--red);box-shadow:0 0 6px var(--red),0 0 18px var(--red);animation:redBeacon .9s infinite}
-.live-indicator.stale .dot{animation:redBeacon .45s infinite}
-.hero{position:relative;overflow:hidden;min-height:225px;margin:18px 0 16px;padding:34px 28px;border:1px solid #9b69e844;border-radius:23px;background:linear-gradient(105deg,#1b1030ed 0%,#120d21ed 53%,#190d1bed 100%);box-shadow:0 24px 70px #0007,inset 0 1px #ffffff19}
-.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 20%,#c59aff0d 45%,transparent 67%),repeating-linear-gradient(0deg,transparent 0 34px,#ffffff05 35px);pointer-events:none}
-.hero:after{content:"";position:absolute;width:290px;height:290px;right:7%;top:-115px;border:1px solid #b68bff30;border-radius:50%;box-shadow:0 0 0 25px #b68bff08,0 0 0 55px #b68bff06,0 0 80px #9c50ff22;animation:orbFloat 8s ease-in-out infinite}
-.hero>div{position:relative;z-index:1}
-.eyebrow{color:#d4b4ff;text-shadow:0 0 16px #b66bff66}
-.hero h1{font-size:clamp(39px,5.2vw,72px);max-width:850px;text-shadow:0 8px 40px #0008}
-.hero h1 span{background:linear-gradient(90deg,#fff 0%,#cba9ff 35%,#ff829c 75%,#80edff 100%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradientFlow 6s linear infinite}
-.hero p{color:#c2b5d6;max-width:570px}
-.hero-side{padding:16px 18px;border:1px solid #ffffff20;border-radius:14px;background:#0806119c;backdrop-filter:blur(12px);box-shadow:0 0 35px #b04cff15}
-.hero-side strong{font:700 27px 'DM Mono';color:#fff;text-shadow:0 0 20px #b68bff66}
-.kpi,.panel{background:linear-gradient(145deg,#1c1430ed,#0d0a18f2 65%);border:1px solid #ffffff1d;border-radius:16px;box-shadow:0 14px 44px #0007,inset 0 1px #ffffff12;backdrop-filter:blur(16px);transition:border-color .25s,box-shadow .25s,transform .25s}
-.kpi{padding:18px 19px;overflow:hidden}
-.kpi:after{display:block;background:#a65cff38;width:120px;height:120px;right:-62px;top:-70px;filter:blur(22px)}
-.kpi:hover,.panel:hover{border-color:#a66bff66;box-shadow:0 18px 55px #0009,0 0 28px #9c55ff16,inset 0 1px #ffffff19}
-.kpi-label{color:#b7a5d1}
-.kpi-value{font-size:31px;text-shadow:0 0 22px #bd91ff2b}
-.section-head{margin-top:27px}
-.section-title{font-size:17px}
-.view-tab,.filter,.search{border-radius:9px;background:#130d21;border-color:#49315e;color:#cfc0e6}
-.view-tab.active,.filter.active{background:linear-gradient(120deg,#a04bff32,#ff315f1b);border-color:#bd8cff;color:#fff;box-shadow:0 0 20px #a34fff26}
-.market-grid{gap:12px}
-.market{position:relative;overflow:hidden;background:linear-gradient(145deg,#1a1230f5,#0d0a18f5 75%);border:1px solid #ffffff1c;border-radius:15px;box-shadow:0 12px 30px #0005;transition:transform .25s,border-color .25s,box-shadow .25s}
-.market:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,#a66aff,#ff4167,transparent);opacity:.45}
-.market:hover,.market.selected{transform:translateY(-4px) scale(1.008);border-color:#b38aff;box-shadow:0 18px 40px #0008,0 0 24px #9d56ff29}
-.market.selected:before{height:3px;opacity:1;box-shadow:0 0 15px #b87aff}
-.market-price{font-size:21px;color:#fff;text-shadow:0 0 15px #a88bff30}
-.tag{border-radius:6px}
-.tag.sell{background:#ff24451c;box-shadow:0 0 14px #ff24451a;color:#ff8298;border-color:#ff41677a}
-.tag.buy{background:#25d99b17;box-shadow:0 0 14px #25d99b16;color:#75f5c1;border-color:#25d99b66}
-.waiting-reason{background:#ffd36d0a;border-color:#ffd36d35}
-.waiting-reason span{color:#ffda87}
-.progress{height:4px;background:#30223f}
-.progress i{background:linear-gradient(90deg,#8b50ff,#e65dff,#ff456b);box-shadow:0 0 12px #a65cff}
-.panel-head h3{font-size:14px}
-.chart-wrap{background:radial-gradient(ellipse at 50% 0%,#271642,#090711 75%);border-color:#49315e}
-.structure-item,.health-item,.detail-level,.setting-chip{background:linear-gradient(145deg,#1b1430,#100c1b);border-color:#ffffff17}
-.next-step{background:linear-gradient(110deg,#9e53ff1b,#ff3c6710);border-color:#a76aff55}
-.status-chip.sl{background:#ff315f17;box-shadow:0 0 14px #ff315f18}
-.bot-orb{background:linear-gradient(145deg,#e0c6ff,#9854ff 60%,#ff456d);box-shadow:0 0 24px #a45cff55}
-.footer{border-color:#ffffff20;color:#8c7da5}
-.ticker-strip{overflow:hidden;display:flex;align-items:center;gap:0;margin:0 0 18px;border:1px solid #ffffff1c;border-radius:10px;background:#0c0916d9;box-shadow:0 8px 28px #0006;min-height:37px}
-.ticker-label{flex:0 0 auto;padding:0 13px;font:9px 'DM Mono';letter-spacing:.16em;color:#ff9db0;border-right:1px solid #ffffff18}
-.ticker-window{overflow:hidden;white-space:nowrap;flex:1}
-.ticker-track{display:inline-flex;align-items:center;gap:34px;min-width:max-content;padding:10px 18px;animation:tickerScroll 32s linear infinite}
-.ticker-item{font:10px 'DM Mono';color:#d7c9e9}
-.ticker-item b{color:#fff;margin-right:7px}.ticker-item em{font-style:normal;color:#9c8baa}.ticker-item .up{color:#62f0b1}.ticker-item .down{color:#ff718d}
-.signal-toast{border-radius:10px;border:1px solid #ff416c;background:linear-gradient(110deg,#390b1bfa,#150b19fa);box-shadow:0 0 0 1px #ff416c25,0 15px 55px #ff174b55,0 0 30px #ff174b33}
-body.alert-flash:after{animation:redAlert .55s ease-out 3}
-@keyframes ambientDrift{from{transform:translate3d(-2%,0,0) scale(1)}to{transform:translate3d(2%,2%,0) scale(1.08)}}
-@keyframes orbFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(15px) rotate(9deg)}}
-@keyframes gradientFlow{to{background-position:220% center}}
-@keyframes markRing{0%{transform:scale(.92);opacity:.7}100%{transform:scale(1.28);opacity:0}}
-@keyframes redBeacon{0%,100%{opacity:1;box-shadow:0 0 5px var(--red),0 0 17px var(--red)}50%{opacity:.28;box-shadow:0 0 2px var(--red)}}
-@keyframes tickerScroll{to{transform:translateX(-50%)}}
-@media(max-width:760px){
- .shell{padding:9px 9px 28px}
- .topbar{border-radius:12px;padding:9px 10px;margin:0 -2px}
- .mark{width:38px;height:38px}
- .brand-name{font-size:12px;letter-spacing:.12em}
- .brand-sub{font-size:7px}
- .live-indicator{font-size:7px;padding:7px 8px;max-width:145px}
- .hero{min-height:0;padding:23px 16px 20px;border-radius:17px;margin:12px 0}
- .hero:after{right:-100px;top:-80px;opacity:.65}
- .hero h1{font-size:clamp(35px,9vw,48px);max-width:95%}
- .hero p{font-size:10px;max-width:90%}
- .hero-side{justify-self:start;text-align:left;padding:9px 11px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:12px}
- .hero-side strong{font-size:15px;margin:0}
- .hero-side .label,.hero-side small{font-size:7px}
- .kpi,.panel{border-radius:13px}
- .kpi{padding:12px 11px}.kpi-value{font-size:22px}
- .section-title{font-size:14px}
- .market-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
- .market{padding:10px;border-radius:12px}
- .market-price{font-size:15px;margin:10px 0 2px}
- .waiting-reason{padding:8px}.waiting-reason p{font-size:9px}
- .workspace{grid-template-columns:1fr;gap:8px}
- .panel{padding:12px}
- .chart-wrap{height:190px}
- .bottom-grid{grid-template-columns:1fr;gap:8px}
- .ticker-strip{margin-bottom:12px;min-height:33px}
- .ticker-label{font-size:8px;padding:0 9px}.ticker-track{gap:24px;padding:9px 12px}
- .signal-toast-wrap{top:8px;right:8px;width:calc(100vw - 16px)}
-}
-@media(max-width:390px){.hero h1{font-size:34px}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.brand-sub{letter-spacing:.07em}.live-indicator{max-width:120px}}
-@media(prefers-reduced-motion:reduce){body:after,.mark:after,.hero:after,.hero h1 span,.ticker-track,.live-indicator .dot{animation:none!important}.market,.kpi,.panel{transition:none!important}}
-
-
-/* Live-feed stability: don't replay entrance effects on every one-second data refresh. */
-.market{animation:none!important}
-.ticker-track{will-change:transform}
-
-/* Stability pass: keep the interface at constant brightness. */
-.dot,.live-indicator .dot{animation:none!important;opacity:1!important}
-body:not(.alert-flash):after{animation:none!important;opacity:1!important}
-.mark:after,.hero:after,.hero h1 span{animation:none!important}
-
-.test-telegram{border:1px solid #8f78df;background:#a78bfa16;color:#e5dcff;border-radius:8px;padding:9px 12px;font:10px 'DM Mono';letter-spacing:.04em;white-space:nowrap;transition:background .18s,border-color .18s}
-.test-telegram:hover{background:#a78bfa2a;border-color:#b9a6ff}
-.test-telegram:disabled{opacity:.65;cursor:wait}
-.test-telegram.sent{border-color:#62d6a6;color:#9af0c9;background:#62d6a610}
-.test-telegram.failed{border-color:#f17e91;color:#ffb1bf;background:#f17e9110}
-@media(max-width:620px){.top-actions{gap:6px}.test-telegram{font-size:9px;padding:8px 9px}.live-indicator{padding:8px 9px}}
-
-/* TRADESBYJAY — LIVE ENERGY REDESIGN */
-:root{
- --bg:#080612;--panel:#121024;--panel2:#19142f;--line:#39305b;
- --purple:#b99aff;--cyan:#66e7f4;--green:#62efb5;--red:#ff5878;--gold:#ffd27c;
-}
-html{scroll-padding-top:18px}
-body{
- background:
-  radial-gradient(ellipse 55% 38% at 8% 0%,#7138bd38,transparent 72%),
-  radial-gradient(ellipse 48% 34% at 96% 12%,#087e9c28,transparent 70%),
-  radial-gradient(ellipse 60% 45% at 50% 100%,#39216c24,transparent 75%),var(--bg);
- background-attachment:fixed;
-}
-body:before{opacity:.12;background-size:54px 54px;mask-image:linear-gradient(#000 0%,transparent 82%)}
-.shell{max-width:1760px}
-.topbar{position:relative;border-bottom-color:#a98cff2c}
-.topbar:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,#a98cff88,#65e5f488,transparent)}
-.mark{position:relative;overflow:hidden;box-shadow:0 0 24px #a78bfa55,0 0 55px #6ee7f522}
-.brand-name{letter-spacing:.13em;text-shadow:0 0 24px #b99aff35}
-.live-indicator{border-radius:999px;box-shadow:0 0 22px #55e6ae12,inset 0 1px #ffffff12}
-.hero{position:relative;isolation:isolate;padding-top:42px}
-.hero:before{content:"";position:absolute;z-index:-1;right:7%;top:0;width:min(36vw,430px);height:230px;border-radius:50%;background:radial-gradient(ellipse,#8054ed25,transparent 68%);filter:blur(12px);pointer-events:none}
-.hero h1{max-width:900px;font-size:clamp(38px,5.4vw,72px);letter-spacing:-.07em;text-shadow:0 10px 55px #8b5cf622}
-.hero h1 span{background:linear-gradient(100deg,#fff 0%,#c9b5ff 38%,#75e8f4 78%,#fff 100%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{font-size:13px;max-width:700px}
-.eyebrow{color:#82e8f4}
-.kpi,.panel{background:linear-gradient(145deg,#ffffff0d,#ffffff02 45%,#17122beF);border:1px solid #a88bff26;box-shadow:0 18px 50px #0005,inset 0 1px #ffffff0c}
-.kpi{position:relative;overflow:hidden;transition:border-color .2s,box-shadow .2s,transform .2s}
-.kpi:before{content:"";position:absolute;left:16px;right:16px;top:0;height:1px;background:linear-gradient(90deg,transparent,#b99aff99,transparent)}
-.kpi:hover{transform:translateY(-2px);border-color:#b99aff70;box-shadow:0 16px 42px #8b5cf622,inset 0 1px #ffffff14}
-.kpi-value{font-size:clamp(23px,2.2vw,31px);text-shadow:0 0 26px #b99aff20}
-.section-head{margin-top:30px}
-.section-title{font-size:16px}
-.view-tab,.filter,.search,.top-link{transition:border-color .18s,background .18s,color .18s,box-shadow .18s}
-.view-tab.active{box-shadow:0 0 22px #a78bfa20,inset 0 0 18px #a78bfa0c}
-.market-grid{gap:12px}
-.market{
- position:relative;overflow:hidden;isolation:isolate;
- background:linear-gradient(145deg,#1b1732ed,#100e1ff5 68%);
- border:1px solid #a98cff27;
- box-shadow:0 12px 32px #0003,inset 0 1px #ffffff0b;
- transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,background .2s ease;
-}
-.market:before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,#a78bfa,#69e5f4,transparent);opacity:.55}
-.market:after{content:"";position:absolute;z-index:-1;width:150px;height:100px;right:-95px;bottom:-75px;border-radius:50%;background:#8054ed25;filter:blur(28px);pointer-events:none}
-.market:hover,.market.selected{transform:translateY(-3px);border-color:#b99aff99;background:linear-gradient(145deg,#241c43f2,#131025f7 70%);box-shadow:0 16px 38px #7c4de52a,inset 0 1px #ffffff16}
-.market.selected{box-shadow:0 0 0 1px #b99aff35,0 16px 38px #7c4de52a}
-.symbol{font-size:13px;letter-spacing:.015em}
-.market-price{font-size:clamp(16px,1.6vw,21px);text-shadow:0 0 20px #a78bfa18}
-.tag{border-radius:999px;padding:5px 9px}
-.tag.buy{box-shadow:0 0 16px #55e6ae16}.tag.sell{box-shadow:0 0 16px #ff718e16}
-.waiting-reason{border-radius:10px;background:linear-gradient(110deg,#f5ca7810,#f5ca7805);border-color:#f5ca7838}
-.progress{height:4px;background:#302747}
-.progress i{background:linear-gradient(90deg,#8b6bfa,#6ee7f5);box-shadow:0 0 12px #9b7bff55}
-.panel{border-radius:17px}
-.panel-head h3{font-size:14px}
-.chart-wrap{background:radial-gradient(ellipse at 50% 0%,#34245b38,transparent 70%),#0b0a16;border-color:#51416e}
-.structure-item,.health-item,.detail-level,.setting-chip{background:linear-gradient(145deg,#ffffff0b,#ffffff03);border-color:#ffffff16}
-.stage.active .stage-icon{box-shadow:0 0 18px #ffd27c35}
-.next-step{background:linear-gradient(110deg,#a78bfa16,#6ee7f408);border-color:#a78bfa55}
-.status-chip{border-radius:999px}
-.bot-orb{box-shadow:0 0 24px #a78bfa42}
-.signal-toast{box-shadow:0 18px 60px #ff173f35,0 0 32px #ff173f20,inset 0 1px #ffffff20}
-.footer{border-top-color:#a78bfa26}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #9c83ff;outline-offset:3px}
-@media(max-width:720px){
- .shell{padding:13px 12px 34px}
- .hero{padding-top:30px}
- .hero:before{right:0;width:70vw;height:160px}
- .hero h1{font-size:clamp(35px,10vw,48px);line-height:1.02}
- .market-grid{gap:9px}
- .market{border-radius:13px}
- .market:hover,.market.selected{transform:translateY(-1px)}
- .panel{border-radius:14px;padding:14px}
- .section-head{margin-top:23px}
-}
-@media(prefers-reduced-motion:reduce){
- .kpi,.market{transition:none!important}
- .kpi:hover,.market:hover,.market.selected{transform:none}
-}
-
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800;900&display=swap');
+:root{color-scheme:dark;--bg:#080810;--surface:#10101b;--surface2:#151525;--line:#29283d;--line2:#393451;--text:#f5f3ff;--muted:#89879f;--purple:#a78bfa;--cyan:#66e7f4;--green:#58e5ad;--red:#ff617c;--gold:#f3c978}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--text);font-family:Manrope,system-ui,sans-serif;background:radial-gradient(ellipse 50% 40% at 12% -10%,#6936a938,transparent 72%),radial-gradient(ellipse 45% 34% at 100% 10%,#075f7826,transparent 72%),radial-gradient(ellipse 50% 40% at 50% 110%,#39216b25,transparent 75%),var(--bg)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.1;background-image:linear-gradient(#ffffff 1px,transparent 1px),linear-gradient(90deg,#ffffff 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(#000,transparent 85%);z-index:-1}
+button,input{font:inherit}button{cursor:pointer;color:inherit}
+.shell{width:min(1800px,100%);margin:auto;padding:20px clamp(14px,2.4vw,38px) 38px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 0 17px;border-bottom:1px solid #ffffff17}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.mark{width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#e4d6ff,#9873f7 55%,#53d8e5);color:#0a0912;font-weight:1000;letter-spacing:-1px;box-shadow:0 0 26px #9c78ff66}
+.brand-name{font-size:14px;font-weight:900;letter-spacing:.15em}
+.brand-sub{font:9px 'DM Mono';color:#9a92b6;letter-spacing:.19em;margin-top:4px}
+.top-actions{display:flex;align-items:center;gap:9px}
+.test-telegram,.top-link,.live-indicator{white-space:nowrap;border:1px solid var(--line2);border-radius:9px;padding:9px 12px;background:#ffffff07;font:10px 'DM Mono';letter-spacing:.04em;text-decoration:none;color:#ded8f4}
+.test-telegram{border-color:#8d75dc;background:#a78bfa17;color:#e9e0ff}
+.test-telegram:hover,.top-link:hover{border-color:var(--purple);background:#a78bfa22}
+.test-telegram:disabled{opacity:.6;cursor:wait}.test-telegram.sent{border-color:var(--green);color:var(--green)}.test-telegram.failed{border-color:var(--red);color:var(--red)}
+.live-indicator{display:flex;align-items:center;gap:8px;border-radius:99px;border-color:#58e5ad45;color:#a8f4d3;background:#58e5ad0b}
+.live-indicator.stale{border-color:#ff617c55;color:#ffadba;background:#ff617c0b}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+.live-indicator.stale .dot{background:var(--red);box-shadow:0 0 12px var(--red)}
+.ticker-strip{display:flex;align-items:center;gap:14px;margin:14px 0 0;padding:10px 13px;border:1px solid #ffffff16;border-radius:10px;background:linear-gradient(90deg,#a78bfa13,#66e7f408 55%,#ffffff04);min-width:0}
+.ticker-label{flex:none;color:var(--cyan);font:9px 'DM Mono';letter-spacing:.15em}
+.ticker-window{overflow-x:auto;min-width:0;scrollbar-width:none}.ticker-window::-webkit-scrollbar{display:none}
+.ticker-track{display:flex;align-items:center;gap:25px;width:max-content}
+.ticker-item{display:inline-flex;align-items:center;gap:8px;color:#aaa6bd;font:10px 'DM Mono';white-space:nowrap}
+.ticker-item b{color:#f0ecff;font-weight:500}.ticker-item em{font-style:normal;color:#bcb5d4}.ticker-item .up{color:var(--green)}.ticker-item .down{color:var(--red)}
+.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:34px 2px 22px}
+.eyebrow{font:10px 'DM Mono';letter-spacing:.2em;color:var(--cyan)}
+.hero h1{font-size:clamp(36px,5vw,65px);line-height:.98;letter-spacing:-.075em;margin:12px 0 10px;font-weight:900}
+.hero h1 span{background:linear-gradient(100deg,#cbb8ff,#8bceff 58%,#66e7f4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:620px;margin:0;color:#a5a1b8;font-size:12px;line-height:1.75}
+.hero-side{flex:none;text-align:right;padding:0 3px 4px}
+.hero-side .label{font:9px 'DM Mono';letter-spacing:.15em;color:var(--muted)}
+.hero-side strong{display:block;font:23px 'DM Mono';margin:8px 0 5px}
+.hero-side small{color:var(--muted);font:9px 'DM Mono'}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 15px}
+.kpi{position:relative;overflow:hidden;padding:14px 16px;border:1px solid #ffffff19;border-radius:12px;background:linear-gradient(135deg,#ffffff0b,transparent 65%),#11101c}
+.kpi:after{content:"";position:absolute;width:80px;height:80px;right:-44px;top:-48px;border-radius:50%;background:#a78bfa27;filter:blur(15px)}
+.kpi-label{color:#9c98b1;font:9px 'DM Mono';letter-spacing:.13em;text-transform:uppercase}
+.kpi-value{font-size:25px;font-weight:800;letter-spacing:-.05em;margin-top:7px}
+.kpi-foot{font-size:9px;color:#77748b;margin-top:3px;overflow-wrap:anywhere}
+.panel{min-width:0;border:1px solid #ffffff18;border-radius:14px;background:linear-gradient(145deg,#ffffff09,transparent 52%),#11101d;box-shadow:0 16px 45px #0003}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.panel-head h3{font-size:12px;font-weight:800;letter-spacing:-.015em;margin:0}
+.section-meta{font:9px 'DM Mono';color:#8c87a4;letter-spacing:.09em}
+.command-grid{display:grid;grid-template-columns:minmax(255px,310px) minmax(360px,1fr) minmax(270px,320px);gap:12px;align-items:stretch}
+.watch-panel,.chart-panel,.setup-panel{padding:15px}
+.watch-panel{display:flex;flex-direction:column}
+.watch-toolbar{display:grid;grid-template-columns:1fr auto;gap:7px;margin-bottom:10px}
+.search{min-width:0;width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 10px;background:#090912;color:var(--text);font-size:11px;outline:none}
+.search:focus{border-color:var(--purple)}
+.view-tabs{display:flex;gap:5px;margin-bottom:9px}
+.view-tab,.filter{border:1px solid var(--line);border-radius:7px;padding:7px 9px;background:#ffffff05;color:#a9a4bd;font-size:10px}
+.view-tab.active,.filter.active{border-color:#9d83f3;color:#e6dcff;background:#a78bfa19}
+.waiting-count{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 4px;border-radius:99px;background:#f3c97820;color:var(--gold);font:9px 'DM Mono'}
+.filters{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:11px}
+.market-count{font:9px 'DM Mono';color:#8b86a2;margin:0 0 9px}
+.market-grid{display:flex;flex-direction:column;gap:6px;max-height:690px;overflow:auto;padding-right:3px;scrollbar-width:thin;scrollbar-color:#51436f transparent}
+.market{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 8px;align-items:center;padding:10px 10px 9px;border:1px solid #ffffff12;border-radius:9px;background:#ffffff04;cursor:pointer;transition:border-color .16s,background .16s}
+.market:before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:#77718a}
+.market:has(.tag.buy):before{background:var(--green)}.market:has(.tag.sell):before{background:var(--red)}
+.market:hover,.market.selected{border-color:#a78bfa8a;background:linear-gradient(90deg,#a78bfa16,#ffffff05);box-shadow:inset 0 0 22px #a78bfa08}
+.market-top{display:flex;align-items:center;gap:7px;min-width:0}
+.symbol{font-size:11px;font-weight:800;overflow-wrap:anywhere}
+.tag{font:8px 'DM Mono';letter-spacing:.06em;padding:4px 6px;border:1px solid #ffffff17;border-radius:99px;color:#aaa4bd;background:#ffffff07}
+.tag.buy{color:var(--green);border-color:#58e5ad44;background:#58e5ad0c}.tag.sell{color:var(--red);border-color:#ff617c44;background:#ff617c0c}
+.market-price{grid-column:2;grid-row:1;font:11px 'DM Mono';text-align:right;color:#e9e5f5}
+.market-foot{display:flex;justify-content:space-between;gap:7px;color:#8f8aa5;font:8px 'DM Mono';grid-column:1/-1}
+.market-foot .direction-buy{color:var(--green)}.market-foot .direction-sell{color:var(--red)}
+.progress{grid-column:1/-1;height:3px;background:#29253a;border-radius:9px;overflow:hidden;margin:4px 0 1px}
+.progress i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#9a75f4,#62dff0)}
+.waiting-reason{grid-column:1/-1;margin-top:5px;padding:7px 8px;border:1px solid #f3c97825;border-radius:7px;background:#f3c97808}
+.waiting-reason span{font:8px 'DM Mono';letter-spacing:.1em;color:var(--gold)}
+.waiting-reason p{font-size:9px;line-height:1.45;color:#c7bfd1;margin:3px 0 0}
+.empty{padding:18px 12px;text-align:center;color:#8d88a2;border:1px dashed #3b3550;border-radius:9px;font-size:10px;line-height:1.6}
+.chart-panel{display:flex;flex-direction:column}
+.chart-wrap{height:clamp(250px,32vw,390px);min-height:230px;border:1px solid #29263d;border-radius:10px;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#38255c35,transparent 68%),#090912}
+.chart-wrap svg{display:block;width:100%;height:100%}
+.chart-caption{display:flex;justify-content:space-between;gap:8px;margin:9px 1px 12px;color:#88839c;font:8px 'DM Mono'}
+.structure{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:auto}
+.structure-item{padding:10px;border:1px solid #ffffff13;border-radius:8px;background:#ffffff05;min-width:0}
+.structure-item span{display:block;color:#8e89a4;font:8px 'DM Mono';letter-spacing:.1em;margin-bottom:6px}
+.structure-item strong{font-size:11px;overflow-wrap:anywhere}
+.direction-buy{color:var(--green)}.direction-sell{color:var(--red)}
+.setup-panel{display:flex;flex-direction:column}
+.journey{display:flex;flex-direction:column;gap:0}
+.check-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #ffffff10}
+.check-row:last-child{border:0}
+.check-row strong{font-size:10px}.check-row small{display:block;color:#8d88a2;font-size:9px;line-height:1.5;margin-top:4px}
+.check-state{font:8px 'DM Mono';white-space:nowrap;color:var(--gold)}.check-state.pass{color:var(--green)}
+.next-step{margin-top:auto;padding:11px;border:1px solid #a78bfa40;border-radius:9px;background:linear-gradient(110deg,#a78bfa14,#66e7f408)}
+.next-step span{font:8px 'DM Mono';color:#c0aaff;letter-spacing:.12em}
+.next-step p{font-size:10px;line-height:1.55;color:#d4cce8;margin:6px 0 0}
+.detail-levels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:9px}
+.detail-level{padding:8px;border:1px solid #ffffff12;border-radius:7px;background:#ffffff04;min-width:0}
+.detail-level span{display:block;font:8px 'DM Mono';color:#8c87a2;margin-bottom:5px}
+.detail-level strong{font-size:10px;overflow-wrap:anywhere}
+.bottom-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.85fr);gap:12px;margin-top:12px}
+.bottom-grid>.panel{padding:15px}
+.health-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.health-item{min-width:0;padding:10px;border:1px solid #ffffff12;border-radius:8px;background:#ffffff04}
+.health-item span{display:block;font:8px 'DM Mono';letter-spacing:.09em;color:#89849e}
+.health-item strong{display:block;font:12px 'DM Mono';margin-top:6px;overflow-wrap:anywhere}
+.health-note{font-size:9px;line-height:1.55;color:#8d88a2;margin-top:9px}
+.scanner-stats{margin-top:10px;padding-top:10px;border-top:1px solid #ffffff12}
+.signal-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #ffffff10;font-size:10px}
+.signal-row:last-child{border:0}.signal-row strong{display:block}.signal-row small{display:block;color:#8d88a2;font:8px 'DM Mono';margin-top:4px}
+.signal-price{font:9px 'DM Mono';color:#d4cdec}
+.status-chip{font:8px 'DM Mono';border:1px solid var(--line2);border-radius:99px;padding:5px 7px;color:#bbb4cc;white-space:nowrap}
+.status-chip.open{color:var(--cyan);border-color:#66e7f444}.status-chip.wait{color:var(--gold);border-color:#f3c97844}
+.status-chip.tp{color:var(--green);border-color:#58e5ad44}.status-chip.sl{color:var(--red);border-color:#ff617c44}
+.tp-track{height:4px;background:#29253a;border-radius:8px;overflow:hidden;margin-top:5px}.tp-track i{display:block;height:100%;background:linear-gradient(90deg,#8c73ee,#66e7f4)}
+.bot-card{display:flex;align-items:center;gap:11px}
+.bot-orb{width:38px;height:38px;display:grid;place-items:center;flex:none;border-radius:11px;background:linear-gradient(135deg,#c8b3ff,#8b6df0 65%,#58d8e7);color:#0b0912;font-weight:1000;box-shadow:0 0 20px #9c78ff38}
+.bot-card strong{font-size:10px}.bot-card p{font-size:9px;color:#8e89a4;line-height:1.5;margin:4px 0 0}
+.bot-meta{display:flex;flex-wrap:wrap;gap:5px;margin:12px 0}
+.bot-meta span{font:8px 'DM Mono';padding:6px 7px;border:1px solid #ffffff13;border-radius:6px;color:#aaa4bc;background:#ffffff05}
+.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.setting-chip{padding:8px;border:1px solid #ffffff12;border-radius:7px;background:#ffffff04;min-width:0}
+.setting-chip span{display:block;font:8px 'DM Mono';color:#8d88a2;margin-bottom:4px}.setting-chip strong{font-size:9px;overflow-wrap:anywhere}
+.footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:22px;padding-top:13px;border-top:1px solid #ffffff14;color:#77728a;font:8px 'DM Mono';line-height:1.7}
+.footer a{color:#b9a7ed;text-decoration:none}
+.signal-toast-wrap{position:fixed;z-index:9999;top:15px;right:15px;width:min(370px,calc(100vw - 30px));display:grid;gap:9px;pointer-events:none}
+.signal-toast{padding:14px 15px;border:1px solid #ff617c99;border-radius:12px;background:linear-gradient(120deg,#35101df5,#17101df7 72%);box-shadow:0 16px 50px #ff173f30,inset 0 1px #ffffff20;backdrop-filter:blur(16px)}
+.signal-toast strong{display:block;font-size:14px;margin:6px 0}.signal-toast p{font-size:10px;color:#e0cbd2;margin:0 0 7px}.toast-kicker,.toast-time{font:8px 'DM Mono';letter-spacing:.08em;color:#ff9aac}
+body.alert-flash{animation:alertEdge .55s ease 2}
+@keyframes alertEdge{0%,100%{box-shadow:inset 0 0 0 transparent}50%{box-shadow:inset 0 0 0 3px #ff315c66}}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--purple);outline-offset:2px}
+@media(max-width:1180px){.command-grid{grid-template-columns:minmax(235px,290px) minmax(0,1fr)}.setup-panel{grid-column:1/-1}.setup-panel .journey{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px}.setup-panel .next-step{margin-top:12px}.market-grid{max-height:530px}}
+@media(max-width:760px){.shell{padding:12px 11px 28px}.topbar{align-items:flex-start}.brand-name{font-size:12px}.brand-sub{font-size:8px}.top-actions{gap:5px;flex-wrap:wrap;justify-content:flex-end}.top-link{display:none}.test-telegram{font-size:8px;padding:8px}.live-indicator{font-size:8px;padding:8px}.ticker-strip{margin-top:10px;padding:9px;gap:9px}.ticker-label{font-size:8px}.hero{padding:26px 2px 17px;align-items:flex-start;flex-direction:column;gap:13px}.hero h1{font-size:clamp(36px,10vw,49px)}.hero p{font-size:11px}.hero-side{display:flex;align-items:center;gap:9px;text-align:left;padding:0}.hero-side strong{font-size:15px;margin:0}.hero-side small{font-size:8px}.hero-side .label{font-size:8px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.kpi{padding:11px}.kpi-value{font-size:21px}.kpi-foot{font-size:8px}.command-grid{grid-template-columns:1fr;gap:9px}.watch-panel{order:2}.chart-panel{order:1}.setup-panel{order:3;grid-column:auto}.chart-wrap{height:260px}.market-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:520px}.market{padding:9px}.market-price{font-size:10px}.setup-panel .journey{display:flex}.bottom-grid{grid-template-columns:1fr}.health-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.footer{font-size:7px}}
+@media(max-width:390px){.market-grid{grid-template-columns:1fr}.top-actions{max-width:210px}.live-indicator{max-width:120px;overflow:hidden}.structure{grid-template-columns:repeat(3,minmax(0,1fr))}.structure-item{padding:8px}.structure-item strong{font-size:9px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div class="signal-toast-wrap" id="signalToasts" aria-live="assertive" aria-atomic="false"></div>
 <div class="shell">
 <header class="topbar">
- <div class="brand"><div class="mark">TBJ</div><div><div class="brand-name">TRADESBYJAY</div><div class="brand-sub">MARKET COMMAND CENTER</div></div></div>
- <div class="top-actions"><button id="telegramTestBtn" class="test-telegram" type="button">✉ TEST TELEGRAM</button><div id="connection" class="live-indicator stale"><i class="dot"></i><span id="connectionText">CONNECTING TO MT5 FEED</span></div><a class="top-link" href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noopener">JOIN THE COMMUNITY ↗</a></div>
+ <div class="brand"><div class="mark">TBJ</div><div><div class="brand-name">TRADESBYJAY</div><div class="brand-sub">LIVE MARKET TERMINAL</div></div></div>
+ <div class="top-actions"><button id="telegramTestBtn" class="test-telegram" type="button">✉ TEST TELEGRAM</button><div id="connection" class="live-indicator stale"><i class="dot"></i><span id="connectionText">CONNECTING TO MT5 FEED</span></div><a class="top-link" href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noopener">TELEGRAM ↗</a></div>
 </header>
-<div class="ticker-strip"><div class="ticker-label">MARKET PULSE</div><div class="ticker-window"><div class="ticker-track" id="tickerTrack"><span class="ticker-item">CONNECTING TO LIVE MARKETS…</span></div></div></div>
+<div class="ticker-strip"><div class="ticker-label">LIVE MARKET PULSE</div><div class="ticker-window"><div class="ticker-track" id="tickerTrack"><span class="ticker-item">CONNECTING TO LIVE MARKETS…</span></div></div></div>
 <section class="hero">
- <div><div class="eyebrow">◈ THE MARKET, WITHOUT THE NOISE</div><h1>See the move.<br><span>Understand the why.</span></h1><p>A live command center for price action, market structure and liquidity. One clean view of the markets your MT5 scanner is watching.</p></div>
- <div class="hero-side"><span class="label">FEED LAST UPDATED</span><strong id="lastUpdated">—</strong><small id="feedMode">WAITING FOR BOT SNAPSHOT</small></div>
+ <div><div class="eyebrow">◈ TRADESBYJAY / MARKET INTELLIGENCE</div><h1>Read the market.<br><span>Catch the moment.</span></h1><p>Your MT5 scanner, market structure and live setup progress — all in one command centre. No guesswork about what the bot is waiting for.</p></div>
+ <div class="hero-side"><span class="label">LAST UPDATE</span><strong id="lastUpdated">—</strong><small id="feedMode">WAITING FOR BOT SNAPSHOT</small></div>
 </section>
 <section class="kpis">
  <div class="kpi"><div class="kpi-label">Markets tracked</div><div class="kpi-value" id="kMarkets">—</div><div class="kpi-foot">Symbols published by MT5</div></div>
  <div class="kpi"><div class="kpi-label">Ready setups</div><div class="kpi-value" id="kReady">—</div><div class="kpi-foot">Scanner-confirmed only</div></div>
- <div class="kpi"><div class="kpi-label">Open + pending</div><div class="kpi-value" id="kSignals">—</div><div class="kpi-foot">Live MT5 positions and pending orders</div></div>
+ <div class="kpi"><div class="kpi-label">Open + pending</div><div class="kpi-value" id="kSignals">—</div><div class="kpi-foot">Live MT5 positions and orders</div></div>
  <div class="kpi"><div class="kpi-label">Bot environment</div><div class="kpi-value" id="kMode">—</div><div class="kpi-foot" id="kAccount">Account mode not verified</div></div>
 </section>
-<section class="panel" id="closestPanel" style="margin-bottom:18px"><div class="panel-head"><h3>🎯 Closest to ready</h3><span class="section-meta">HIGHEST BOT-REPORTED SETUP PROGRESS</span></div><div id="closestContent" class="empty">Waiting for scanner data…</div></section>
-<section class="panel" id="scannerMetrics" style="margin-bottom:18px"><div class="panel-head"><h3>📊 Scanner breakdown</h3><span class="section-meta" id="scanCycleMeta">WAITING FOR BOT METRICS</span></div><div class="health-grid"><div class="health-item"><span>READY</span><strong id="metricReady">—</strong></div><div class="health-item"><span>CLOSEST TO READY</span><strong id="metricClosest">—</strong></div><div class="health-item"><span>WAITING</span><strong id="metricWaiting">—</strong></div><div class="health-item"><span>SETUP IN PROGRESS</span><strong id="metricProgress">—</strong></div></div><div class="health-note" id="scannerStats">Scanner counters will appear when the updated bot publishes them.</div></section>
-<section class="panel" style="margin-bottom:14px"><div class="panel-head"><h3>🛰️ Live feed health</h3><span class="section-meta" id="healthStatus">CHECKING</span></div><div class="health-grid"><div class="health-item"><span>FEED STATUS</span><strong id="healthFeed">—</strong></div><div class="health-item"><span>LAST PUBLISHED</span><strong id="healthAge">—</strong></div><div class="health-item"><span>BOT MODE</span><strong id="healthMode">—</strong></div><div class="health-item"><span>LAST SCAN</span><strong id="healthScan">—</strong></div></div><div class="health-note" id="healthNote">Waiting for a verified bot snapshot.</div></section>
-<div class="section-head"><div><div class="section-title">Market scanner</div><div class="section-meta" id="marketCount">ALL PUBLISHED SYMBOLS</div></div><div class="toolbar"><button class="view-tab active" data-view="markets"><span class="tab-icon">📡</span> Markets</button><button class="view-tab" data-view="waiting"><span class="tab-icon">⏳</span> Waiting <span class="waiting-count" id="waitingCount">—</span></button><input id="search" class="search" placeholder="Search a market..." autocomplete="off"><button class="filter active" data-filter="ALL">All</button><button class="filter" data-filter="READY">Ready</button><button class="filter" data-filter="BUY">Buy</button><button class="filter" data-filter="SELL">Sell</button></div></div>
-<div class="market-grid" id="markets"><div class="empty">Connecting to your MT5 market feed…</div></div>
-<div class="workspace">
- <section class="panel"><div class="panel-head"><h3>Price action / market structure</h3><span class="chart-symbol" id="chartSymbol">SELECT A MARKET</span></div><div class="chart-wrap" id="chart"><svg viewBox="0 0 700 260" preserveAspectRatio="none"><text x="350" y="130" fill="#77728f" text-anchor="middle" font-size="12">Waiting for verified candle history</text></svg></div><div class="chart-caption"><span>MT5 PUBLISHED M15 CANDLES</span><span id="chartPrice">NO PRICE SELECTED</span></div><div class="structure"><div class="structure-item"><span>H4 DIRECTION</span><strong id="detailBias">—</strong></div><div class="structure-item"><span>SETUP STAGE</span><strong id="detailStage">—</strong></div><div class="structure-item"><span>TRADE SIDE</span><strong id="detailSide">—</strong></div></div></section>
- <aside class="panel"><div class="panel-head"><h3>Setup journey</h3><span class="section-meta">LIVE BOT STATE</span></div><div class="journey" id="journey"><div class="empty">Select a market to inspect its setup.</div></div><div class="next-step"><span>NEXT REQUIRED ACTION</span><p id="nextRequired">Choose a market to see what the scanner is waiting for.</p></div><div class="section-meta" style="margin:16px 0 8px">SWEEP &amp; TRADE LEVELS</div><div class="detail-levels" id="detailLevels"><div class="empty">Select a market to inspect its levels.</div></div></aside>
-</div>
+<section class="panel" id="closestPanel" style="padding:13px 15px;margin-bottom:12px"><div class="panel-head"><h3>🎯 Closest to ready</h3><span class="section-meta">HIGHEST BOT-REPORTED PROGRESS</span></div><div id="closestContent" class="empty">Waiting for scanner data…</div></section>
+<section class="command-grid">
+ <section class="panel watch-panel">
+  <div class="panel-head"><h3>◉ Market watch</h3><span class="section-meta" id="marketCount">ALL SYMBOLS</span></div>
+  <div class="watch-toolbar"><input id="search" class="search" placeholder="Search markets…" autocomplete="off"><span class="section-meta" style="align-self:center">MT5</span></div>
+  <div class="view-tabs"><button class="view-tab active" data-view="markets">All markets</button><button class="view-tab" data-view="waiting">Waiting <span class="waiting-count" id="waitingCount">—</span></button></div>
+  <div class="filters"><button class="filter active" data-filter="ALL">All</button><button class="filter" data-filter="READY">Ready</button><button class="filter" data-filter="BUY">Buy</button><button class="filter" data-filter="SELL">Sell</button></div>
+  <div class="market-grid" id="markets"><div class="empty">Connecting to your MT5 market feed…</div></div>
+ </section>
+ <section class="panel chart-panel">
+  <div class="panel-head"><h3>◈ Price action / market structure</h3><span class="chart-symbol" id="chartSymbol">SELECT A MARKET</span></div>
+  <div class="chart-wrap" id="chart"><svg viewBox="0 0 700 260" preserveAspectRatio="none"><text x="350" y="130" fill="#77728f" text-anchor="middle" font-size="12">Waiting for verified candle history</text></svg></div>
+  <div class="chart-caption"><span>MT5 PUBLISHED M15 CANDLES</span><span id="chartPrice">NO PRICE SELECTED</span></div>
+  <div class="structure"><div class="structure-item"><span>H4 DIRECTION</span><strong id="detailBias">—</strong></div><div class="structure-item"><span>SETUP STAGE</span><strong id="detailStage">—</strong></div><div class="structure-item"><span>TRADE SIDE</span><strong id="detailSide">—</strong></div></div>
+ </section>
+ <aside class="panel setup-panel">
+  <div class="panel-head"><h3>◎ Setup readiness</h3><span class="section-meta">LIVE BOT STATE</span></div>
+  <div class="journey" id="journey"><div class="empty">Select a market to inspect its setup.</div></div>
+  <div class="next-step"><span>NEXT REQUIRED ACTION</span><p id="nextRequired">Choose a market to see what the scanner is waiting for.</p></div>
+  <div class="section-meta" style="margin:13px 0 0">TRADE LEVELS</div>
+  <div class="detail-levels" id="detailLevels"><div class="empty">Select a market to inspect its levels.</div></div>
+ </aside>
+</section>
+<section class="panel" id="scannerMetrics" style="padding:14px 15px;margin-top:12px">
+ <div class="panel-head"><h3>📊 Scanner activity</h3><span class="section-meta" id="scanCycleMeta">WAITING FOR BOT METRICS</span></div>
+ <div class="health-grid"><div class="health-item"><span>READY</span><strong id="metricReady">—</strong></div><div class="health-item"><span>CLOSEST TO READY</span><strong id="metricClosest">—</strong></div><div class="health-item"><span>WAITING</span><strong id="metricWaiting">—</strong></div><div class="health-item"><span>SETUP IN PROGRESS</span><strong id="metricProgress">—</strong></div></div>
+ <div class="health-note scanner-stats" id="scannerStats">Scanner counters will appear when the bot publishes them.</div>
+</section>
 <div class="bottom-grid">
- <section class="panel"><div class="panel-head"><h3>Live positions &amp; pending</h3><span class="section-meta">FROM MT5 ACCOUNT</span></div><div id="signals"><div class="empty">No active orders published.</div></div><div id="telegramNote" class="health-note">Telegram delivery status will appear when the bot publishes it.</div><div class="section-meta" style="margin-top:15px">OPEN POSITIONS</div><div id="tradeMonitor"><div class="empty">No position records published.</div></div><div class="section-meta" style="margin-top:16px">RECENT SIGNAL HISTORY</div><div id="signalHistory"><div class="empty">No signal history published.</div></div></section>
- <section class="panel"><div class="panel-head"><h3>Scanner configuration</h3><span class="section-meta" id="botVersion">BOT DETAILS</span></div><div class="bot-card"><div class="bot-orb">TBJ</div><div><strong id="botName">TradesByJay Sweep-Wick Scanner</strong><p id="strategyText">H4 trend → H1 key-level liquidity sweep → M15 wick rejection.</p></div></div><div class="bot-meta"><span id="scanSymbols">SYMBOLS: —</span><span id="scanPositions">OPEN: —</span><span id="scanPending">PENDING: —</span><span id="executionMode">EXECUTION: DEMO ONLY</span></div><div id="settingsGrid" class="settings-grid"><div class="empty">Bot configuration will appear after the updated publisher sends settings.</div></div></section>
+ <section class="panel">
+  <div class="panel-head"><h3>⇄ Live positions &amp; pending</h3><span class="section-meta">FROM MT5 ACCOUNT</span></div>
+  <div id="signals"><div class="empty">No active orders published.</div></div>
+  <div id="telegramNote" class="health-note">Telegram delivery status will appear when the bot publishes it.</div>
+  <div class="section-meta" style="margin-top:14px">OPEN POSITIONS</div><div id="tradeMonitor"><div class="empty">No position records published.</div></div>
+  <div class="section-meta" style="margin-top:14px">RECENT SIGNAL HISTORY</div><div id="signalHistory"><div class="empty">No signal history published.</div></div>
+ </section>
+ <section class="panel">
+  <div class="panel-head"><h3>🛰️ System health &amp; scanner config</h3><span class="section-meta" id="botVersion">BOT DETAILS</span></div>
+  <div class="health-grid"><div class="health-item"><span>FEED STATUS</span><strong id="healthFeed">—</strong></div><div class="health-item"><span>LAST PUBLISHED</span><strong id="healthAge">—</strong></div><div class="health-item"><span>BOT MODE</span><strong id="healthMode">—</strong></div><div class="health-item"><span>LAST SCAN</span><strong id="healthScan">—</strong></div></div>
+  <div class="health-note" id="healthNote">Waiting for a verified bot snapshot.</div>
+  <div style="height:1px;background:#ffffff12;margin:14px 0"></div>
+  <div class="bot-card"><div class="bot-orb">TBJ</div><div><strong id="botName">TradesByJay Sweep-Wick Scanner</strong><p id="strategyText">Strategy details will appear from the bot feed.</p></div></div>
+  <div class="bot-meta"><span id="scanSymbols">SYMBOLS: —</span><span id="scanPositions">OPEN: —</span><span id="scanPending">PENDING: —</span><span id="executionMode">EXECUTION: —</span></div>
+  <div id="settingsGrid" class="settings-grid"><div class="empty">Bot configuration will appear after the publisher sends settings.</div></div>
+ </section>
 </div>
-<footer class="footer"><span>TRADESBYJAY © 2026 · MARKET DATA IS PROVIDED BY YOUR MT5 BOT.</span><span>READ-ONLY MONITOR · <a href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noopener">TELEGRAM COMMUNITY</a></span><span>Trading involves risk. Verify every setup in your trading terminal.</span></footer>
+<footer class="footer"><span>TRADESBYJAY © 2026 · MARKET DATA PROVIDED BY YOUR MT5 BOT.</span><span>READ-ONLY MONITOR · <a href="https://t.me/+4S2w77VSrLIzMjBh" target="_blank" rel="noopener">TELEGRAM COMMUNITY</a></span><span>Trading involves risk. Verify every setup in your terminal.</span></footer>
 </div>
 <script>
 (()=>{'use strict';
