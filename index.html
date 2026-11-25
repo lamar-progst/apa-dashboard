@@ -103,7 +103,7 @@ const fvgReady=m=>stage(m)==='READY'&&!!m.fvg;
 const waitingText=m=>m?.next_required||m?.waiting||m?.reason||m?.note||'No next step published.';
 const age=()=>{const t=Date.parse(snapshot?.updated||'');return Number.isFinite(t)?Date.now()-t:Infinity},stale=()=>!snapshot||snapshot.online===false||age()>90000||age() < -120000;
 const dateTime=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?'—':d.toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'})};
-function readiness(m){const checks=fvgChecks(m);if(checks.length){const passed=checks.filter(c=>String(c?.status||'').toUpperCase()==='PASS').length;const pct=Math.round(100*passed/checks.length);return fvgReady(m)?Math.min(90,pct):Math.min(99,pct)}return Math.max(0,Math.min(90,n(m?.readiness??m?.progress)??0))}
+function readiness(m){const checks=fvgChecks(m);if(checks.length){const passed=checks.filter(c=>String(c?.status||'').toUpperCase()==='PASS').length;const pct=Math.round(100*passed/checks.length);return fvgReady(m)?Math.min(90,pct):Math.min(89,pct)}return Math.max(0,Math.min(90,n(m?.readiness??m?.progress)??0))}
 function waitingCheck(m){const checks=fvgChecks(m);const missing=checks.find(c=>String(c.status||'').toUpperCase()!=='PASS');if(missing)return (missing.name||'CONFIRMATION')+': '+(missing.detail||'condition not passed');return fvgReady(m)?'FVG MIDPOINT RETRACEMENT / LIMIT FILL':waitingText(m)}
 function auditedConfirmed(m){return fvgReady(m)&&false}
 function candidates(){return (snapshot?.markets||[]).filter(m=>m&&m.symbol)}
