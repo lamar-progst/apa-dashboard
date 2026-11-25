@@ -370,6 +370,13 @@ const num=v=>v===null||v===undefined||v===''?null:Number(v);
 const price=v=>{const n=num(v);return n===null||!Number.isFinite(n)?'—':n.toLocaleString(undefined,{maximumFractionDigits:6})};
 const stage=m=>{const v=String(m?.setup_status||m?.stage||m?.status||'WATCH').toUpperCase();return v==='READY'?'ARMED':v==='TRIGGERED'?'CONFIRMED':v};
 const side=m=>{const d=String(m?.side||'').toUpperCase();if(d==='BUY'||d==='SELL')return d;const b=String(m?.h4_direction||m?.bias||'').toUpperCase();return b==='BULLISH'?'BUY':b==='BEARISH'?'SELL':'WAIT'};
+const FX_CODES=new Set(['USD','EUR','GBP','JPY','CHF','CAD','AUD','NZD','SGD','HKD','NOK','SEK','DKK','PLN','TRY','MXN','ZAR','CNH','CNY']);
+function isOtherForex(m){
+ const raw=String(m?.symbol||'').toUpperCase().replace(/[^A-Z]/g,'');
+ if(raw.includes('XAUUSD'))return false;
+ const root=raw.slice(0,6);
+ return root.length===6&&FX_CODES.has(root.slice(0,3))&&FX_CODES.has(root.slice(3,6));
+}
 const h4Bias=m=>{const b=String(m?.h4_direction||m?.bias||'NEUTRAL').toUpperCase();return b==='BUY'?'BULLISH':b==='SELL'?'BEARISH':b};
 function time(v){if(!v)return'—';const d=new Date(v);return Number.isNaN(d.getTime())?'—':d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
 function ageMs(){const d=Date.parse(snapshot?.updated||'');return Number.isFinite(d)?Date.now()-d:Infinity}
@@ -515,7 +522,7 @@ function renderScanner(){
 }
 function renderTicker(){const ms=snapshot?.markets||[];const rows=ms;const html=rows.map(m=>{const d=h4Bias(m),cls=d==='BULLISH'?'up':d==='BEARISH'?'down':'';return '<span class="ticker-item"><b>'+esc(m.symbol)+'</b><em>'+esc(price(m.price))+'</em> <em class="'+cls+'">'+esc(d||'WATCH')+'</em></span>'}).join('');const track=$('tickerTrack'),next=html+html;if(track.dataset.rendered!==next){track.innerHTML=next;track.dataset.rendered=next}}
 function render(){if(!snapshot)return;renderHealth();renderStats();renderScanner();renderClosest();renderMarkets();renderDetail();renderSignals();renderTicker()}
-async function load(){let lastError=null;for(const base of FEEDS){try{const r=await fetch(base+'?t='+Date.now(),{cache:'no-store',headers:{'Cache-Control':'no-cache'}});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(!data||!Array.isArray(data.markets))throw Error('Invalid feed structure');checkNewSignals(data);snapshot=data;const featured=data.markets.filter(m=>['CONFIRMED','ARMED'].includes(stage(m))&&(side(m)==='BUY'||side(m)==='SELL')).sort((a,b)=>{const rank=m=>stage(m)==='CONFIRMED'?2:1;return rank(b)-rank(a)||((Number(b.progress)||0)-(Number(a.progress)||0))})[0];if(!data.markets.some(m=>m.symbol===selected))selected=featured?.symbol||data.markets[0]?.symbol||'';render();return}catch(e){lastError=e}}$('connection').classList.add('stale');$('connectionText').textContent='FEED UNAVAILABLE';$('feedMode').textContent='COULD NOT READ STATE.JSON';if(!snapshot)$('markets').innerHTML='<div class="empty">The dashboard cannot reach the bot feed. Check that the bot has published state.json to GitHub.</div>';console.warn('TradesByJay feed error:',lastError)}
+async function load(){let lastError=null;for(const base of FEEDS){try{const r=await fetch(base+'?t='+Date.now(),{cache:'no-store',headers:{'Cache-Control':'no-cache'}});if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();if(!data||!Array.isArray(data.markets))throw Error('Invalid feed structure');data.markets=data.markets.filter(m=>!isOtherForex(m));checkNewSignals(data);snapshot=data;const featured=data.markets.filter(m=>['CONFIRMED','ARMED'].includes(stage(m))&&(side(m)==='BUY'||side(m)==='SELL')).sort((a,b)=>{const rank=m=>stage(m)==='CONFIRMED'?2:1;return rank(b)-rank(a)||((Number(b.progress)||0)-(Number(a.progress)||0))})[0];if(!data.markets.some(m=>m.symbol===selected))selected=featured?.symbol||data.markets[0]?.symbol||'';render();return}catch(e){lastError=e}}$('connection').classList.add('stale');$('connectionText').textContent='FEED UNAVAILABLE';$('feedMode').textContent='COULD NOT READ STATE.JSON';if(!snapshot)$('markets').innerHTML='<div class="empty">The dashboard cannot reach the bot feed. Check that the bot has published state.json to GitHub.</div>';console.warn('TradesByJay feed error:',lastError)}
 
 const telegramTestBtn=$('telegramTestBtn');
 telegramTestBtn.addEventListener('click',async()=>{
