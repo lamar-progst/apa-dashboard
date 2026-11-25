@@ -98,7 +98,7 @@ const n=v=>v===null||v===undefined||v===''?null:Number(v),fmt=v=>{const x=n(v);r
 const stage=m=>String(m?.setup_status||m?.stage||'WATCH').toUpperCase(),side=m=>{const s=String(m?.side||'').toUpperCase();return ['BUY','SELL'].includes(s)?s:'WAIT'},bias=m=>String(m?.h4_direction||m?.bias||'NEUTRAL').toUpperCase();
 const age=()=>{const t=Date.parse(snapshot?.updated||'');return Number.isFinite(t)?Date.now()-t:Infinity},stale=()=>!snapshot||snapshot.online===false||age()>90000||age() < -120000;
 const dateTime=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?'—':d.toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'})};
-function readiness(m){return Math.max(0,Math.min(100,n(m?.readiness??m?.progress)??0))}
+function readiness(m){const checks=Array.isArray(m?.checks)?m.checks:null;if(checks&&checks.length){const passed=checks.filter(c=>String(c?.status||'').toUpperCase()==='PASS').length;return Math.round(100*passed/checks.length)}if(stage(m)==='CONFIRMED')return 0;return Math.max(0,Math.min(99,n(m?.readiness??m?.progress)??0))}
 function waitingCheck(m){const checks=Array.isArray(m?.checks)?m.checks:[];const missing=checks.find(c=>String(c.status||'').toUpperCase()!=='PASS');if(!missing)return '';return (missing.name||'CONFIRMATION')+': '+(missing.detail||'condition not passed')}
 function auditedConfirmed(m){return stage(m)==='CONFIRMED'&&Array.isArray(m?.checks)&&m.checks.length>0&&m.checks.every(c=>String(c.status||'').toUpperCase()==='PASS')}
 function candidates(){return (snapshot?.markets||[]).filter(m=>m&&m.symbol)}
