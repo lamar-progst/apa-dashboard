@@ -427,10 +427,9 @@ function chartSvg(m){const cs=Array.isArray(m.candles)?m.candles.slice(-36):[];i
 
  const sourceChecks=Array.isArray(m.checks)?m.checks:[];
  const findCheck=(terms)=>sourceChecks.find(x=>terms.some(t=>String(x.name||'').toUpperCase().includes(t)));
- const h4=findCheck(['H4 DIRECTION']);
- const h1=findCheck(['H1 SUPPORT / RESISTANCE','H1 S/R']);
- const m15=findCheck(['M15 LEVEL REJECTION','M15 REJECTION']);
- const m5=findCheck(['M5 RETEST','M5 BOUNCE','REJECTION']);
+ const h4=findCheck(['H4 DIRECTION','H4 CONTEXT']);
+ const h1=findCheck(['SUPPORT / RESISTANCE','S/R ZONE','KEY LEVEL']);
+ const m5=findCheck(['M5 CONFIRMATION','M5 RETEST','M5 BOUNCE','M5 REJECTION']);
  const make=(name,check,passFallback,detailFallback)=>{
   const pass=check?String(check.status||'').toUpperCase()==='PASS':!!passFallback;
   const detail=check?.detail||detailFallback||'This condition has not been published by the bot.';
@@ -439,15 +438,12 @@ function chartSvg(m){const cs=Array.isArray(m.candles)?m.candles.slice(-36):[];i
  const h1Zone=m.sr_zone||m.key_zone||{};
  const low=num(h1Zone.low??m.zone_low),high=num(h1Zone.high??m.zone_high);
  const zoneText=Number.isFinite(low)&&Number.isFinite(high)?price(low)+' – '+price(high):price(m.sr_level??m.key_level);
- const m15Level=m.mss_level??m.bos_level;
- const m15Passed=m15?String(m15.status||'').toUpperCase()==='PASS':!!(m.mss_level||m.m15_bos);
  const m5Passed=m5?String(m5.status||'').toUpperCase()==='PASS':stage(m)==='CONFIRMED';
- const retest=num(m.m5_retest_level??m.retest_level??(m15Passed?m15Level:null));
+ const retest=num(m.m5_retest_level??m.retest_level??m.trigger_level);
  const rows=[
-  make('H4 · DIRECTION',h4,bias==='BULLISH'||bias==='BEARISH','H4 structure: '+bias+'. H4 alone controls directional bias; D1 does not block the setup.'),
-  make('H1 · SUPPORT / RESISTANCE',h1,!!(m.sr_level!==null&&m.sr_level!==undefined||m.key_level!==null&&m.key_level!==undefined),'Nearest H1 zone: '+zoneText+'.'),
-  make('M15 · S/R REJECTION',m15,m15Passed,m15Passed?'M15 rejection confirmed at '+price(m.sr_level??m.key_level??m15Level):'Waiting for an M15 candle to test the H1 zone and close away from it.'),
-  make('M5 · RETEST + REJECTION',m5,m5Passed,m5Passed?'M5 retest/rejection confirmation reported by the bot.':(m15Passed?'Waiting for M5 retest of '+price(retest)+' and a rejection candle close in the trade direction.':'M5 entry confirmation is not available until M15 structure confirms.'))
+  make('H4 · MARKET CONTEXT',h4,bias==='BULLISH'||bias==='BEARISH','H4 context: '+bias+'. Context only — it does not block a valid countertrend setup at major S/R.'),
+  make('KEY · SUPPORT / RESISTANCE',h1,!!(m.sr_level!==null&&m.sr_level!==undefined||m.key_level!==null&&m.key_level!==undefined||m.sr_zone||m.key_zone),'Relevant price area: '+zoneText+'.'),
+  make('M5 · ENTRY CONFIRMATION',m5,m5Passed,m5Passed?'M5 entry confirmation reported by the bot.':(retest!==null?'Waiting for M5 confirmation around '+price(retest)+'.':'Waiting for a clear M5 trigger at the level.'))
  ];
  $('journey').innerHTML=rows.map((x,i)=>'<div class="check-row"><div><strong>'+esc(x.name)+'</strong><small>'+esc(x.detail)+'</small></div><span class="check-state '+(x.pass?'pass':'wait')+'">'+(x.pass?'✓ PASS':'◷ WAIT')+'</span></div>').join('');
  const breakdown=waitBreakdown(m);
@@ -459,8 +455,7 @@ function chartSvg(m){const cs=Array.isArray(m.candles)?m.candles.slice(-36):[];i
   ['H1 SUPPORT',price(m.h1_support)],
   ['H1 RESISTANCE',price(m.h1_resistance)],
   ['H1 PROTECTED / INVALIDATION LEVEL',price(m.protected_level)],
-  ['M15 REJECTION LEVEL',price(m.sr_level??m.key_level??m15Level)],
-  ['M5 RETEST TARGET',retest!==null?price(retest):(m15Passed?'Not separately published':'Waiting for M15 BOS')],
+  ['M5 RETEST / TRIGGER',retest!==null?price(retest):'Not published'],
   ['CURRENT PRICE',price(m.price)],
   ['SETUP STAGE',m.setup_status||stage(m)],
   ['LAST MARKET UPDATE',time(m.updated)]
